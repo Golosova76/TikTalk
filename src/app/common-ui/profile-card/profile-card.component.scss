@@ -1,0 +1,7 @@
+.profile-card {
+  border: 1px solid var(--light-solid);
+  padding: 32px 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 32px;
+}
