@@ -1,10 +1,66 @@
+@import 'styles/fonts';
+@import 'styles/null';
+
 :root {
   --dark-solid: #000000;
   --light-solid: #FFFFFF;
+  --light-transparent: rgba(255, 255, 255, 0.75);
+  --light-faf4f0: #faf4f0;
+  --dark-transparent: #000;
+  --dark-active: #161616;
+  --dark-without-fill: rgba(216, 216, 216, 0);
+  --dark-message: #404040;
+  --gray-solid: #5f646d;
+  --gray-soft: #5f646d;
+  --outline-ae7aff: #d8d8d8;
+  --primary-primary: #ae7aff;
+  --primary-hover: #ae7aff;
+  --primary-soft: #ae7aff;
+  --green-primary: #98e9ab;
+  --green-soft: #98e9ab;
+  --yellow-primary: #fae8a4;
+  --yellow-soft: #fae8a4;
+  --red-primary: #e99898;
+  --red-soft: #e99898;
+  --color: #404040;
 }
 
 
 body {
+  font-family: 'JetBrains Mono', sans-serif;
+  font-weight: 400;
   background: var(--dark-solid);
   color: var(--light-solid);
+}
+
+.skill-tag {
+  display: inline;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 133%;
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid var(--light-solid);
+  margin-right: 4px;
+}
+
+.btn {
+  border: none;
+  background: var(--primary-primary);
+  color: var(--dark-solid);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 171%;
+  padding: 10px 20px;
+}
+
+.h6 {
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 133%;
+}
+
+.subtitle {
+  font-size: 14px;
+  line-height: 150%;
 }

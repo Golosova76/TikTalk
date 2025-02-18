@@ -5,3 +5,28 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 32px;
 }
+
+.avatar-name {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-gap: 20px;
+}
+
+.profile-card__avatar {
+  width: 71px;
+  height: 71px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-card__description {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+}
+
+.profile-card__name {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
