@@ -1,8 +1,11 @@
 .profile-card {
+  max-width: 1092px;
+  margin: 0 auto;
   border: 1px solid var(--light-solid);
-  padding: 32px 24px;
+  border-radius: 2px;
+  padding: 23px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr) 250px 1fr;
   grid-gap: 32px;
 }
 
@@ -29,4 +32,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.profile-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  height: min-content;
 }
