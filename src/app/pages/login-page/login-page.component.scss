@@ -1,0 +1,46 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100dvh;
+  align-items: center;
+  margin: 0 5%;
+}
+
+.login-form {
+  max-width: 440px;
+}
+
+.h1 {
+ &:not(:last-child) {
+   margin-bottom: 60px;
+ }
+}
+
+.control-title {
+  display: inline-block;
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.form-body {
+  &:not(:last-child) {
+    margin-bottom: 32px;
+  }
+}
+
+.tt-control-label {
+  display: block;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 133%;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.btn-login {
+    border: 1px solid var(--dark-solid);
+    border-radius: 2px;
+}
