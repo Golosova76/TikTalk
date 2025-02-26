@@ -38,9 +38,24 @@
   &:not(:last-child) {
     margin-bottom: 16px;
   }
+  &.eye {
+    position: relative;
+    .password-eye-button {
+      position: absolute;
+      top: 40px;
+      right: 20px;
+    }
+    .password-eye-button.active {
+      svg {
+        stroke: var(--primary-primary);
+      }
+    }
+  }
 }
 
 .btn-login {
     border: 1px solid var(--dark-solid);
     border-radius: 2px;
 }
+
+
