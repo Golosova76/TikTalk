@@ -1,1 +1,40 @@
-<p>sidebar works!</p>
+<div class="sidebar">
+  <div class="sidebar__content">
+    <div class="sidebar__logo">
+      <img src="/assets/img/svg/Logo-Tik-Talk.svg" alt="logo Tik-Talk">
+    </div>
+    <nav class="sidebar__menu">
+      <ul class="main-menu-list">
+        <li *ngFor="let menuItem of menuItems" class="menu-item">
+          <a href="#" class="menu-item-link">
+            <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
+            <span class="menu-item-title">{{menuItem.label}}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="sidebar__subscribes">
+      <div class="sidebar__title">Подписчики</div>
+
+      <div class="sidebar__names">
+        @for (profile of subscribers$ | async; track profile.id) {
+          <app-subscriber-card [profile]="profile"></app-subscriber-card>
+        }
+      </div>
+
+
+
+      <div class="to-subscribers">
+        <a [routerLink]="['/subscriber']"  class="to-subscribers-link">
+          Все подписчики
+        </a>
+        <svg icon="arrow" class="to-subscribers-icon"></svg>
+      </div>
+    </div>
+  </div>
+  <footer class="sidebar__footer">
+    <img src="/assets/img/avatar-placeholder.png" alt="avatar placeholder">
+    <div class="footer-name"></div>
+    <a href="#" class="settings-btn"></a>
+  </footer>
+</div>

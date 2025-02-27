@@ -1,0 +1,114 @@
+@import '../../../styles/mixins';
+
+:host {
+  padding: 20px 0;
+  background: var(--dark-solid);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__content {
+    flex-grow: 1;
+  }
+  &__footer {
+    padding: 0 12px;
+    margin-top: auto;
+  }
+  &__logo {
+    padding: 0 28px;
+    @include margin-bottom20;
+  }
+  &__menu {
+    padding: 0 12px;
+    @include margin-bottom20;
+  }
+  &__subscribes {
+    padding: 0 28px;
+  }
+  &__title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 133%;
+    color: var(--light-transparent);
+    @include margin-bottom20;
+  }
+
+  &__names {
+    @include margin-bottom20;
+  }
+}
+
+
+.main-menu-list {
+  display: grid;
+  grid-gap: 8px;
+}
+
+.menu-item {
+  border-radius: 2px;
+  padding: 8px 16px;
+  cursor: pointer;
+  .menu-item-link:hover,
+  .menu-item-link:focus-visible {
+    background-color: var(--dark-active);
+    color: var(--primary-primary);
+    .menu-item-svg {
+      color: var(--primary-primary);
+    }
+  }
+}
+
+.menu-item-link {
+  display: grid;
+  grid-template-columns: 16px 1fr max-content;
+  grid-gap: 12px;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 171%;
+  color: var(--light-solid);
+}
+
+.menu-item-svg {
+  width: 16px;
+  height: 16px;
+  color: white;
+}
+
+.menu-item-title {}
+
+
+.to-subscribers {
+  display: flex;
+  column-gap: 11px;
+  align-items: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+  cursor: pointer;
+  &:hover,
+  &:focus-visible {
+    .to-subscribers-link {
+      color: var(--primary-primary);
+    }
+    .to-subscribers-icon {
+      color: var(--primary-primary);
+    }
+  }
+}
+
+.to-subscribers-icon {
+  width: 16px;
+  height: 16px;
+  color: white;
+}
+
+
+
+.footer-name {
+}
+
+.settings-btn {
+}
