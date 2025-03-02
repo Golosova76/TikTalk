@@ -3,7 +3,7 @@ import {SvgIconComponent} from "../svg-icon/svg-icon.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {SubscriberCardComponent} from "./subscriber-card/subscriber-card.component";
 import {ProfileService} from "../../data/services/profile.service";
-import {map} from "rxjs";
+import {firstValueFrom} from "rxjs";
 import {RouterLink} from "@angular/router";
 import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
 
@@ -26,6 +26,8 @@ export class SidebarComponent {
 
   subscribers$ = this.profileService.getSubscribersShortList();
 
+  me = this.profileService.me
+
   menuItems = [
     {
     label: 'Моя страница',
@@ -45,6 +47,6 @@ export class SidebarComponent {
   ]
 
   ngOnInit() {
-    this.profileService.getMe()
+    firstValueFrom(this.profileService.getMe());
   }
 }
