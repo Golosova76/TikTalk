@@ -1,0 +1,13 @@
+<div class="profile-logo-name" [ngClass]="layoutClass">
+  @if (profile(); as profile) {
+    @if (profile.avatarUrl) {
+      <img [src]="profile.avatarUrl | imgUrl" alt="">
+    } @else {
+      <img src="/assets/img/avatar-placeholder-big.svg" alt="avatar placeholder">
+    }
+    <div class="profiles-names">
+      <h1 class="profile-title">{{ profile.firstName }} {{ profile.lastName }}</h1>
+      <div class="profile-subtitle">{{profile.username}}</div>
+    </div>
+  }
+</div>

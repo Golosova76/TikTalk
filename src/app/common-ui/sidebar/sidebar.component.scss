@@ -111,7 +111,6 @@
   grid-template-columns: 32px 1fr 16px;
   grid-gap: 12px;
   align-items: center;
-  cursor: pointer;
   border-radius: 2px;
   padding: 4px 16px;
   &:hover,
@@ -127,9 +126,17 @@
   .settings-button {
     width: 16px;
     height: 16px;
+
     .footer-avatar-icon {
       width: 16px;
       height: 16px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      .footer-avatar-icon {
+        color: var(--primary-primary);
+      }
     }
   }
 }

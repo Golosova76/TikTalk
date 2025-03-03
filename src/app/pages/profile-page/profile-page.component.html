@@ -1,1 +1,14 @@
-<p>profile-page works!</p>
+@if (profile$ | async; as profile) {
+  <header class="profile-page__header">
+    <app-profile-header [profile]="profile" layoutClass="horizontal-layout"></app-profile-header>
+
+    <div class="header-settings">
+      <a class="btn profile-header-settings" [routerLink]="['settings']">
+      Редактировать
+      <svg icon="settings" class="header-settings-icon"></svg>
+    </a>
+    </div>
+  </header>
+
+  <main class="profile-page__body"></main>
+}
