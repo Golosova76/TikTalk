@@ -1,0 +1,64 @@
+<div class="settings-body">
+  <div class="settings-about">
+    <header class="profile-page__header">
+    <app-profile-header layoutClass="vertical-layout"></app-profile-header>
+  </header>
+  </div>
+  <div class="settings-save">
+    <form class="profile-form__wrapper" [formGroup]="form">
+      <div class="profile-form">
+        <div class="two-columns">
+          <label class="tt-form-label">
+            <span class="tt-form-label__text">Имя</span>
+            <input
+              type="text"
+              class="tt-form-input"
+              placeholder="Введите данные"
+              formControlName="firstName">
+          </label>
+          <label class="tt-form-label">
+            <span class="tt-form-label__text">Фамилия</span>
+            <input type="text" class="tt-form-input" formControlName="lastName">
+          </label>
+        </div>
+        <label class="tt-form-label">
+          <span class="tt-form-label__text">Telegram username</span>
+          <input type="text" class="tt-form-input" formControlName="username">
+        </label>
+        <label class="tt-form-label">
+          <span class="tt-form-label__text">О себе</span>
+          <textarea
+            formControlName="description"
+            class="tt-form-input tt-textarea"
+            rows="4"
+          ></textarea>
+        </label>
+        <label class="tt-form-label">
+          <span class="tt-form-label__text">Аватарка</span>
+        </label>
+        <label class="tt-form-label">
+          <span class="tt-form-label__text">Навыки</span>
+          <input type="text" class="tt-form-input" formControlName="stack">
+        </label>
+      </div>
+      <div class="profile-controls">
+        <div class="profile-actions">
+          <a href="/delete-profile" class="profile-actions__delete">
+            <svg icon="delete-profile" class="delete-profile-icon"></svg>
+          </a>
+          <a href="/logout" class="profile-actions__logout">
+            <svg icon="logout" class="logout-icon"></svg>
+          </a>
+        </div>
+        <div class="settings-controls">
+          <button type="button" class="settings-controls__cancel">Отмена</button>
+          <button
+            type="submit"
+            class="btn settings-controls__save"
+            (click)="onSave()"
+          >Сохранить</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

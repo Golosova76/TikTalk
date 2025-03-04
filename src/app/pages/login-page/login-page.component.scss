@@ -30,6 +30,7 @@
 }
 
 .tt-control-label {
+  position: relative;
   display: block;
   font-weight: 700;
   font-size: 12px;
@@ -38,18 +39,26 @@
   &:not(:last-child) {
     margin-bottom: 16px;
   }
-  &.eye {
-    position: relative;
-    .password-eye-button {
-      position: absolute;
-      top: 40px;
-      right: 20px;
-    }
-    .password-eye-button.active {
-      svg {
-        stroke: var(--primary-primary);
-      }
-    }
+
+  .telegram-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .eye-icon {
+    width: 20px;
+    height: 17px;
+  }
+
+  .control-telegram-icon,
+  .password-eye-button {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+  }
+
+  .password-eye-button.active {
+      color: var(--primary-primary);
   }
 }
 

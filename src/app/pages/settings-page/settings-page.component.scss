@@ -1,0 +1,119 @@
+@import '../../../styles/mixins';
+
+.settings-body {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  grid-gap: 48px;
+  padding: 24px;
+
+  .settings-about {
+    padding: 0 24px;
+    .profile-page__header {
+    }
+  }
+
+  .settings-save {
+    border: 1px solid var(--light-solid);
+    border-radius: 2px;
+    padding: 32px;
+    background: var(--dark-solid);
+
+    .profile-form__wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100dvh;
+
+
+      .profile-form {
+        display: grid;
+        grid-gap: 20px;
+        .two-columns {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 20px;
+        }
+
+        .tt-form-label {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .tt-form-label__text {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 133%;
+            color: var(--light-transparent);
+          }
+
+          .tt-form-input {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 150%;
+            border-bottom: 1px solid var(--light-solid);
+            padding: 12px 0;
+            min-height: 44px;
+            background: none;
+            color: var(--light-transparent);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            &:focus-within {
+              outline: 1px solid var(--primary-primary);
+            }
+          }
+        }
+      }
+
+      .profile-controls {
+        @include flex-center-between;
+
+        .profile-actions {
+          @include flex-center;
+          gap: 20px;
+          .profile-actions__delete {
+            @include flex-center-center;
+            @include profile-actions;
+            .delete-profile-icon {
+              width: 10px;
+              height: 12px;
+              color: var(--red-primary);
+            }
+          }
+
+          .profile-actions__logout {
+            @include flex-center-center;
+            @include profile-actions;
+            .logout-icon {
+              width: 14px;
+              height: 12px;
+            }
+          }
+        }
+
+        .settings-controls {
+          @include flex-center;
+          gap: 20px;
+          .settings-controls__cancel {
+            border: 1px solid var(--light-solid);
+            border-radius: 2px;
+            padding: 10px 20px;
+            background: var(--dark-solid);
+          }
+
+          .settings-controls__save {
+          }
+        }
+      }
+    }
+
+
+
+  }
+}
+
+.tt-textarea {
+  height: 84px;
+  resize: none;
+}
+
+

@@ -3,12 +3,41 @@
     <app-profile-header [profile]="profile" layoutClass="horizontal-layout"></app-profile-header>
 
     <div class="header-settings">
-      <a class="btn profile-header-settings" [routerLink]="['settings']">
+      <a class="btn profile-header-settings" [routerLink]="['/settings']">
       Редактировать
       <svg icon="settings" class="header-settings-icon"></svg>
     </a>
     </div>
   </header>
 
-  <main class="profile-page__body"></main>
+  <main class="profile-page__body">
+    <div class="profile-page__chat">
+      <h2 class="visually-hidden">Мой чат</h2>
+      <app-post-feed></app-post-feed>
+    </div>
+    <div class="profile-page__about">
+      <h3 class="profile-page__subscribers">Подписчики</h3>
+      <div class="subscribers-wrapper">
+        @for (subscriber of subscribers$ | async; track subscriber.id) {
+          <a [routerLink]="['/profile', subscriber.id]" class="subscriber-avatar-button" >
+            <img [src]="subscriber.avatarUrl | imgUrl" alt="avatar placeholder">
+          </a>
+        }
+        <a class="subscribers-search" [routerLink]="['/search']">
+          <svg icon="plus" class="subscribers-search-icon"></svg>
+        </a>
+      </div>
+      <h3 class="profile-page__skills">Навыки</h3>
+      <div class="skills-wrapper">
+        @for (skill of profile.stack; track skill) {
+          <div class="skill-tag">{{ skill }}</div>
+        }
+      </div>
+      <h3 class="profile-page__about-me">О себе</h3>
+      <div class="about-me-wrapper">
+        {{ profile.description }}
+        Список навыков, который мы обсудили выше, — основа резюме, но не единственная его часть. Также можно рассказать о себе в классическом смысле — этот раздел можно добавить в сопроводительное письмо.
+      </div>
+    </div>
+  </main>
 }

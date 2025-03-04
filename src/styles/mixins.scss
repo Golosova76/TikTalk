@@ -3,3 +3,41 @@
     margin-bottom: 20px;
   }
 }
+
+@mixin margin-bottom16 {
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+@mixin margin-bottom32 {
+  &:not(:last-child) {
+    margin-bottom: 32px;
+  }
+}
+
+@mixin flex-center-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin profile-actions {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--light-solid);
+  border-radius: 2px;
+  padding: 14px;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
