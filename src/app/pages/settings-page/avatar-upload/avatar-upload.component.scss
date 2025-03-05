@@ -1,0 +1,13 @@
+:host {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  grid-gap: 32px;
+  padding: 8px 0 16px 0;
+}
+
+.avatar-image {
+  img {
+    width: 140px;
+    height: 140px;
+  }
+}

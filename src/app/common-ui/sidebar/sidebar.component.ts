@@ -32,7 +32,7 @@ export class SidebarComponent {
     {
     label: 'Моя страница',
     icon: 'home',
-    link: '',
+    link: 'profile/me',
     },
     {
       label: 'Чаты',
@@ -42,7 +42,7 @@ export class SidebarComponent {
     {
       label: 'Поиск',
       icon: 'search',
-      link: 'search',
+      link: ['/search'],
     }
   ]
 

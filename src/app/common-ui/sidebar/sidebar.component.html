@@ -6,7 +6,7 @@
     <nav class="sidebar__menu">
       <ul class="main-menu-list">
         <li *ngFor="let menuItem of menuItems" class="menu-item">
-          <a href="#" class="menu-item-link">
+          <a [routerLink]=[menuItem.link] class="menu-item-link">
             <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
             <span class="menu-item-title">{{menuItem.label}}</span>
           </a>

@@ -61,6 +61,13 @@
               outline: 1px solid var(--primary-primary);
             }
           }
+
+          .tt-form-avatar {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 150%;
+            border-bottom: 1px solid var(--light-solid);
+          }
         }
       }
 

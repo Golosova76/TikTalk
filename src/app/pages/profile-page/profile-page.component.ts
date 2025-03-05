@@ -4,9 +4,8 @@ import {ProfileService} from "../../data/services/profile.service";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {switchMap} from "rxjs";
 import {toObservable} from "@angular/core/rxjs-interop";
-import {AsyncPipe, NgForOf} from "@angular/common";
+import {AsyncPipe} from "@angular/common";
 import {SvgIconComponent} from "../../common-ui/svg-icon/svg-icon.component";
-import {SubscriberCardComponent} from "../../common-ui/sidebar/subscriber-card/subscriber-card.component";
 import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
 import {PostFeedComponent} from "./post-feed/post-feed.component";
 
@@ -30,7 +29,7 @@ export class ProfilePageComponent {
 
   me$ = toObservable(this.profileService.me);
 
-  subscribers$ = this.profileService.getSubscribersShortList();
+  subscribers$ = this.profileService.getSubscribersShortList(5);
 
   profile$ = this.route.params
     .pipe(
