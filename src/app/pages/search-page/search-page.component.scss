@@ -1,3 +1,13 @@
+@import '../../../styles/mixins';
+
+.profile-card__filter {
+  border: 1px solid var(--light-solid);
+  padding: 16px 20px;
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.25);
+  background: var(--dark-solid);
+  @include margin-bottom20;
+}
+
 .profile-card__wrapper {
   display: grid;
   grid-gap: 8px;

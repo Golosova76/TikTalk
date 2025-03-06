@@ -4,7 +4,7 @@ import {AsyncPipe, NgForOf} from "@angular/common";
 import {SubscriberCardComponent} from "./subscriber-card/subscriber-card.component";
 import {ProfileService} from "../../data/services/profile.service";
 import {firstValueFrom} from "rxjs";
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
 
 @Component({
@@ -16,7 +16,8 @@ import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
     SubscriberCardComponent,
     AsyncPipe,
     RouterLink,
-    ImgUrlPipe
+    ImgUrlPipe,
+    RouterLinkActive
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
@@ -42,7 +43,7 @@ export class SidebarComponent {
     {
       label: 'Поиск',
       icon: 'search',
-      link: ['/search'],
+      link: 'search',
     }
   ]
 

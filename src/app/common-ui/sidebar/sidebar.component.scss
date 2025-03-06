@@ -72,14 +72,20 @@
   color: var(--light-solid);
 }
 
+.menu-item-link {
+  &.active {
+    color: var(--primary-primary);
+    .menu-item-svg {
+      color: var(--primary-primary);
+    }
+  }
+}
+
 .menu-item-svg {
   width: 16px;
   height: 16px;
   color: white;
 }
-
-.menu-item-title {}
-
 
 .to-subscribers {
   display: flex;
@@ -113,6 +119,11 @@
   align-items: center;
   border-radius: 2px;
   padding: 4px 16px;
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+  }
   &:hover,
   &:focus-visible {
     background-color: var(--dark-active);

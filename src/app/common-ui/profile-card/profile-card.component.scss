@@ -1,11 +1,11 @@
 .profile-card {
-  max-width: 1092px;
   border: 1px solid var(--light-solid);
   border-radius: 2px;
   padding: 23px;
   display: grid;
   grid-template-columns: repeat(2, 1fr) 250px 1fr;
   grid-gap: 32px;
+  align-items: center;
 }
 
 .avatar-name {

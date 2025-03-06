@@ -6,7 +6,11 @@
     <nav class="sidebar__menu">
       <ul class="main-menu-list">
         <li *ngFor="let menuItem of menuItems" class="menu-item">
-          <a [routerLink]=[menuItem.link] class="menu-item-link">
+          <a
+            [routerLink]="[menuItem.link]"
+            class="menu-item-link"
+            routerLinkActive="active"
+          >
             <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
             <span class="menu-item-title">{{menuItem.label}}</span>
           </a>
@@ -23,7 +27,7 @@
       </div>
 
       <div class="to-subscribers">
-        <a [routerLink]="['subscriber']"  class="to-subscribers-link">
+        <a [routerLink]="['/subscriber']"  class="to-subscribers-link">
           Все подписчики
         </a>
         <svg icon="arrow" class="to-subscribers-icon"></svg>
@@ -40,7 +44,7 @@
           <img src="/assets/img/avatar-placeholder.png" alt="avatar placeholder">
         }
         <div class="footer-name">{{ me.username }}</div>
-        <a [routerLink]="['settings']" class="settings-button">
+        <a [routerLink]="['/settings']" class="settings-button">
           <svg icon="settings" class="footer-avatar-icon"></svg>
         </a>
       }
