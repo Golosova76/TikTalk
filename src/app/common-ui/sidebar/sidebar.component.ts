@@ -6,6 +6,7 @@ import {ProfileService} from "../../data/services/profile.service";
 import {firstValueFrom} from "rxjs";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
+import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +18,8 @@ import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
     AsyncPipe,
     RouterLink,
     ImgUrlPipe,
-    RouterLinkActive
+    RouterLinkActive,
+    AvatarCircleComponent
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'

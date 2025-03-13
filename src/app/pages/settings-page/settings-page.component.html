@@ -1,8 +1,10 @@
 <div class="settings-body">
   <div class="settings-about">
     <header class="profile-page__header">
-    <app-profile-header layoutClass="vertical-layout"></app-profile-header>
-  </header>
+      @if (profile$ | async; as profile) {
+        <app-profile-header [profile]="profile" layoutClass="vertical-layout"></app-profile-header>
+      }
+    </header>
   </div>
   <div class="settings-save">
     <form class="profile-form__wrapper" [formGroup]="form">

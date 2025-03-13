@@ -20,7 +20,7 @@
       <div class="subscribers-wrapper">
         @for (subscriber of subscribers$ | async; track subscriber.id) {
           <a [routerLink]="['/profile', subscriber.id]" class="subscriber-avatar-button" >
-            <img [src]="subscriber.avatarUrl | imgUrl" alt="avatar placeholder">
+            <app-avatar-circle [avatarUrl]="subscriber.avatarUrl" [class]="'size36'"></app-avatar-circle>
           </a>
         }
         <a class="subscribers-search" [routerLink]="['/search']">

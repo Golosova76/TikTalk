@@ -1,0 +1,33 @@
+img {
+  width: 140px;
+  height: 140px;
+  border-radius: 100%;
+}
+
+:host {
+  img {
+    border-radius: 100%;
+  }
+}
+
+:host(.size32) {
+  img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+
+:host(.size36) {
+  img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+:host(.size112) {
+  img {
+    width: 112px;
+    height: 112px;
+  }
+}

@@ -1,0 +1,69 @@
+@import '../../../../styles/mixins';
+
+:host {
+  display: grid;
+  border: 1px solid var(--light-solid);
+  border-radius: 2px;
+  padding: 16px;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 12px;
+  align-items: center;
+  background: var(--dark-solid);
+  @include margin-bottom16;
+}
+
+.post-body {
+  display: grid;
+  grid-template-columns: 1fr 96px;
+  grid-gap: 12px;
+  align-items: center;
+
+  .hidden-textarea {
+    resize: none;
+    background: var(--dark-solid);
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--light-transparent);
+
+    &:hover,
+    &:focus-visible {
+      outline: 1px solid var(--primary-primary);
+      border-radius: 4px;
+    }
+  }
+
+  .post-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+
+    .post-emoji {
+      width: 44px;
+      height: 44px;
+      .emoji-icon {
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+      }
+    }
+
+    .post-send {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--dark-solid);
+      border-radius: 2px;
+      padding: 14px;
+      background: var(--primary-primary);
+      .send-post-icon {
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        color: black;
+      }
+    }
+  }
+}
+
