@@ -5,15 +5,29 @@
 ></app-avatar-circle>
 
 <div class="post-body">
-  <textarea
-    (input)="onTextAreaInput($event)"
-    class="hidden-textarea" ></textarea>
-  <div class="post-controls">
-    <button type="button" class="post-emoji">
-      <svg icon="emoji" class="emoji-icon"></svg>
-    </button>
-    <button type="button" class="post-send">
-      <svg icon="send-post" class="send-post-icon"></svg>
-    </button>
+  <div class="post-title">
+    <input
+    type="text"
+    class="post-subtitle"
+    [(ngModel)]="postTitle"
+    placeholder="Введите заголовок"
+    maxlength="100"
+    />
+  </div>
+  <div class="post-text">
+    <textarea
+      (input)="onTextAreaInput($event)"
+      [(ngModel)]="postText"
+      class="hidden-textarea"
+      placeholder="Напишите что-нибудь..."
+    ></textarea>
+    <div class="post-controls">
+      <button type="button" class="post-emoji">
+        <svg icon="emoji" class="emoji-icon"></svg>
+      </button>
+      <button type="button" (click)="onCreatePost()" class="post-send">
+        <svg icon="send-post" class="send-post-icon"></svg>
+      </button>
+    </div>
   </div>
 </div>
