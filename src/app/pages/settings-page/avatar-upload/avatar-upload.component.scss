@@ -1,3 +1,5 @@
+@import "../../../../styles/mixins";
+
 :host {
   display: grid;
   grid-template-columns: 140px 1fr;
@@ -34,9 +36,7 @@
     height: 52px;
   }
   .dropzone-text {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 150%;
+    @include font-size14-500-150;
     text-align: center;
   }
 }

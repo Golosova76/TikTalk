@@ -10,6 +10,12 @@
   }
 }
 
+@mixin margin-bottom12 {
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
 @mixin margin-bottom32 {
   &:not(:last-child) {
     margin-bottom: 32px;
@@ -41,3 +47,32 @@
   align-items: center;
 }
 
+@mixin font-size12-500-133 {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+}
+
+@mixin font-size12-700 {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 133%;
+}
+
+@mixin font-size14-700-150 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+@mixin font-size14-500-150 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+@mixin font-size14-400-150 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+}

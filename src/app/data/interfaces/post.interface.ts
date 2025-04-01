@@ -37,4 +37,6 @@ export interface CommentCreateDto {
   text: string;
   authorId: number;
   postId: number;
+  commentId: number;
 }
+

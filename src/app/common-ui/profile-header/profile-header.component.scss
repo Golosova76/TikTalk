@@ -1,16 +1,19 @@
+@import "../../../styles/mixins";
+
 .profile-logo-name {
   display: grid;
   grid-gap: 24px;
+
   .profile-title {
     font-weight: 800;
     font-size: 24px;
     line-height: 133%;
   }
+
   .profile-subtitle {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 150%;
+    @include font-size14-400-150;
   }
+
   &.vertical-layout {
     grid-template-columns: 112px 1fr;
     max-width: 332px;

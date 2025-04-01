@@ -20,9 +20,7 @@
     @include margin-bottom32;
     .post-subtitle {
       background: var(--dark-solid);
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 150%;
+      @include font-size14-500-150;
       padding: 10px 5px;
       width: 100%;
       color: var(--light-transparent);
@@ -46,9 +44,7 @@
       resize: none;
       background: var(--dark-solid);
       border: none;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 150%;
+      @include font-size14-500-150;
       color: var(--light-transparent);
       padding: 0 5px;
 
@@ -60,10 +56,8 @@
     }
 
     .post-controls {
-      display: flex;
+      @include flex-center;
       gap: 12px;
-      align-items: center;
-
 
       .post-emoji {
         width: 44px;
@@ -97,8 +91,6 @@
 
 .post-subtitle::placeholder,
 .hidden-textarea::placeholder {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 150%;
+  @include font-size14-500-150;
   color: var(--light-transparent);
 }

@@ -1,3 +1,5 @@
+@import "../../../styles/mixins";
+
 :host {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -32,6 +34,7 @@
 .tt-control-label {
   position: relative;
   display: block;
+  @include font-size12-700;
   font-weight: 700;
   font-size: 12px;
   line-height: 133%;

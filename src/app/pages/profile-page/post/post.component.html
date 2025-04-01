@@ -1,2 +1,33 @@
-<p>{{ post()?.title }}</p>
-<p>{{ post()?.content }}</p>
+@if (post(); as post) {
+  <div class="post-avatar">
+      <app-avatar-circle [avatarUrl]="post.author.avatarUrl" [class]="'size32'"></app-avatar-circle>
+  </div>
+
+  <main class="post-column">
+    <div class="post-body">
+      <div class="post-total">
+        <div class="post-header">
+          <div class="post__author"> {{ post.author.firstName }} {{post.author.lastName}}</div>
+          <div class="post-created-at"> {{post.createdAt | date : 'HH:mm dd.MM.YYYY'}} </div>
+        </div>
+        <div class="post-content">
+          <p class="post-content__title">{{ post.title }}</p>
+          <p class="post-content__content">{{ post.content }}</p>
+        </div>
+      </div>
+      <div class="button-points">...</div>
+    </div>
+    <div class="post-counters">
+      <div class="comment-amount">
+        <svg icon="comment" class="comment-amount-icon"></svg>
+        <span class="comments-length">{{ post.comments.length }}</span>
+      </div>
+      <div class="like-amount">
+        <svg icon="like" class="comment-amount-icon white"></svg>
+        <span class="like-length">28</span>
+      </div>
+    </div>
+    <div class="post-comments"></div>
+  </main>
+}
+

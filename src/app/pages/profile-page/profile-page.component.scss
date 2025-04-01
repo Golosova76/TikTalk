@@ -9,8 +9,7 @@
 
   .header-settings {
     .profile-header-settings {
-      display: flex;
-      align-items: center;
+      @include flex-center;
       column-gap: 8px;
       width: 174px;
     }
@@ -42,8 +41,7 @@
     }
 
     .subscribers-wrapper {
-      display: flex;
-      align-items: center;
+      @include flex-center;
       gap: 6px;
       @include margin-bottom32;
       .subscriber-avatar-button {
@@ -78,9 +76,7 @@
     }
 
     .about-me-wrapper {
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 133%;
+      @include font-size12-500-133;
       @include margin-bottom32;
     }
   }

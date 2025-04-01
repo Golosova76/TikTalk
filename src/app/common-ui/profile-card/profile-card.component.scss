@@ -1,3 +1,5 @@
+@import "../../../styles/mixins";
+
 .profile-card {
   border: 1px solid var(--light-solid);
   border-radius: 2px;
@@ -22,9 +24,7 @@
 }
 
 .profile-card__description {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 133%;
+  @include font-size12-500-133;
 }
 
 .profile-card__name {
