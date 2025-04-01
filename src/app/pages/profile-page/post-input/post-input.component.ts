@@ -1,11 +1,10 @@
-import {Component, inject, Renderer2} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, Renderer2} from '@angular/core';
 import {AvatarCircleComponent} from "../../../common-ui/avatar-circle/avatar-circle.component";
 import {ProfileService} from "../../../data/services/profile.service";
 import {NgIf} from "@angular/common";
 import {SvgIconComponent} from "../../../common-ui/svg-icon/svg-icon.component";
-import {PostService} from "../../../data/services/post.service";
 import {FormsModule} from "@angular/forms";
-import {firstValueFrom} from "rxjs";
+
 
 @Component({
   selector: 'app-post-input',
@@ -21,12 +20,15 @@ import {firstValueFrom} from "rxjs";
 })
 export class PostInputComponent {
   r2 = inject(Renderer2);
-  postService = inject(PostService);
 
   profile = inject(ProfileService).me;
 
-  postTitle = '';
-  postText = '';
+  @Input() showTitle = false;
+  @Input() placeholder = 'Напишите что-нибудь...';
+  @Output() submit = new EventEmitter<{ title?: string; text: string }>();
+
+  title = '';
+  text = '';
 
   onTextAreaInput(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
@@ -35,18 +37,24 @@ export class PostInputComponent {
     this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
   }
 
-  onCreatePost(): void {
-    if (!this.postTitle || !this.postText) return;
+  onSubmit(): void {
+    if (!this.text) return;
 
-    firstValueFrom(
-    this.postService.createPost({
-      title: this.postTitle,
-      content: this.postText,
-      authorId: this.profile()!.id,
-      })
-    ).then(() => {
-      this.postText = '';
-      this.postTitle = '';
+    /*
+    this.submit.emit({
+      ...(this.showTitle ? { title: this.title } : {}),
+      text: this.text
     });
+    */
+
+    if (this.showTitle) {
+      this.submit.emit({ title: this.title, text: this.text });
+    } else {
+      this.submit.emit({ text: this.text });
+    }
+
+    // Очищаем поля после отправки
+    this.title = '';
+    this.text = '';
   }
 }

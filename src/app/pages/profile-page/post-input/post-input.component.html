@@ -5,27 +5,29 @@
 ></app-avatar-circle>
 
 <div class="post-body">
-  <div class="post-title">
+  @if (showTitle) {
+    <div class="post-title">
     <input
     type="text"
     class="post-subtitle"
-    [(ngModel)]="postTitle"
+    [(ngModel)]="title"
     placeholder="Введите заголовок"
     maxlength="100"
     />
   </div>
+  }
   <div class="post-text">
     <textarea
       (input)="onTextAreaInput($event)"
-      [(ngModel)]="postText"
+      [(ngModel)]="text"
       class="hidden-textarea"
-      placeholder="Напишите что-нибудь..."
+      [placeholder]="placeholder"
     ></textarea>
     <div class="post-controls">
       <button type="button" class="post-emoji">
         <svg icon="emoji" class="emoji-icon"></svg>
       </button>
-      <button type="button" (click)="onCreatePost()" class="post-send">
+      <button type="button" (click)="onSubmit()" class="post-send">
         <svg icon="send-post" class="send-post-icon"></svg>
       </button>
     </div>
