@@ -2,7 +2,10 @@
 
 :host {
   display: grid;
-  border: 1px solid var(--light-solid);
+  //border: 1px solid var(--light-solid);
+  border-width: 1px;
+  border-color: var(--light-solid);
+  border-style: solid;
   border-radius: 2px;
   padding: 16px;
   grid-template-columns: 32px 1fr;

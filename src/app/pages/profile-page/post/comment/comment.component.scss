@@ -1,0 +1,32 @@
+@import '../../../../../styles/mixins';
+
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
+}
+
+.comment-body {
+  display: grid;
+  grid-gap: 8px;
+  padding-right: 10px;
+  @include font-size12-500-133;
+
+  .comment-header {
+    @include flex-center-between;
+    color: var(--light-transparent);
+
+    .comment__author {
+    }
+
+    .comment-created-at {
+    }
+  }
+
+  .comment-content {
+    .comment-text {
+      color: var(--light-solid);
+    }
+  }
+}
+

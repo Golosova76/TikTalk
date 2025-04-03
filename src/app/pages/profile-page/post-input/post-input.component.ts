@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Input, Output, Renderer2} from '@angular/core';
+import {Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2} from '@angular/core';
 import {AvatarCircleComponent} from "../../../common-ui/avatar-circle/avatar-circle.component";
 import {ProfileService} from "../../../data/services/profile.service";
 import {NgIf} from "@angular/common";
@@ -26,6 +26,13 @@ export class PostInputComponent {
   @Input() showTitle = false;
   @Input() placeholder = 'Напишите что-нибудь...';
   @Output() submit = new EventEmitter<{ title?: string; text: string }>();
+
+  @Input() borderStyle: 'solid' | 'dashed' = 'solid';
+
+  @HostBinding('style.borderStyle')
+  get hostBorderStyle() {
+    return this.borderStyle;
+  }
 
   title = '';
   text = '';

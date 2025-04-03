@@ -17,22 +17,29 @@
       </div>
       <div class="button-points">...</div>
     </div>
+
     <div class="post-counters">
       <div class="comment-amount">
         <svg icon="comment" class="comment-amount-icon"></svg>
-        <span class="comments-length">{{ post.comments.length }}</span>
+        <span class="comments-length">{{ comments().length }}</span>
       </div>
       <div class="like-amount">
         <svg icon="like" class="comment-amount-icon white"></svg>
         <span class="like-length">28</span>
       </div>
     </div>
-    <div class="post-comments"></div>
+
+    <div class="post-comments">
+      @for (comment of comments() | sortComments; track comment.id) {
+       <app-comment [comment]="comment"></app-comment>
+      }
+    </div>
+
     <app-post-input
       [showTitle]="false"
-      [(ngModel)]="text"
       [placeholder]="'Напишите комментарий...'"
-      (click)="onCreateComment()">
+      (submit)="onCreateComment($event)"
+      borderStyle="dashed">
     </app-post-input>
   </main>
 }
