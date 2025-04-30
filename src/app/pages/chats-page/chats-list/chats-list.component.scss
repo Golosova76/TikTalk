@@ -1,0 +1,41 @@
+@import '../../../../styles/mixins';
+
+:host {
+  border: 1px solid var(--light-solid);
+  border-radius: 2px;
+}
+
+
+.chats-filter-wrapper {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--light-solid);
+
+  .chats-filter-input {
+    @include flex-center-between;
+
+    .filter-input-chats {
+      width: 100%;
+      display: block;
+      padding: 2px;
+      background: var(--dark-solid);
+      @include font-size14-400-150;
+      color: var(--light-transparent);
+      border-bottom: 1px solid var(--light-transparent);
+      min-height: 44px;
+      &:focus-within {
+        outline: 1px solid var(--primary-primary);
+        border-radius: 5px;
+      }
+    }
+
+    .control-search-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .search-icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

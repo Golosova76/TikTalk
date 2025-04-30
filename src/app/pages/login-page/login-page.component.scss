@@ -35,9 +35,6 @@
   position: relative;
   display: block;
   @include font-size12-700;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 133%;
 
   &:not(:last-child) {
     margin-bottom: 16px;

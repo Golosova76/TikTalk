@@ -1,0 +1,18 @@
+@if (profile(); as profile) {
+  <header class="header-body">
+    <button class="header-body__controls">
+      <span class="control-icon">
+        <svg icon="arrow" class="arrow-icon"></svg>
+      </span>
+    </button>
+    <div class="header-body__title">
+      <app-avatar-circle [avatarUrl]="profile.avatarUrl" [class]="'size32'"></app-avatar-circle>
+      <div class="header-body__author"> {{ profile.firstName }} {{ profile.lastName }} </div>
+    </div>
+    <button class="header-body__controls">
+      <span class="control-icon">
+        <svg icon="dots" class="dots-icon"></svg>
+      </span>
+    </button>
+  </header>
+}

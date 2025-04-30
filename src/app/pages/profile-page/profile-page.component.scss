@@ -9,7 +9,7 @@
 
   .header-settings {
     .profile-header-settings {
-      @include flex-center;
+      @include flex-center-center;
       column-gap: 8px;
       width: 174px;
     }
