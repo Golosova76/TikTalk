@@ -25,7 +25,7 @@ export class PostInputComponent {
 
   @Input() showTitle = false;
   @Input() placeholder = 'Напишите что-нибудь...';
-  @Output() submit = new EventEmitter<{ title?: string; text: string }>();
+  @Output() created = new EventEmitter<{ title?: string; text: string }>();
 
   @Input() borderStyle: 'solid' | 'dashed' = 'solid';
 
@@ -55,9 +55,9 @@ export class PostInputComponent {
     */
 
     if (this.showTitle) {
-      this.submit.emit({ title: this.title, text: this.text });
+      this.created.emit({ title: this.title, text: this.text });
     } else {
-      this.submit.emit({ text: this.text });
+      this.created.emit({ text: this.text });
     }
 
     // Очищаем поля после отправки
