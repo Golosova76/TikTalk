@@ -16,6 +16,12 @@
   }
 }
 
+@mixin margin-bottom8 {
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
 @mixin margin-bottom32 {
   &:not(:last-child) {
     margin-bottom: 32px;

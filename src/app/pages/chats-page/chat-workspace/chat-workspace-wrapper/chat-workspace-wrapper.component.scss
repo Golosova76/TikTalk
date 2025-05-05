@@ -1,4 +1,9 @@
 :host {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   padding: 16px 20px;
+}
+
+.messages-input {
+  margin-top: auto;
 }

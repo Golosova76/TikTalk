@@ -1,0 +1,26 @@
+@import '../../../../../../styles/mixins';
+
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 12px;
+  @include margin-bottom12;
+}
+
+.message-wrapper {}
+
+.message__title {
+  display: flex;
+  gap: 4px;
+  @include font-size12-700;
+  @include margin-bottom8;
+}
+
+.message__text {
+  @include font-size14-500-150;
+  color: var(--dark-solid);
+  border-radius: 1px;
+  padding: 8px 16px;
+  background-color: var(--primary-primary);
+  width: min-content;
+}

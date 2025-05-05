@@ -4,7 +4,7 @@ export interface Chat {
   id: number;
   userFirst: Profile;
   userSecond: Profile;
-  messages: [];
+  messages: Message[];
   companion?: Profile;
 }
 
@@ -26,4 +26,9 @@ export interface LastMessageRes {
   message: string | null;
   createdAt: string | null;
   unreadMessages: number;
+}
+
+export interface MessageGroup {
+  dateTitle: string;
+  messages: Message[];
 }

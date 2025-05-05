@@ -1,11 +1,9 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {SvgIconComponent} from "../svg-icon/svg-icon.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {SubscriberCardComponent} from "./subscriber-card/subscriber-card.component";
 import {ProfileService} from "../../data/services/profile.service";
-import {firstValueFrom} from "rxjs";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {ImgUrlPipe} from "../../helpers/pipes/img-url.pipe";
 import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
 
 @Component({
@@ -17,14 +15,13 @@ import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
     SubscriberCardComponent,
     AsyncPipe,
     RouterLink,
-    ImgUrlPipe,
     RouterLinkActive,
     AvatarCircleComponent
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   profileService = inject(ProfileService)
 
   subscribers$ = this.profileService.getSubscribersShortList(5);
@@ -50,6 +47,6 @@ export class SidebarComponent {
   ]
 
   ngOnInit() {
-    firstValueFrom(this.profileService.getMe());
+    this.profileService.getMe().subscribe();
   }
 }
