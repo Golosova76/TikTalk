@@ -1,3 +1,5 @@
+@import '../../../../../styles/mixins';
+
 :host {
   display: flex;
   flex-direction: column;
@@ -6,4 +8,10 @@
 
 .messages-input {
   margin-top: auto;
+}
+
+.message-date-title {
+  text-align: center;
+  @include font-size12-700;
+  @include margin-bottom32;
 }

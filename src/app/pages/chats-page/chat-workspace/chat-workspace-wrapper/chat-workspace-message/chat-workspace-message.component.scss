@@ -2,9 +2,28 @@
 
 :host {
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 32px max-content;
   grid-gap: 12px;
   @include margin-bottom12;
+}
+
+:host.is-mine {
+  grid-template-columns: max-content 32px;
+  justify-self: end;
+  .message-wrapper {
+    order: -1;
+  }
+  .message__title {
+    justify-content: flex-end;
+  }
+  .message__text {
+    color: var(--dark-solid);
+    background-color: var(--primary-primary);
+    mask: linear-gradient(to bottom, #000 0%, #000 100%),
+    linear-gradient(-135deg, #000 50%, #0000 0) border-box 100% 100% / 200% 200% no-repeat;
+    mask-composite: exclude;
+    mask-position: 25px 0;
+  }
 }
 
 .message-wrapper {}
@@ -18,9 +37,15 @@
 
 .message__text {
   @include font-size14-500-150;
-  color: var(--dark-solid);
   border-radius: 1px;
   padding: 8px 16px;
-  background-color: var(--primary-primary);
-  width: min-content;
+  background-color: var(--dark-message);
+  color: var(--light-solid);
+  mask:
+    linear-gradient(to bottom, #000 0%, #000 100%),
+    linear-gradient(135deg, transparent 0, transparent 10px, #000 0) border-box;
+  mask-composite: intersect;
+  mask-repeat: no-repeat;
+  mask-position: 0 0;
+  //mask-size: 100% 100%;
 }
