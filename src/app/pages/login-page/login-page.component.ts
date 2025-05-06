@@ -35,10 +35,8 @@ export class LoginPageComponent {
          username: this.form.value.username ?? '',
          password: this.form.value.password ?? ''
        };
-       //console.log(formData);
-       this.authService.login(formData).subscribe( res => {
-         this.router.navigate(['']);
-         console.log(res);
+       this.authService.login(formData).subscribe( async () => {
+         await this.router.navigate(['']);
        });
      }
    }

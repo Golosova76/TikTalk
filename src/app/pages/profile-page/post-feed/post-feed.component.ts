@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2} from '@angular/core';
 import {PostInputComponent} from "../post-input/post-input.component";
 import {PostComponent} from "../post/post.component";
 import {PostService} from "../../../data/services/post.service";
@@ -16,7 +16,7 @@ import {debounceTime, firstValueFrom, fromEvent} from "rxjs";
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss'
 })
-export class PostFeedComponent implements OnInit {
+export class PostFeedComponent implements OnInit, AfterViewInit {
   postService = inject(PostService);
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
@@ -49,11 +49,11 @@ export class PostFeedComponent implements OnInit {
     this.r2.setStyle(feedElement, 'height', `${height}px`);
   }
 
-  onCreatePost(data: { title?: string; text: string }) {
+  async onCreatePost(data: { title?: string; text: string }) {
     const user = this.profile();
     if (!user || !data.title || !data.text) return;
 
-    firstValueFrom(
+    await firstValueFrom(
       this.postService.createPost({
         title: data.title,
         content: data.text,

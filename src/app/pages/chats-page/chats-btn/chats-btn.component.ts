@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {Chat, LastMessageRes} from "../../../data/interfaces/chats.interface";
+import {LastMessageRes} from "../../../data/interfaces/chats.interface";
 import {AvatarCircleComponent} from "../../../common-ui/avatar-circle/avatar-circle.component";
 import {DatePipe} from "@angular/common";
 

@@ -40,31 +40,37 @@ export class SettingsPageComponent {
 
   constructor() {
     effect(() => {
-      //@ts-ignore
       this.form.patchValue({
         ...this.profileService.me(),
-        //@ts-ignore
         stack: this.mergeStack(this.profileService.me()?.stack)
       })
     });
   }
 
 
-  onSave() {
+  async onSave() {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
 
     if (this.form.invalid) return
 
     if (this.avatarUploader.avatar) {
-      firstValueFrom(this.profileService.uploadAvatar(this.avatarUploader.avatar))
+      await firstValueFrom(this.profileService.uploadAvatar(this.avatarUploader.avatar))
     }
 
-    //@ts-ignore
-    firstValueFrom(this.profileService.patchProfile({
+
+    // Преобразуем значения формы, заменяя null на undefined
+    const formValue = {
       ...this.form.value,
       stack: this.splitStack(this.form.value.stack)
-    }))
+    };
+
+    const cleanedValue = Object.fromEntries(
+      Object.entries(formValue)
+        .map(([key, value]) => [key, value === null ? undefined : value])
+    );
+
+    await firstValueFrom(this.profileService.patchProfile(cleanedValue));
   }
 
   splitStack(stack: string | null | string[] | undefined): string[] {
