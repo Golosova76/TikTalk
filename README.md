@@ -28,4 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Backend documentation
 
-[AngularCourse]([https://angular.dev/tools/cli](https://icherniakov.ru/yt-course/docs#/))
+[AngularCourse](https://angular.dev/tools/cli](https://icherniakov.ru/yt-course/docs#/)
