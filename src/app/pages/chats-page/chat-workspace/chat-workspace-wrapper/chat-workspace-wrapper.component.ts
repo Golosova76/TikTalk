@@ -53,5 +53,9 @@ export class ChatWorkspaceWrapperComponent implements OnInit, OnDestroy {
       this.chatService.sendMessage(this.chat().id, data.text)
     )
     await firstValueFrom(this.chatService.getChatById(this.chat().id));
+
+    await firstValueFrom(this.chatService.getMyChats());
+
+    this.chatService.getMyChats().subscribe();
   }
 }
