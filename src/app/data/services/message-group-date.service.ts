@@ -32,7 +32,7 @@ export class MessageGroupDateService {
 
       result.push({
         dateTitle: label,
-        messages: groupMessages,
+        messages: [...groupMessages],
       });
     }
 
