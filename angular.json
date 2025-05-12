@@ -50,7 +50,8 @@
                   "maximumError": "4kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/TikTalk/"
             },
             "development": {
               "optimization": false,

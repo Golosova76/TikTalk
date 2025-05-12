@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular project
-        run: npm run build -- --base-href=/TikTalk/
+        run: npm run build -- --configuration production
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
