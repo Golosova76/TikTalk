@@ -29,3 +29,4 @@ jobs:
         with:
           branch: gh-pages
           folder: dist/tik-talk
+          token: ${{ secrets.GITHUB_TOKEN }}
