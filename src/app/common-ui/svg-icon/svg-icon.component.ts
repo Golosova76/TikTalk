@@ -12,6 +12,6 @@ export class SvgIconComponent {
 
 
   get href() {
-    return `/assets/img/svg/${this.icon}.svg#${this.icon}`;
+    return `assets/img/svg/${this.icon}.svg#${this.icon}`;
   }
 }

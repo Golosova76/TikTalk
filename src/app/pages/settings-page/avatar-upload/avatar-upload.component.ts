@@ -13,7 +13,7 @@ import {DndDirective} from "../../../common-ui/directives/dnd.directive";
   styleUrl: './avatar-upload.component.scss'
 })
 export class AvatarUploadComponent {
-  preview = signal<string>('/assets/img/avatar-placeholder-big.svg')
+  preview = signal<string>('assets/img/avatar-placeholder-big.svg')
 
   avatar: File | null = null
 
