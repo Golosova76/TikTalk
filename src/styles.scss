@@ -1,6 +1,6 @@
-@import 'styles/fonts';
-@import 'styles/null';
-@import 'styles/mixins';
+@use 'styles/fonts';
+@use 'styles/null';
+@use 'styles/mixins' as *;
 
 
 :root {

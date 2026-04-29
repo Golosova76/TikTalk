@@ -1,4 +1,4 @@
-@import '../../../../../styles/mixins';
+@use '../../../../../styles/mixins' as *;
 
 .header-body {
   @include flex-center-between;

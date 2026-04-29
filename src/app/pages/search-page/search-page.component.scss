@@ -1,4 +1,4 @@
-@import '../../../styles/mixins';
+@use '../../../styles/mixins' as *;
 
 .profile-card__filter {
   border: 1px solid var(--light-solid);

@@ -36,7 +36,7 @@
       </div>
       <h3 class="profile-page__skills">Навыки</h3>
       <div class="skills-wrapper">
-        @for (skill of profile.stack; track skill) {
+        @for (skill of profile.stack; track $index) {
           <div class="skill-tag">{{ skill }}</div>
         }
       </div>
