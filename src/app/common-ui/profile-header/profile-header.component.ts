@@ -4,14 +4,13 @@ import {NgClass} from "@angular/common";
 import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
 
 @Component({
-  selector: 'app-profile-header',
-  standalone: true,
-  imports: [
-    NgClass,
-    AvatarCircleComponent
-  ],
-  templateUrl: './profile-header.component.html',
-  styleUrl: './profile-header.component.scss'
+    selector: 'app-profile-header',
+    imports: [
+        NgClass,
+        AvatarCircleComponent
+    ],
+    templateUrl: './profile-header.component.html',
+    styleUrl: './profile-header.component.scss'
 })
 export class ProfileHeaderComponent {
   profile = input<Profile>()

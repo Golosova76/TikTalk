@@ -9,17 +9,16 @@ import {toObservable} from "@angular/core/rxjs-interop";
 import {AsyncPipe} from "@angular/common";
 
 @Component({
-  selector: 'app-settings-page',
-  standalone: true,
-  imports: [
-    ProfileHeaderComponent,
-    ReactiveFormsModule,
-    SvgIconComponent,
-    AvatarUploadComponent,
-    AsyncPipe,
-  ],
-  templateUrl: './settings-page.component.html',
-  styleUrl: './settings-page.component.scss'
+    selector: 'app-settings-page',
+    imports: [
+        ProfileHeaderComponent,
+        ReactiveFormsModule,
+        SvgIconComponent,
+        AvatarUploadComponent,
+        AsyncPipe,
+    ],
+    templateUrl: './settings-page.component.html',
+    styleUrl: './settings-page.component.scss'
 })
 
 export class SettingsPageComponent {

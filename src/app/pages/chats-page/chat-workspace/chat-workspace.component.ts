@@ -7,15 +7,14 @@ import {ChatWorkspaceHeaderComponent} from "./chat-workspace-header/chat-workspa
 import {AsyncPipe} from "@angular/common";
 
 @Component({
-  selector: 'app-chat-workspace',
-  standalone: true,
-  imports: [
-    ChatWorkspaceWrapperComponent,
-    ChatWorkspaceHeaderComponent,
-    AsyncPipe
-  ],
-  templateUrl: './chat-workspace.component.html',
-  styleUrl: './chat-workspace.component.scss'
+    selector: 'app-chat-workspace',
+    imports: [
+        ChatWorkspaceWrapperComponent,
+        ChatWorkspaceHeaderComponent,
+        AsyncPipe
+    ],
+    templateUrl: './chat-workspace.component.html',
+    styleUrl: './chat-workspace.component.scss'
 })
 export class ChatWorkspaceComponent {
   route = inject(ActivatedRoute);

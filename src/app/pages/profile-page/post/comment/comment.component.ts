@@ -4,14 +4,13 @@ import {AvatarCircleComponent} from "../../../../common-ui/avatar-circle/avatar-
 import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-comment',
-  standalone: true,
-  imports: [
-    AvatarCircleComponent,
-    DatePipe
-  ],
-  templateUrl: './comment.component.html',
-  styleUrl: './comment.component.scss'
+    selector: 'app-comment',
+    imports: [
+        AvatarCircleComponent,
+        DatePipe
+    ],
+    templateUrl: './comment.component.html',
+    styleUrl: './comment.component.scss'
 })
 export class CommentComponent {
   comment = input<PostComment>();

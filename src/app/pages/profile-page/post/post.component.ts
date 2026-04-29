@@ -13,19 +13,18 @@ import {SortCommentsPipe} from "../../../helpers/pipes/sort-comments.pipe";
 
 
 @Component({
-  selector: 'app-post',
-  standalone: true,
-  imports: [
-    AvatarCircleComponent,
-    SvgIconComponent,
-    DatePipe,
-    PostInputComponent,
-    FormsModule,
-    CommentComponent,
-    SortCommentsPipe
-  ],
-  templateUrl: './post.component.html',
-  styleUrl: './post.component.scss'
+    selector: 'app-post',
+    imports: [
+        AvatarCircleComponent,
+        SvgIconComponent,
+        DatePipe,
+        PostInputComponent,
+        FormsModule,
+        CommentComponent,
+        SortCommentsPipe
+    ],
+    templateUrl: './post.component.html',
+    styleUrl: './post.component.scss'
 })
 export class PostComponent implements OnInit {
   postService = inject(PostService);

@@ -7,19 +7,18 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [
-    SvgIconComponent,
-    NgForOf,
-    SubscriberCardComponent,
-    AsyncPipe,
-    RouterLink,
-    RouterLinkActive,
-    AvatarCircleComponent
-  ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+    selector: 'app-sidebar',
+    imports: [
+        SvgIconComponent,
+        NgForOf,
+        SubscriberCardComponent,
+        AsyncPipe,
+        RouterLink,
+        RouterLinkActive,
+        AvatarCircleComponent
+    ],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
   profileService = inject(ProfileService)

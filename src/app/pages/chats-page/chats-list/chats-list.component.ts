@@ -10,19 +10,18 @@ import {LastMessageRes} from "../../../data/interfaces/chats.interface";
 import {toObservable} from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: 'app-chats-list',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    SvgIconComponent,
-    ChatsBtnComponent,
-    AsyncPipe,
-    RouterLink,
-    RouterLinkActive
-  ],
-  templateUrl: './chats-list.component.html',
-  styleUrl: './chats-list.component.scss'
+    selector: 'app-chats-list',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        SvgIconComponent,
+        ChatsBtnComponent,
+        AsyncPipe,
+        RouterLink,
+        RouterLinkActive
+    ],
+    templateUrl: './chats-list.component.html',
+    styleUrl: './chats-list.component.scss'
 })
 export class ChatsListComponent implements OnInit {
   chatsService = inject(ChatsService);

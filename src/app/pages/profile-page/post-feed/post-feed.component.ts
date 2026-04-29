@@ -7,14 +7,13 @@ import {debounceTime, firstValueFrom, fromEvent} from "rxjs";
 
 
 @Component({
-  selector: 'app-post-feed',
-  standalone: true,
-  imports: [
-    PostInputComponent,
-    PostComponent
-  ],
-  templateUrl: './post-feed.component.html',
-  styleUrl: './post-feed.component.scss'
+    selector: 'app-post-feed',
+    imports: [
+        PostInputComponent,
+        PostComponent
+    ],
+    templateUrl: './post-feed.component.html',
+    styleUrl: './post-feed.component.scss'
 })
 export class PostFeedComponent implements OnInit, AfterViewInit {
   postService = inject(PostService);

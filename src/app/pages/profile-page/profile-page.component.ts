@@ -11,18 +11,17 @@ import {AvatarCircleComponent} from "../../common-ui/avatar-circle/avatar-circle
 import {ChatsService} from "../../data/services/chats.service";
 
 @Component({
-  selector: 'app-profile-page',
-  standalone: true,
-  imports: [
-    ProfileHeaderComponent,
-    AsyncPipe,
-    SvgIconComponent,
-    RouterLink,
-    PostFeedComponent,
-    AvatarCircleComponent
-  ],
-  templateUrl: './profile-page.component.html',
-  styleUrl: './profile-page.component.scss'
+    selector: 'app-profile-page',
+    imports: [
+        ProfileHeaderComponent,
+        AsyncPipe,
+        SvgIconComponent,
+        RouterLink,
+        PostFeedComponent,
+        AvatarCircleComponent
+    ],
+    templateUrl: './profile-page.component.html',
+    styleUrl: './profile-page.component.scss'
 })
 export class ProfilePageComponent {
   profileService = inject(ProfileService)

@@ -3,14 +3,13 @@ import {SvgIconComponent} from "../../../common-ui/svg-icon/svg-icon.component";
 import {DndDirective} from "../../../common-ui/directives/dnd.directive";
 
 @Component({
-  selector: 'app-avatar-upload',
-  standalone: true,
-  imports: [
-    SvgIconComponent,
-    DndDirective
-  ],
-  templateUrl: './avatar-upload.component.html',
-  styleUrl: './avatar-upload.component.scss'
+    selector: 'app-avatar-upload',
+    imports: [
+        SvgIconComponent,
+        DndDirective
+    ],
+    templateUrl: './avatar-upload.component.html',
+    styleUrl: './avatar-upload.component.scss'
 })
 export class AvatarUploadComponent {
   preview = signal<string>('assets/img/avatar-placeholder-big.svg')

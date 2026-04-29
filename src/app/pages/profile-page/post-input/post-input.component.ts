@@ -7,16 +7,15 @@ import {FormsModule} from "@angular/forms";
 
 
 @Component({
-  selector: 'app-post-input',
-  standalone: true,
-  imports: [
-    AvatarCircleComponent,
-    NgIf,
-    SvgIconComponent,
-    FormsModule
-  ],
-  templateUrl: './post-input.component.html',
-  styleUrl: './post-input.component.scss'
+    selector: 'app-post-input',
+    imports: [
+        AvatarCircleComponent,
+        NgIf,
+        SvgIconComponent,
+        FormsModule
+    ],
+    templateUrl: './post-input.component.html',
+    styleUrl: './post-input.component.scss'
 })
 export class PostInputComponent {
   r2 = inject(Renderer2);

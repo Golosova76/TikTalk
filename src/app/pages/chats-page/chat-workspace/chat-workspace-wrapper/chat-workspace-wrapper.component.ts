@@ -8,14 +8,13 @@ import {MessageGroupDateService} from "../../../../data/services/message-group-d
 import {toObservable} from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: 'app-chat-workspace-wrapper',
-  standalone: true,
-  imports: [
-    PostInputComponent,
-    ChatWorkspaceMessageComponent
-  ],
-  templateUrl: './chat-workspace-wrapper.component.html',
-  styleUrl: './chat-workspace-wrapper.component.scss'
+    selector: 'app-chat-workspace-wrapper',
+    imports: [
+        PostInputComponent,
+        ChatWorkspaceMessageComponent
+    ],
+    templateUrl: './chat-workspace-wrapper.component.html',
+    styleUrl: './chat-workspace-wrapper.component.scss'
 })
 export class ChatWorkspaceWrapperComponent implements OnInit, OnDestroy {
   chatService = inject(ChatsService);
