@@ -49,8 +49,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/TikTalk/",
-              "deployUrl": "/TikTalk/"
+              "baseHref": "/TikTalk/"
             },
             "development": {
               "optimization": false,
