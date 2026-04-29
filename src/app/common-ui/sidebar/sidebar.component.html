@@ -5,16 +5,18 @@
     </div>
     <nav class="sidebar__menu">
       <ul class="main-menu-list">
-        <li *ngFor="let menuItem of menuItems" class="menu-item">
-          <a
-            [routerLink]="[menuItem.link]"
-            class="menu-item-link"
-            routerLinkActive="active"
-          >
-            <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
-            <span class="menu-item-title">{{menuItem.label}}</span>
-          </a>
-        </li>
+        @for (menuItem of menuItems; track menuItem) {
+          <li class="menu-item">
+            <a
+              [routerLink]="[menuItem.link]"
+              class="menu-item-link"
+              routerLinkActive="active"
+              >
+              <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
+              <span class="menu-item-title">{{menuItem.label}}</span>
+            </a>
+          </li>
+        }
       </ul>
     </nav>
     <div class="sidebar__subscribes">

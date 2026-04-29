@@ -1,35 +1,36 @@
-<app-avatar-circle
-  *ngIf="profile() as profile"
-  [avatarUrl]="profile.avatarUrl"
-  [class]="'size32'"
-></app-avatar-circle>
+@if (profile(); as profile) {
+  <app-avatar-circle
+    [avatarUrl]="profile.avatarUrl"
+    [class]="'size32'"
+  ></app-avatar-circle>
+}
 
 <div class="post-body">
   @if (showTitle) {
     <div class="post-title">
-    <input
-    type="text"
-    class="post-subtitle"
-    [(ngModel)]="title"
-    placeholder="Введите заголовок"
-    maxlength="100"
-    />
-  </div>
-  }
-  <div class="post-text">
-    <textarea
-      (input)="onTextAreaInput($event)"
-      [(ngModel)]="text"
-      class="hidden-textarea"
-      [placeholder]="placeholder"
-    ></textarea>
-    <div class="post-controls">
-      <button type="button" class="post-emoji">
-        <svg icon="emoji" class="emoji-icon"></svg>
-      </button>
-      <button type="button" (click)="onSubmit()" class="post-send">
-        <svg icon="send-post" class="send-post-icon"></svg>
-      </button>
+      <input
+        type="text"
+        class="post-subtitle"
+        [(ngModel)]="title"
+        placeholder="Введите заголовок"
+        maxlength="100"
+        />
+      </div>
+    }
+    <div class="post-text">
+      <textarea
+        (input)="onTextAreaInput($event)"
+        [(ngModel)]="text"
+        class="hidden-textarea"
+        [placeholder]="placeholder"
+      ></textarea>
+      <div class="post-controls">
+        <button type="button" class="post-emoji">
+          <svg icon="emoji" class="emoji-icon"></svg>
+        </button>
+        <button type="button" (click)="onSubmit()" class="post-send">
+          <svg icon="send-post" class="send-post-icon"></svg>
+        </button>
+      </div>
     </div>
   </div>
-</div>

@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {SvgIconComponent} from "../svg-icon/svg-icon.component";
-import {AsyncPipe, NgForOf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {SubscriberCardComponent} from "./subscriber-card/subscriber-card.component";
 import {ProfileService} from "../../data/services/profile.service";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -9,14 +9,13 @@ import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
 @Component({
     selector: 'app-sidebar',
     imports: [
-        SvgIconComponent,
-        NgForOf,
-        SubscriberCardComponent,
-        AsyncPipe,
-        RouterLink,
-        RouterLinkActive,
-        AvatarCircleComponent
-    ],
+    SvgIconComponent,
+    SubscriberCardComponent,
+    AsyncPipe,
+    RouterLink,
+    RouterLinkActive,
+    AvatarCircleComponent
+],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'
 })
