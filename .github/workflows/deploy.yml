@@ -27,6 +27,6 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-         publish_branch: gh-pages
-         publish_dir: ./dist/tik-talk/browser
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist/tik-talk/browser

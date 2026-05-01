@@ -1,11 +1,9 @@
-@use '../../../../styles/mixins' as *;
-
+@use "../../../../styles/mixins" as *;
 
 :host {
   border: 1px solid var(--light-solid);
   border-radius: 2px;
 }
-
 
 .chats-filter-wrapper {
   padding: 16px 20px;

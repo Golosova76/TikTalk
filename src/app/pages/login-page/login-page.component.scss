@@ -13,9 +13,9 @@
 }
 
 .h1 {
- &:not(:last-child) {
-   margin-bottom: 60px;
- }
+  &:not(:last-child) {
+    margin-bottom: 60px;
+  }
 }
 
 .control-title {
@@ -58,13 +58,11 @@
   }
 
   .password-eye-button.active {
-      color: var(--primary-primary);
+    color: var(--primary-primary);
   }
 }
 
 .btn-login {
-    border: 1px solid var(--dark-solid);
-    border-radius: 2px;
+  border: 1px solid var(--dark-solid);
+  border-radius: 2px;
 }
-
-

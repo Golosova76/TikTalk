@@ -39,7 +39,6 @@
   }
 }
 
-
 .main-menu-list {
   display: grid;
   grid-gap: 8px;
@@ -53,7 +52,7 @@
   &:focus-visible {
     background-color: var(--dark-active);
     .menu-item-link {
-    color: var(--primary-primary);
+      color: var(--primary-primary);
     }
     .menu-item-svg {
       color: var(--primary-primary);
@@ -151,5 +150,3 @@
     }
   }
 }
-
-

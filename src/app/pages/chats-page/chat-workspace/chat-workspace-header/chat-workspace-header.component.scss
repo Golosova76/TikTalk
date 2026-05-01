@@ -1,4 +1,4 @@
-@use '../../../../../styles/mixins' as *;
+@use "../../../../../styles/mixins" as *;
 
 .header-body {
   @include flex-center-between;
@@ -27,8 +27,6 @@
     }
   }
 
-
-
   .header-body__title {
     display: grid;
     grid-template-columns: 32px auto;
@@ -42,4 +40,3 @@
     }
   }
 }
-

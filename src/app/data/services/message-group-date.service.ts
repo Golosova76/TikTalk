@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Message, MessageGroup} from "../interfaces/chats.interface";
+import { Message, MessageGroup } from '../interfaces/chats.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageGroupDateService {
-  groupMessagesByDate (messages: Message[]): MessageGroup[] {
+  groupMessagesByDate(messages: Message[]): MessageGroup[] {
     const map = new Map<string, Message[]>();
 
     const today = new Date();
@@ -36,15 +36,12 @@ export class MessageGroupDateService {
       });
     }
 
-    result.sort((a, b) =>
-      new Date(a.messages[0].createdAt).getTime() -
-      new Date(b.messages[0].createdAt).getTime()
-    );
+    result.sort((a, b) => new Date(a.messages[0].createdAt).getTime() - new Date(b.messages[0].createdAt).getTime());
 
     return result;
   }
 
-  private getDateTitle (date: Date, today: Date, yesterday: Date): string {
+  private getDateTitle(date: Date, today: Date, yesterday: Date): string {
     const dateStr = date.toISOString().slice(0, 10);
     const todayStr = today.toISOString().slice(0, 10);
     const yesterdayStr = yesterday.toISOString().slice(0, 10);
@@ -62,5 +59,4 @@ export class MessageGroupDateService {
       year: 'numeric',
     });
   }
-
 }

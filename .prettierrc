@@ -1,0 +1,31 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "bracketSpacing": true,
+  "printWidth": 120,
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": "*.css",
+      "options": {
+        "singleQuote": false
+      }
+    },
+    {
+      "files": "*.scss",
+      "options": {
+        "singleQuote": false
+      }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "singleQuote": false,
+        "parser": "angular"
+      }
+    }
+  ]
+}

@@ -4,10 +4,10 @@
 
     <div class="header-settings">
       @if (isMyPage()) {
-      <a class="btn profile-header-settings" [routerLink]="['/settings']">
-        Редактировать
-        <svg icon="settings" class="header-settings-icon"></svg>
-      </a>
+        <a class="btn profile-header-settings" [routerLink]="['/settings']">
+          Редактировать
+          <svg icon="settings" class="header-settings-icon"></svg>
+        </a>
       } @else {
         <button class="btn profile-header-settings" (click)="sendMessage(profile.id)">
           Написать
@@ -26,7 +26,7 @@
       <h3 class="profile-page__subscribers">Подписчики</h3>
       <div class="subscribers-wrapper">
         @for (subscriber of subscribers$ | async; track subscriber.id) {
-          <a [routerLink]="['/profile', subscriber.id]" class="subscriber-avatar-button" >
+          <a [routerLink]="['/profile', subscriber.id]" class="subscriber-avatar-button">
             <app-avatar-circle [avatarUrl]="subscriber.avatarUrl" [class]="'size36'"></app-avatar-circle>
           </a>
         }

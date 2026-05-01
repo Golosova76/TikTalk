@@ -1,24 +1,12 @@
 <div class="chats-filter-wrapper">
   <div class="chats-filter-input">
-    <input
-      class="filter-input-chats"
-      type="text"
-      placeholder="Искать..."
-      [formControl]="filterChatsControl"
-    >
+    <input class="filter-input-chats" type="text" placeholder="Искать..." [formControl]="filterChatsControl" />
     <span class="control-search-icon">
-        <svg icon="search" class="search-icon"></svg>
+      <svg icon="search" class="search-icon"></svg>
     </span>
   </div>
 </div>
 
 @for (chat of chats$ | async; track chat.id) {
-  <button
-    chats
-    [chat]="chat"
-    [routerLink]="[chat.id]"
-    routerLinkActive="active"
-  ></button>
+  <button chats [chat]="chat" [routerLink]="[chat.id]" routerLinkActive="active" aria-label="Открыть чат"></button>
 }
-
-

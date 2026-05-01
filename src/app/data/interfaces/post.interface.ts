@@ -1,11 +1,10 @@
-import {Profile} from "./profile.interface";
+import { Profile } from './profile.interface';
 
 export interface PostCreateDto {
   title: string;
   content: string;
   authorId: number;
 }
-
 
 export interface Post {
   id: number;
@@ -39,4 +38,3 @@ export interface CommentCreateDto {
   postId: number;
   commentId: number;
 }
-

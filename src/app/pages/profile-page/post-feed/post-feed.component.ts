@@ -1,25 +1,20 @@
-import {AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2} from '@angular/core';
-import {PostInputComponent} from "../post-input/post-input.component";
-import {PostComponent} from "../post/post.component";
-import {PostService} from "../../../data/services/post.service";
-import {ProfileService} from "../../../data/services/profile.service";
-import {debounceTime, firstValueFrom, fromEvent} from "rxjs";
-
+import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
+import { PostInputComponent } from '../post-input/post-input.component';
+import { PostComponent } from '../post/post.component';
+import { PostService } from '../../../data/services/post.service';
+import { ProfileService } from '../../../data/services/profile.service';
+import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
 
 @Component({
-    selector: 'app-post-feed',
-    imports: [
-        PostInputComponent,
-        PostComponent
-    ],
-    templateUrl: './post-feed.component.html',
-    styleUrl: './post-feed.component.scss'
+  selector: 'app-post-feed',
+  imports: [PostInputComponent, PostComponent],
+  templateUrl: './post-feed.component.html',
+  styleUrl: './post-feed.component.scss',
 })
 export class PostFeedComponent implements OnInit, AfterViewInit {
   postService = inject(PostService);
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
-
 
   feed = this.postService.posts;
 
@@ -56,7 +51,7 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
       this.postService.createPost({
         title: data.title,
         content: data.text,
-        authorId: user.id
+        authorId: user.id,
       })
     );
   }

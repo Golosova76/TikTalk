@@ -1,11 +1,10 @@
-@use 'styles/fonts';
-@use 'styles/null';
-@use 'styles/mixins' as *;
-
+@use "styles/fonts";
+@use "styles/null";
+@use "styles/mixins" as *;
 
 :root {
   --dark-solid: #000000;
-  --light-solid: #FFFFFF;
+  --light-solid: #ffffff;
   --light-transparent: rgba(255, 255, 255, 0.75);
   --light-faf4f0: #faf4f0;
   --dark-transparent: #000;
@@ -27,14 +26,13 @@
   --color: #404040;
 }
 
-
 body {
   height: 100dvh;
-  font-family: 'JetBrains Mono', sans-serif;
+  font-family: "JetBrains Mono", sans-serif;
   font-weight: 400;
   background: var(--dark-active);
   color: var(--light-solid);
-  background-image: url('assets/img/img-back.jpg');
+  background-image: url("assets/img/img-back.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   //background: var(--dark-active);
@@ -129,5 +127,3 @@ h1 {
     border-bottom: 1px solid var(--light-solid);
   }
 }
-
-

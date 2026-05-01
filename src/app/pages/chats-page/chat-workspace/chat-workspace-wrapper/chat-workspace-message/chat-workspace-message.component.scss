@@ -1,5 +1,4 @@
-@use '../../../../../../styles/mixins' as *;
-
+@use "../../../../../../styles/mixins" as *;
 
 :host {
   display: grid;
@@ -46,7 +45,8 @@
   }
 }
 
-.message-wrapper {}
+.message-wrapper {
+}
 
 .message__title {
   display: flex;
@@ -54,5 +54,3 @@
   @include font-size12-700;
   @include margin-bottom8;
 }
-
-

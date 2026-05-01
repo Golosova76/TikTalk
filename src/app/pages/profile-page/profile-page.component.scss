@@ -1,4 +1,4 @@
-@use '../../../styles/mixins' as *;
+@use "../../../styles/mixins" as *;
 
 .profile-page__header {
   display: grid;
@@ -82,7 +82,6 @@
   }
 }
 
-
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -94,7 +93,3 @@
   white-space: nowrap;
   border: 0;
 }
-
-
-
-

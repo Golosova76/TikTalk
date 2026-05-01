@@ -1,20 +1,15 @@
-import {Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2} from '@angular/core';
-import {AvatarCircleComponent} from "../../../common-ui/avatar-circle/avatar-circle.component";
-import {ProfileService} from "../../../data/services/profile.service";
+import { Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2 } from '@angular/core';
+import { AvatarCircleComponent } from '../../../common-ui/avatar-circle/avatar-circle.component';
+import { ProfileService } from '../../../data/services/profile.service';
 
-import {SvgIconComponent} from "../../../common-ui/svg-icon/svg-icon.component";
-import {FormsModule} from "@angular/forms";
-
+import { SvgIconComponent } from '../../../common-ui/svg-icon/svg-icon.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-post-input',
-    imports: [
-    AvatarCircleComponent,
-    SvgIconComponent,
-    FormsModule
-],
-    templateUrl: './post-input.component.html',
-    styleUrl: './post-input.component.scss'
+  selector: 'app-post-input',
+  imports: [AvatarCircleComponent, SvgIconComponent, FormsModule],
+  templateUrl: './post-input.component.html',
+  styleUrl: './post-input.component.scss',
 })
 export class PostInputComponent {
   r2 = inject(Renderer2);

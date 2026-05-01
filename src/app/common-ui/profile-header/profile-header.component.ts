@@ -1,19 +1,16 @@
-import {Component, Input, input} from '@angular/core';
-import {Profile} from "../../data/interfaces/profile.interface";
-import {NgClass} from "@angular/common";
-import {AvatarCircleComponent} from "../avatar-circle/avatar-circle.component";
+import { Component, Input, input } from '@angular/core';
+import { Profile } from '../../data/interfaces/profile.interface';
+import { NgClass } from '@angular/common';
+import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component';
 
 @Component({
-    selector: 'app-profile-header',
-    imports: [
-        NgClass,
-        AvatarCircleComponent
-    ],
-    templateUrl: './profile-header.component.html',
-    styleUrl: './profile-header.component.scss'
+  selector: 'app-profile-header',
+  imports: [NgClass, AvatarCircleComponent],
+  templateUrl: './profile-header.component.html',
+  styleUrl: './profile-header.component.scss',
 })
 export class ProfileHeaderComponent {
-  profile = input<Profile>()
+  profile = input<Profile>();
   @Input() layoutClass = '';
 
   get avatarSize(): 'size32' | 'size36' | 'size112' | 'size140' {

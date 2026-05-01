@@ -1,19 +1,15 @@
 <div class="sidebar">
   <div class="sidebar__content">
     <div class="sidebar__logo">
-      <img src="assets/img/svg/Logo-Tik-Talk.svg" alt="logo Tik-Talk">
+      <img src="assets/img/svg/Logo-Tik-Talk.svg" alt="logo Tik-Talk" />
     </div>
     <nav class="sidebar__menu">
       <ul class="main-menu-list">
         @for (menuItem of menuItems; track menuItem) {
           <li class="menu-item">
-            <a
-              [routerLink]="[menuItem.link]"
-              class="menu-item-link"
-              routerLinkActive="active"
-              >
+            <a [routerLink]="[menuItem.link]" class="menu-item-link" routerLinkActive="active">
               <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
-              <span class="menu-item-title">{{menuItem.label}}</span>
+              <span class="menu-item-title">{{ menuItem.label }}</span>
             </a>
           </li>
         }
@@ -29,9 +25,7 @@
       </div>
 
       <div class="to-subscribers">
-        <a [routerLink]="['/subscriber']"  class="to-subscribers-link">
-          Все подписчики
-        </a>
+        <a [routerLink]="['/subscriber']" class="to-subscribers-link"> Все подписчики </a>
         <svg icon="arrow" class="to-subscribers-icon"></svg>
       </div>
     </div>

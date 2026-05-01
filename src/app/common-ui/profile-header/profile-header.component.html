@@ -1,6 +1,5 @@
 <div class="profile-logo-name" [ngClass]="layoutClass">
   @if (profile(); as profile) {
-
     <app-avatar-circle [avatarUrl]="profile.avatarUrl" [class]="avatarSize"></app-avatar-circle>
 
     <!--
@@ -13,7 +12,7 @@
 
     <div class="profiles-names">
       <h1 class="profile-title">{{ profile.firstName }} {{ profile.lastName }}</h1>
-      <div class="profile-subtitle">{{profile.username}}</div>
+      <div class="profile-subtitle">{{ profile.username }}</div>
     </div>
   }
 </div>

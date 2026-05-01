@@ -1,4 +1,3 @@
-
 <div class="messages-body">
   @for (group of groupMessages(); track group.dateTitle) {
     <div class="message-date-title">{{ group.dateTitle }}</div>
@@ -13,6 +12,7 @@
     [showTitle]="false"
     [placeholder]="'Напишите что-нибудь...'"
     (created)="onCreateMessage($event)"
-    borderStyle="solid">
+    borderStyle="solid"
+  >
   </app-post-input>
 </div>

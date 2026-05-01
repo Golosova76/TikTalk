@@ -8,9 +8,8 @@ describe('PostInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PostInputComponent]
-    })
-    .compileComponents();
+      imports: [PostInputComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PostInputComponent);
     component = fixture.componentInstance;

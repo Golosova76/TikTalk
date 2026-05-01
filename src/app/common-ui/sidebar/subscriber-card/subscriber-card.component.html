@@ -1,11 +1,6 @@
 @if (profile) {
   <div class="sidebar__names">
-    <img
-      [src]="profile.avatarUrl | imgUrl"
-      [alt]="profile.lastName"
-      class="subscriber__avatar"
-    >
-    <strong class="sidebar-names-subtitle">{{profile.firstName}} {{profile.lastName}}</strong>
+    <img [src]="profile.avatarUrl | imgUrl" [alt]="profile.lastName" class="subscriber__avatar" />
+    <strong class="sidebar-names-subtitle">{{ profile.firstName }} {{ profile.lastName }}</strong>
   </div>
 }
-

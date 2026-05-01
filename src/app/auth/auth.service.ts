@@ -1,12 +1,12 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, tap, throwError} from "rxjs";
-import {TokenResponse} from "./auth.interface";
-import {CookieService} from "ngx-cookie-service";
-import {Router} from "@angular/router";
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, tap, throwError } from 'rxjs';
+import { TokenResponse } from './auth.interface';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   http = inject(HttpClient);
@@ -28,32 +28,27 @@ export class AuthService {
     return !!this.token;
   }
 
-  login(payload: {username: string, password: string}) {
+  login(payload: { username: string; password: string }) {
     const fd = new FormData();
 
     fd.append('username', payload.username);
     fd.append('password', payload.password);
 
-    return this.http.post<TokenResponse>(
-      `${this.baseApiUrl}token`,
-      fd).pipe(
-        tap(value => this.saveTokens(value))
-      )
+    return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(tap((value) => this.saveTokens(value)));
   }
 
   refreshAuthToken() {
-    return this.http.post<TokenResponse>(
-      `${this.baseApiUrl}refresh`,
-      {
+    return this.http
+      .post<TokenResponse>(`${this.baseApiUrl}refresh`, {
         refresh_token: this.refreshToken,
-      }
-    ).pipe(
-      tap(value => this.saveTokens(value)),
-      catchError((error: HttpErrorResponse) => {
-        this.logout();
-        return throwError(() => error);
       })
-    )
+      .pipe(
+        tap((value) => this.saveTokens(value)),
+        catchError((error: HttpErrorResponse) => {
+          this.logout();
+          return throwError(() => error);
+        })
+      );
   }
 
   logout() {

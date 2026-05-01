@@ -1,18 +1,14 @@
-import {Component, input} from '@angular/core';
-import {AvatarCircleComponent} from "../../../../common-ui/avatar-circle/avatar-circle.component";
-import {SvgIconComponent} from "../../../../common-ui/svg-icon/svg-icon.component";
-import {Profile} from "../../../../data/interfaces/profile.interface";
+import { Component, input } from '@angular/core';
+import { AvatarCircleComponent } from '../../../../common-ui/avatar-circle/avatar-circle.component';
+import { SvgIconComponent } from '../../../../common-ui/svg-icon/svg-icon.component';
+import { Profile } from '../../../../data/interfaces/profile.interface';
 
 @Component({
-    selector: 'app-chat-workspace-header',
-    imports: [
-        AvatarCircleComponent,
-        SvgIconComponent
-    ],
-    templateUrl: './chat-workspace-header.component.html',
-    styleUrl: './chat-workspace-header.component.scss'
+  selector: 'app-chat-workspace-header',
+  imports: [AvatarCircleComponent, SvgIconComponent],
+  templateUrl: './chat-workspace-header.component.html',
+  styleUrl: './chat-workspace-header.component.scss',
 })
 export class ChatWorkspaceHeaderComponent {
-  profile = input.required<Profile>()
-
+  profile = input.required<Profile>();
 }
