@@ -7,6 +7,8 @@ import { firstValueFrom } from 'rxjs';
 import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -15,8 +17,10 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './settings-page.component.scss',
 })
 export class SettingsPageComponent {
-  fb = inject(FormBuilder);
-  profileService = inject(ProfileService);
+  private fb = inject(FormBuilder);
+  private profileService = inject(ProfileService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   profile$ = toObservable(this.profileService.me);
 
@@ -74,5 +78,9 @@ export class SettingsPageComponent {
     if (Array.isArray(stack)) return stack.join(',');
 
     return stack;
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

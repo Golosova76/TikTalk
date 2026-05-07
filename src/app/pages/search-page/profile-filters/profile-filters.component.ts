@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy } from '@angular/core';
-import {NonNullableFormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith, Subscription, switchMap } from 'rxjs';
 import { ProfileService } from '../../../data/services/profile.service';
 
