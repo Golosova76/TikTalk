@@ -3,7 +3,7 @@
   <div class="message-body">
     <div class="message-header">
       <div class="message__author">{{ chat.userFrom.firstName }} {{ chat.userFrom.lastName }}</div>
-      <div class="message-created-at">{{ chat.createdAt | date: "HH:mm dd.MM.YYYY" }}</div>
+      <div class="message-created-at">{{ chat.createdAt | luxonDate }}</div>
     </div>
     <div class="message-content">
       <p class="message-text">{{ chat.message ?? "..." }}</p>

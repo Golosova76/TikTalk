@@ -10,6 +10,7 @@ import { PostService } from '../../../data/services/post.service';
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from './comment/comment.component';
 import { SortCommentsPipe } from '../../../helpers/pipes/sort-comments.pipe';
+import { LuxonDatePipe } from '../../../helpers/pipes/luxon-date.pipe';
 
 @Component({
   selector: 'app-post',
@@ -21,6 +22,7 @@ import { SortCommentsPipe } from '../../../helpers/pipes/sort-comments.pipe';
     FormsModule,
     CommentComponent,
     SortCommentsPipe,
+    LuxonDatePipe,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

@@ -6,7 +6,7 @@
   <div class="comment-body">
     <div class="comment-header">
       <div class="comment__author">{{ comment.author.username }}</div>
-      <div class="comment-created-at">{{ comment.createdAt | date: "HH:mm dd.MM.YYYY" }}</div>
+      <div class="comment-created-at">{{ comment.createdAt | luxonDate }}</div>
     </div>
     <div class="comment-content">
       <p class="comment-text">{{ comment.text }}</p>
