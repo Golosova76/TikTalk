@@ -24,7 +24,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
   styleUrl: './chats-list.component.scss',
 })
 export class ChatsListComponent implements OnInit {
-  chatsService = inject(ChatsService);
+  private chatsService = inject(ChatsService);
 
   filterChatsControl = new FormControl('');
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Message, MessageGroup } from '../interfaces/chats.interface';
+import { DateTime } from 'luxon';
 
 @Injectable({
   providedIn: 'root',
@@ -8,14 +9,14 @@ export class MessageGroupDateService {
   groupMessagesByDate(messages: Message[]): MessageGroup[] {
     const map = new Map<string, Message[]>();
 
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
-
     for (const message of messages) {
-      const msgDate = new Date(message.createdAt);
+      const date = DateTime.fromISO(message.createdAt, { zone: 'utc' }).toLocal();
 
-      const key = msgDate.toISOString().slice(0, 10);
+      if (!date.isValid) {
+        continue;
+      }
+
+      const key = date.toFormat('yyyy-MM-dd');
 
       if (!map.has(key)) {
         map.set(key, []);
@@ -27,36 +28,35 @@ export class MessageGroupDateService {
     const result: MessageGroup[] = [];
 
     for (const [key, groupMessages] of map) {
-      const date = new Date(key); // обратно в Date из ISO
-      const label = this.getDateTitle(date, today, yesterday);
-
       result.push({
-        dateTitle: label,
+        dateTitle: this.getDateTitle(key),
         messages: [...groupMessages],
       });
     }
 
-    result.sort((a, b) => new Date(a.messages[0].createdAt).getTime() - new Date(b.messages[0].createdAt).getTime());
+    result.sort((a, b) => {
+      const firstDate = DateTime.fromISO(a.messages[0].createdAt, { zone: 'utc' }).toLocal();
+      const secondDate = DateTime.fromISO(b.messages[0].createdAt, { zone: 'utc' }).toLocal();
+
+      return firstDate.toMillis() - secondDate.toMillis();
+    });
 
     return result;
   }
 
-  private getDateTitle(date: Date, today: Date, yesterday: Date): string {
-    const dateStr = date.toISOString().slice(0, 10);
-    const todayStr = today.toISOString().slice(0, 10);
-    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+  private getDateTitle(dateKey: string): string {
+    const date = DateTime.fromFormat(dateKey, 'yyyy-MM-dd');
+    const today = DateTime.local().startOf('day');
+    const yesterday = today.minus({ days: 1 });
 
-    if (dateStr === todayStr) {
+    if (date.equals(today)) {
       return 'Сегодня';
     }
-    if (dateStr === yesterdayStr) {
+
+    if (date.equals(yesterday)) {
       return 'Вчера';
     }
 
-    return date.toLocaleDateString('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
+    return date.setLocale('ru').toFormat('d MMMM yyyy');
   }
 }

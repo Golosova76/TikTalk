@@ -32,6 +32,9 @@
   }
   .message__title {
     justify-content: flex-end;
+    .message__date {
+      order: -1;
+    }
   }
   .message__text {
     color: var(--dark-solid);

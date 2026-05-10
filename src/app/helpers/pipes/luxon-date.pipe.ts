@@ -5,7 +5,11 @@ import { DateTime } from 'luxon';
   name: 'luxonDate',
 })
 export class LuxonDatePipe implements PipeTransform {
-  transform(value: string | null | undefined, format = 'HH:mm dd.MM.yyyy'): string {
+  transform(
+    value: string | null | undefined,
+    format = 'HH:mm dd.MM.yyyy',
+    mode: 'default' | 'chatPreview' = 'default'
+  ): string {
     if (!value) {
       return '';
     }
@@ -16,6 +20,23 @@ export class LuxonDatePipe implements PipeTransform {
       return '';
     }
 
+    if (mode === 'chatPreview') {
+      return this.formatChatPreview(date);
+    }
+
     return date.toFormat(format);
+  }
+
+  private formatChatPreview(date: DateTime) {
+    const today = DateTime.local().startOf('day');
+    const messageDay = date.startOf('day');
+
+    if (messageDay.equals(today)) {
+      return date.toFormat('HH:mm');
+    }
+    if (messageDay.equals(today.minus({ days: 1 }))) {
+      return 'Вчера';
+    }
+    return date.toFormat('dd.MM.yyyy');
   }
 }
