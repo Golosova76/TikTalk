@@ -150,3 +150,16 @@
     }
   }
 }
+
+.message-unread {
+  @include font-size12-700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-primary);
+  padding: 0 5px;
+  min-width: 26px;
+  height: 18px;
+  text-align: center;
+  color: var(--dark-solid);
+}

@@ -5,6 +5,7 @@ import { SubscriberCardComponent } from './subscriber-card/subscriber-card.compo
 import { ProfileService } from '../../data/services/profile.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component';
+import { ChatsService } from '../../data/services/chats.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,11 +14,14 @@ import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component'
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit {
-  profileService = inject(ProfileService);
+  private readonly profileService = inject(ProfileService);
+  private readonly chatsService = inject(ChatsService);
 
   subscribers$ = this.profileService.getSubscribersShortList(5);
 
   me = this.profileService.me;
+
+  readonly unreadMessagesCount = this.chatsService.unreadMessagesCount;
 
   menuItems = [
     {
@@ -29,6 +33,7 @@ export class SidebarComponent implements OnInit {
       label: 'Чаты',
       icon: 'chats',
       link: 'chats',
+      showUnreadBadge: true,
     },
     {
       label: 'Поиск',
@@ -39,5 +44,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.profileService.getMe().subscribe();
+    this.chatsService.getMyChats().subscribe();
   }
 }

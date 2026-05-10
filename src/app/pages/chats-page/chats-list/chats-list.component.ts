@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SvgIconComponent } from '../../../common-ui/svg-icon/svg-icon.component';
 import { ChatsBtnComponent } from '../chats-btn/chats-btn.component';
@@ -23,14 +23,10 @@ import { toObservable } from '@angular/core/rxjs-interop';
   templateUrl: './chats-list.component.html',
   styleUrl: './chats-list.component.scss',
 })
-export class ChatsListComponent implements OnInit {
+export class ChatsListComponent {
   private chatsService = inject(ChatsService);
 
   filterChatsControl = new FormControl('');
-
-  ngOnInit() {
-    this.chatsService.getMyChats().subscribe();
-  }
 
   chats$ = toObservable(this.chatsService.chatsLastMessage).pipe(
     switchMap((chats) =>

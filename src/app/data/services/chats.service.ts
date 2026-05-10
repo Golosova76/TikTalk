@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
 import { ProfileService } from './profile.service';
@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class ChatsService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   me = inject(ProfileService).me;
 
   activeChatMessages = signal<Message[]>([]);
@@ -18,6 +18,12 @@ export class ChatsService {
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
   chatUrl = `${this.baseApiUrl}chat/`;
   messageUrl = `${this.baseApiUrl}message/`;
+
+  readonly unreadMessagesCount = computed(() => {
+    return this.chatsLastMessage().reduce((total, chat) => {
+      return total + chat.unreadMessages;
+    }, 0);
+  });
 
   createChat(userId: number) {
     return this.http.post<Chat>(`${this.chatUrl}${userId}`, {});

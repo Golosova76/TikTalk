@@ -24,12 +24,6 @@
   .message-header {
     @include flex-center-between;
     color: var(--light-transparent);
-
-    .message__author {
-    }
-
-    .message-created-at {
-    }
   }
 
   .message-content {

@@ -7,7 +7,9 @@
     </div>
     <div class="message-content">
       <p class="message-text">{{ chat.message ?? "..." }}</p>
-      <p class="message-unread">{{ chat.unreadMessages }}</p>
+      @if (chat.unreadMessages > 0) {
+        <p class="message-unread">{{ chat.unreadMessages }}</p>
+      }
     </div>
   </div>
 }

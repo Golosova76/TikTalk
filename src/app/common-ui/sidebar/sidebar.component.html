@@ -10,6 +10,9 @@
             <a [routerLink]="[menuItem.link]" class="menu-item-link" routerLinkActive="active">
               <svg class="menu-item-svg" [icon]="menuItem.icon"></svg>
               <span class="menu-item-title">{{ menuItem.label }}</span>
+              @if (menuItem.showUnreadBadge && unreadMessagesCount() > 0) {
+                <p class="message-unread">{{ unreadMessagesCount() }}</p>
+              }
             </a>
           </li>
         }
