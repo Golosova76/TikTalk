@@ -1,4 +1,4 @@
-@use "../../../../styles/mixins" as *;
+@use "styles/mixins" as *;
 
 :host {
   border: 1px solid var(--light-solid);
@@ -16,7 +16,7 @@
       width: 100%;
       display: block;
       padding: 2px;
-      background: var(--dark-solid);
+      background-color: var(--dark-solid);
       @include font-size14-400-150;
       color: var(--light-transparent);
       border-bottom: 1px solid var(--light-transparent);

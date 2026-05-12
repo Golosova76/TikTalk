@@ -1,4 +1,4 @@
-@use "../../../styles/mixins" as *;
+@use "styles/mixins" as *;
 
 .profile-page__header {
   display: grid;
@@ -24,11 +24,6 @@
   display: grid;
   grid-template-columns: 1fr 340px;
   grid-gap: 64px;
-  padding: 24px;
-
-  .profile-page__chat {
-  }
-
   .profile-page__about {
     padding: 0 24px;
     h3 {

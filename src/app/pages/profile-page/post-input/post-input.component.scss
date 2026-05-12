@@ -1,8 +1,7 @@
-@use "../../../../styles/mixins" as *;
+@use "styles/mixins" as *;
 
 :host {
   display: grid;
-  //border: 1px solid var(--light-solid);
   border-width: 1px;
   border-color: var(--light-solid);
   border-style: solid;
@@ -11,7 +10,7 @@
   grid-template-columns: 32px 1fr;
   grid-gap: 12px;
   align-items: center;
-  background: var(--dark-solid);
+  background-color: var(--dark-solid);
   @include margin-bottom16;
 }
 
@@ -22,7 +21,7 @@
   .post-title {
     @include margin-bottom32;
     .post-subtitle {
-      background: var(--dark-solid);
+      background-color: var(--dark-solid);
       @include font-size14-500-150;
       padding: 10px 5px;
       width: 100%;
@@ -45,7 +44,7 @@
 
     .hidden-textarea {
       resize: none;
-      background: var(--dark-solid);
+      background-color: var(--dark-solid);
       border: none;
       @include font-size14-500-150;
       color: var(--light-transparent);
@@ -76,11 +75,7 @@
       .post-send {
         width: 44px;
         height: 44px;
-        border: 1px solid var(--dark-solid);
-        border-radius: 2px;
         padding: 14px;
-        background: var(--primary-primary);
-
         .send-post-icon {
           width: 16px;
           height: 16px;

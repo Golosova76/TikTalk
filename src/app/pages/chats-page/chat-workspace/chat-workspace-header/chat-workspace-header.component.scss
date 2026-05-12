@@ -1,4 +1,4 @@
-@use "../../../../../styles/mixins" as *;
+@use "styles/mixins" as *;
 
 .header-body {
   @include flex-center-between;
@@ -36,7 +36,5 @@
     font-size: 14px;
     line-height: 171%;
     color: var(--light-solid);
-    .header-body__author {
-    }
   }
 }

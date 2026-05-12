@@ -1,8 +1,8 @@
-@use "../../../styles/mixins" as *;
+@use "styles/mixins" as *;
 
 :host {
   padding: 20px 0;
-  background: var(--dark-solid);
+  background-color: var(--dark-solid);
 }
 
 .sidebar {

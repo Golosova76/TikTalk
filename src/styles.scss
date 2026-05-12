@@ -30,7 +30,7 @@ body {
   height: 100dvh;
   font-family: "JetBrains Mono", sans-serif;
   font-weight: 400;
-  background: var(--dark-active);
+  background-color: var(--dark-active);
   color: var(--light-solid);
   background-image: url("assets/img/img-back.jpg");
   background-size: cover;
@@ -51,8 +51,9 @@ body {
 
 .btn {
   width: 100%;
-  border: none;
-  background: var(--primary-primary);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background-color: var(--primary-primary);
   color: var(--dark-solid);
   box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.25);
   font-weight: 700;
@@ -60,6 +61,37 @@ body {
   line-height: 171%;
   padding: 10px 20px;
   cursor: pointer;
+  &:hover {
+    box-shadow: none;
+    border-color: var(--dark-solid);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--light-solid);
+    outline-offset: 2px;
+  }
+  &:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+}
+
+.btn-limpid {
+  border: 1px solid var(--light-solid);
+  border-radius: 2px;
+  padding: 10px 20px;
+  background-color: var(--dark-solid);
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.25);
+  &:hover {
+    box-shadow: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--light-solid);
+    outline-offset: 2px;
+  }
+  &:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
 }
 
 .h6 {
@@ -85,7 +117,7 @@ h1 {
   border: 1px solid var(--light-solid);
   border-radius: 2px;
   padding: 12px 20px;
-  background: var(--dark-solid);
+  background-color: var(--dark-solid);
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;

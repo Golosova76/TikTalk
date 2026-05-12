@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class ChatsService {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
   me = inject(ProfileService).me;
 
   activeChatMessages = signal<Message[]>([]);
