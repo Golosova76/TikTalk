@@ -1,9 +1,20 @@
-import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  signal,
+} from '@angular/core';
 import { PostInputComponent } from '../../../profile-page/post-input/post-input.component';
 import { ChatsService } from '../../../../data/services/chats.service';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
 import { Chat, MessageGroup } from '../../../../data/interfaces/chats.interface';
-import { firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { debounceTime, firstValueFrom, fromEvent, Subject, takeUntil } from 'rxjs';
 import { MessageGroupDateService } from '../../../../data/services/message-group-date.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 
@@ -13,9 +24,13 @@ import { toObservable } from '@angular/core/rxjs-interop';
   templateUrl: './chat-workspace-wrapper.component.html',
   styleUrl: './chat-workspace-wrapper.component.scss',
 })
-export class ChatWorkspaceWrapperComponent implements OnInit, OnDestroy {
-  chatService = inject(ChatsService);
-  messageGroupDateService = inject(MessageGroupDateService);
+export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnDestroy {
+  private readonly chatService = inject(ChatsService);
+  private readonly messageGroupDateService = inject(MessageGroupDateService);
+  private readonly hostElement = inject(ElementRef);
+  private readonly r2 = inject(Renderer2);
+  private destroy$ = new Subject<void>();
+  private previousChatId: number | null = null;
 
   chat = input.required<Chat>();
 
@@ -23,12 +38,39 @@ export class ChatWorkspaceWrapperComponent implements OnInit, OnDestroy {
 
   messages = this.chatService.activeChatMessages;
   messages$ = toObservable(this.messages);
-  private destroy$ = new Subject<void>();
+
+  constructor() {
+    effect(() => {
+      const currentChatId = this.chat().id;
+      if (this.previousChatId === currentChatId) return;
+      this.previousChatId = currentChatId;
+      this.scrollToBottom();
+    });
+  }
 
   ngOnInit(): void {
     this.messages$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.updateGroupedMessages();
     });
+  }
+
+  ngAfterViewInit() {
+    this.resizeFeed();
+
+    fromEvent(window, 'resize')
+      .pipe(debounceTime(300))
+      .subscribe(() => {
+        this.resizeFeed();
+      });
+  }
+
+  resizeFeed() {
+    const feedElement = this.hostElement.nativeElement.querySelector('.scrollable-chat');
+    if (!feedElement) return;
+
+    const { top } = feedElement.getBoundingClientRect();
+    const height = window.innerHeight - top - 24;
+    this.r2.setStyle(feedElement, 'height', `${height}px`);
   }
 
   ngOnDestroy(): void {
@@ -48,6 +90,18 @@ export class ChatWorkspaceWrapperComponent implements OnInit, OnDestroy {
 
     await firstValueFrom(this.chatService.getMyChats());
 
+    this.scrollToBottom();
+
     this.chatService.getMyChats().subscribe();
+  }
+
+  private scrollToBottom(): void {
+    requestAnimationFrame(() => {
+      const feedElement = this.hostElement.nativeElement.querySelector('.scrollable-chat');
+
+      if (!feedElement) return;
+
+      feedElement.scrollTop = feedElement.scrollHeight;
+    });
   }
 }

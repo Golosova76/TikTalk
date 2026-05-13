@@ -1,17 +1,29 @@
 @use "styles/mixins" as *;
 
 :host {
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 16px 20px;
 }
 
-.messages-input {
-  margin-top: auto;
+.scrollable-chat {
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @include margin-bottom20;
 }
 
 .message-date-title {
   text-align: center;
   @include font-size12-700;
   @include margin-bottom32;
+}
+.messages-body {
+  flex: 1 1 0;
+}
+
+.messages-input {
+  flex: 0 0 auto;
 }

@@ -12,9 +12,9 @@ import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
   styleUrl: './post-feed.component.scss',
 })
 export class PostFeedComponent implements OnInit, AfterViewInit {
-  postService = inject(PostService);
-  hostElement = inject(ElementRef);
-  r2 = inject(Renderer2);
+  private readonly postService = inject(PostService);
+  private readonly hostElement = inject(ElementRef);
+  private readonly r2 = inject(Renderer2);
 
   feed = this.postService.posts;
 
@@ -39,7 +39,7 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
     if (!feedElement) return;
 
     const { top } = feedElement.getBoundingClientRect();
-    const height = window.innerHeight - top - 24;
+    const height = window.innerHeight - top - 94;
     this.r2.setStyle(feedElement, 'height', `${height}px`);
   }
 
