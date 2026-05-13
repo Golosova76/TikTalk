@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
 import { ProfileService } from './profile.service';
 import { map, tap } from 'rxjs';
+import { BASE_API_URL } from '../links.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,8 @@ export class ChatsService {
 
   chatsLastMessage = signal<LastMessageRes[]>([]);
 
-  baseApiUrl = 'https://icherniakov.ru/yt-course/';
-  chatUrl = `${this.baseApiUrl}chat/`;
-  messageUrl = `${this.baseApiUrl}message/`;
+  chatUrl = `${BASE_API_URL}chat/`;
+  messageUrl = `${BASE_API_URL}message/`;
 
   readonly unreadMessagesCount = computed(() => {
     return this.chatsLastMessage().reduce((total, chat) => {

@@ -72,3 +72,35 @@
   height: 84px;
   resize: none;
 }
+
+.required-star {
+  color: var(--primary-color, red);
+}
+
+.profile-page__header {
+  @include margin-bottom32;
+}
+
+.profile-page__line {
+  @include margin-bottom32;
+}
+
+.profile-page__skills {
+  @include margin-bottom16;
+}
+
+.skills-wrapper {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  @include margin-bottom32;
+}
+
+.profile-page__about-me {
+  @include margin-bottom16;
+}
+
+.about-me-wrapper {
+  @include font-size12-500-133;
+  @include margin-bottom32;
+}

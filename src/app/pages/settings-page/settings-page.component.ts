@@ -17,10 +17,10 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './settings-page.component.scss',
 })
 export class SettingsPageComponent {
-  private fb = inject(FormBuilder);
-  private profileService = inject(ProfileService);
-  private router = inject(Router);
-  private authService = inject(AuthService);
+  private readonly fb = inject(FormBuilder);
+  private readonly profileService = inject(ProfileService);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
 
   profile$ = toObservable(this.profileService.me);
 
@@ -80,7 +80,19 @@ export class SettingsPageComponent {
     return stack;
   }
 
-  logout(): void {
+  onUndo(): void {
+    const profile = this.profileService.me();
+
+    this.form.patchValue({
+      ...profile,
+      stack: this.mergeStack(profile?.stack),
+    });
+
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+  }
+
+  onLogout(): void {
     this.authService.logout();
   }
 }
