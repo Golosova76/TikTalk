@@ -2,7 +2,7 @@
   <app-profile-filters></app-profile-filters>
 </div>
 
-<div class="profile-card__wrapper">
+<div class="profile-card__wrapper scrollable-feed">
   @for (profile of profiles(); track profile.id) {
     <app-profile-card [profile]="profile"></app-profile-card>
   }

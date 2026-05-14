@@ -18,7 +18,23 @@
     </div>
 
     <div class="profile-card__action-buttons">
-      <button class="btn">Подписаться</button>
+      @if (profile.subscribersAmount) {
+        <button class="profile-card__action-subscriber" type="button" aria-label="Управление подпиской">
+          <svg icon="subscriber" class="subscriber-icon icon"></svg>
+        </button>
+      }
+      <button class="btn profile-card__action-choice">
+        @if (profile.subscribersAmount) {
+          Написать
+          <svg icon="send-post" class="header-settings-icon icon"></svg>
+        } @else {
+          Подписаться
+          <svg icon="add-user" class="header-settings-icon icon"></svg>
+        }
+      </button>
+      <a class="profile-card__action-open-profile" [routerLink]="['/profile', profile.id]" aria-label="Открыть профиль">
+        <svg icon="arrow-open-profile" class="to-arrow-open-profile-icon icon"></svg>
+      </a>
     </div>
   </div>
 }

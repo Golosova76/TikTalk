@@ -82,3 +82,32 @@
   font-size: 14px;
   line-height: 150%;
 }
+
+@mixin color-hover-focus-active {
+  &:hover {
+    box-shadow: none;
+    border-color: var(--dark-solid);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--light-solid);
+    outline-offset: 2px;
+  }
+  &:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+}
+
+@mixin color-hover-focus-active-subscriber {
+  &:hover {
+    box-shadow: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--light-solid);
+    outline-offset: 2px;
+  }
+  &:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+}
