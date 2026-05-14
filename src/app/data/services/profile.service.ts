@@ -38,6 +38,12 @@ export class ProfileService {
       .pipe(map((res) => res.items.slice(0, subsAmount)));
   }
 
+  getSubscribersIds() {
+    return this.http
+      .get<Pageble<Profile>>(`${BASE_API_URL}account/subscribers/`)
+      .pipe(map((res) => new Set(res.items.map((profile) => profile.id))));
+  }
+
   patchProfile(profile: Partial<Profile>) {
     return this.http
       .patch<Profile>(`${BASE_API_URL}account/me`, profile)

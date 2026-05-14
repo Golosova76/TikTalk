@@ -1,38 +1,54 @@
-@if (profile) {
+@if (profile()) {
   <div class="profile-card">
     <div class="avatar-name">
-      <img [src]="profile.avatarUrl | imgUrl" alt="Avatar" class="profile-card__avatar" />
+      <img [src]="profile().avatarUrl | imgUrl" alt="Avatar" class="profile-card__avatar" />
 
       <div class="profile-card__name">
-        <strong class="h6">{{ profile.firstName }} {{ profile.lastName }}</strong>
-        <span class="subtitle">{{ profile.username }}</span>
+        <strong class="h6">{{ profile().firstName }} {{ profile().lastName }}</strong>
+        <span class="subtitle">{{ profile().username }}</span>
       </div>
     </div>
 
-    <div class="profile-card__description">{{ profile.description }}</div>
+    <div class="profile-card__description">{{ profile().description }}</div>
 
     <div class="profile-card__tags">
-      @for (skill of profile.stack; track $index) {
+      @for (skill of profile().stack; track $index) {
         <div class="skill-tag">{{ skill }}</div>
       }
     </div>
 
     <div class="profile-card__action-buttons">
-      @if (profile.subscribersAmount) {
+      @if (isSubscriber()) {
         <button class="profile-card__action-subscriber" type="button" aria-label="Управление подпиской">
           <svg icon="subscriber" class="subscriber-icon icon"></svg>
         </button>
       }
-      <button class="btn profile-card__action-choice">
-        @if (profile.subscribersAmount) {
+      @if (isSubscriber()) {
+        <button
+          class="btn profile-card__action-choice"
+          type="button"
+          aria-label="Открыть чат переписки"
+          (click)="openChat(profile().id)"
+        >
           Написать
           <svg icon="send-post" class="header-settings-icon icon"></svg>
-        } @else {
+        </button>
+      } @else {
+        <button
+          class="btn profile-card__action-choice"
+          type="button"
+          aria-label="Оформить подписку"
+          (click)="onSubscribe()"
+        >
           Подписаться
           <svg icon="add-user" class="header-settings-icon icon"></svg>
-        }
-      </button>
-      <a class="profile-card__action-open-profile" [routerLink]="['/profile', profile.id]" aria-label="Открыть профиль">
+        </button>
+      }
+      <a
+        class="profile-card__action-open-profile"
+        [routerLink]="['/profile', profile().id]"
+        aria-label="Открыть профиль"
+      >
         <svg icon="arrow-open-profile" class="to-arrow-open-profile-icon icon"></svg>
       </a>
     </div>

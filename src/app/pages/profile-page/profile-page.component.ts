@@ -17,10 +17,10 @@ import { ChatsService } from '../../data/services/chats.service';
   styleUrl: './profile-page.component.scss',
 })
 export class ProfilePageComponent {
-  profileService = inject(ProfileService);
-  chatsService = inject(ChatsService);
-  route = inject(ActivatedRoute);
-  router = inject(Router);
+  private readonly profileService = inject(ProfileService);
+  private readonly chatsService = inject(ChatsService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   me$ = toObservable(this.profileService.me);
 

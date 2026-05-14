@@ -4,6 +4,6 @@
 
 <div class="profile-card__wrapper scrollable-feed">
   @for (profile of profiles(); track profile.id) {
-    <app-profile-card [profile]="profile"></app-profile-card>
+    <app-profile-card [profile]="profile" [isSubscriber]="subscriberIds().has(profile.id)"></app-profile-card>
   }
 </div>

@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Profile } from '../../data/interfaces/profile.interface';
 import { ImgUrlPipe } from '../../helpers/pipes/img-url.pipe';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 
 @Component({
@@ -11,5 +11,16 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
   styleUrl: './profile-card.component.scss',
 })
 export class ProfileCardComponent {
-  @Input() profile!: Profile;
+  profile = input.required<Profile>();
+  isSubscriber = input(false);
+
+  private readonly router = inject(Router);
+
+  openChat(userId: number) {
+    this.router.navigate(['/chats', userId]).then();
+  }
+
+  onSubscribe() {
+    console.log('Подписаться на пользователя:', this.profile().id);
+  }
 }

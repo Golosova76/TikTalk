@@ -3,6 +3,7 @@ import { ProfileCardComponent } from '../../common-ui/profile-card/profile-card.
 import { ProfileService } from '../../data/services/profile.service';
 import { ProfileFiltersComponent } from './profile-filters/profile-filters.component';
 import { debounceTime, fromEvent } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-search-page',
@@ -16,6 +17,10 @@ export class SearchPageComponent implements AfterViewInit {
   private readonly r2 = inject(Renderer2);
 
   profiles = this.profileService.filteredProfiles;
+
+  subscriberIds = toSignal(this.profileService.getSubscribersIds(), {
+    initialValue: new Set<number>(),
+  });
 
   ngAfterViewInit() {
     this.resizeFeed();
