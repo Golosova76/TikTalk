@@ -7,12 +7,19 @@ import { firstValueFrom } from 'rxjs';
 import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [ProfileHeaderComponent, ReactiveFormsModule, SvgIconComponent, AvatarUploadComponent, AsyncPipe],
+  imports: [
+    ProfileHeaderComponent,
+    ReactiveFormsModule,
+    SvgIconComponent,
+    AvatarUploadComponent,
+    AsyncPipe,
+    RouterLink,
+  ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
 })

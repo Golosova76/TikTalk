@@ -1,0 +1,134 @@
+<div class="form-wrapper">
+  <form class="form">
+    <h1 class="form__title">Оформление заказа</h1>
+    <fieldset class="form__section">
+      <legend class="form__legend">Товар</legend>
+      <div class="form-field">
+        <label for="product" class="form-field__label">Выберите товар</label>
+        <select id="product" class="form-field__control">
+          <option value="">Выберите товар0</option>
+          <option value="product-1">Выберите товар1</option>
+          <option value="product-2">Выберите товар2</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="amount" class="form-field__label">Укажите количество</label>
+        <input id="amount" min="1" step="1" type="number" placeholder="Количество" class="form-field__control" />
+      </div>
+    </fieldset>
+    <fieldset class="form__section">
+      <legend class="form__legend">Получатель</legend>
+      <fieldset class="choice-group">
+        <legend class="choice-group__legend">Укажите тип получателя</legend>
+        <label class="choice-group__label">
+          <input value="person" type="radio" class="choice-group__control" />
+          <span class="choice-group__text">Физическое лицо</span>
+        </label>
+        <label class="choice-group__label">
+          <input value="legal" type="radio" class="choice-group__control" />
+          <span class="choice-group__text">Юридическое лицо</span>
+        </label>
+      </fieldset>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="firstName" class="form-field__label">Имя</label>
+          <input id="firstName" type="text" placeholder="Имя" autocomplete="given-name" class="form-field__control" />
+        </div>
+        <div class="form-field">
+          <label for="lastName" class="form-field__label">Фамилия</label>
+          <input
+            id="lastName"
+            type="text"
+            placeholder="Фамилия"
+            autocomplete="family-name"
+            class="form-field__control"
+          />
+        </div>
+        <div class="form-field">
+          <label for="legalName" class="form-field__label">Название организации</label>
+          <input
+            id="legalName"
+            type="text"
+            placeholder="Название организации"
+            autocomplete="organization"
+            class="form-field__control"
+          />
+        </div>
+        <div class="form-field">
+          <label for="inn" class="form-field__label">ИНН</label>
+          <input
+            id="inn"
+            type="text"
+            placeholder="10 или 12 цифр"
+            inputmode="numeric"
+            pattern="[0-9]{10}|[0-9]{12}"
+            class="form-field__control"
+          />
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form__section">
+      <legend class="form__legend">Способ доставки</legend>
+      <div class="choice-group">
+        <label class="choice-group__label">
+          <input value="pickup" type="radio" class="choice-group__control" />
+          <span class="choice-group__text">Самовывоз</span>
+        </label>
+        <label class="choice-group__label">
+          <input value="courier" type="radio" class="choice-group__control" />
+          <span class="choice-group__text">Доставка курьером</span>
+        </label>
+      </div>
+    </fieldset>
+    <fieldset class="form__section specific-group">
+      <legend class="form__legend">Дополнительные услуги</legend>
+      <div class="choice-group">
+        <label class="choice-group__label">
+          <input type="checkbox" class="choice-group__control" />
+          <span class="choice-group__text">Позвонить перед доставкой</span>
+        </label>
+        <label class="choice-group__label">
+          <input type="checkbox" class="choice-group__control" />
+          <span class="choice-group__text">Поднять на этаж</span>
+        </label>
+        <label class="choice-group__label">
+          <input type="checkbox" class="choice-group__control" />
+          <span class="choice-group__text">Отправить электронный чек</span>
+        </label>
+      </div>
+    </fieldset>
+    <fieldset class="form__section specific-group">
+      <legend class="form__legend">Адрес доставки</legend>
+      <button type="button" class="form__button address">Добавить адрес</button>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="city" class="form-field__label">Город</label>
+          <input id="city" type="text" placeholder="Город" autocomplete="address-level2" class="form-field__control" />
+        </div>
+        <div class="form-field">
+          <label for="street" class="form-field__label">Улица</label>
+          <input id="street" type="text" placeholder="Улица" autocomplete="address-line1" class="form-field__control" />
+        </div>
+        <div class="form-field">
+          <label for="house" class="form-field__label">Дом</label>
+          <input id="house" type="text" placeholder="Дом" autocomplete="address-line2" class="form-field__control" />
+        </div>
+        <div class="form-field">
+          <label for="apartment" class="form-field__label">Квартира</label>
+          <input
+            id="apartment"
+            type="text"
+            placeholder="Квартира"
+            autocomplete="address-line3"
+            class="form-field__control"
+          />
+        </div>
+      </div>
+      <button type="button" class="form__button address">Удалить адрес</button>
+    </fieldset>
+    <div class="form__controls">
+      <button type="button" class="form__button">Очистить</button>
+      <button type="submit" class="form__button">Подтвердить</button>
+    </div>
+  </form>
+</div>

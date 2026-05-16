@@ -104,3 +104,19 @@
   @include font-size12-500-133;
   @include margin-bottom32;
 }
+
+.experimental-form {
+  display: flex;
+  border-bottom: 1px solid var(--light-solid);
+  padding: 12px 0;
+  &:hover {
+    color: var(--primary-primary);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--light-solid);
+    outline-offset: 2px;
+  }
+  &:active {
+    transform: translate(2px, 2px);
+  }
+}
