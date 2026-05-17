@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { Address, ExtraServices, ReceiverType } from '../../data/form.model';
 import { MockService } from './mock.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 function getAddressForm(initialValue: Address = {}) {
   return new FormGroup({
@@ -19,7 +20,7 @@ function getAddressForm(initialValue: Address = {}) {
   templateUrl: './experimental.component.html',
   styleUrl: './experimental.component.scss',
 })
-export class ExperimentalComponent implements OnInit {
+export class ExperimentalComponent {
   private readonly mockService = inject(MockService);
   extraServices: ExtraServices[] = [];
 
@@ -32,7 +33,8 @@ export class ExperimentalComponent implements OnInit {
     legalName: new FormControl<string>('', { nonNullable: true }),
     inn: new FormControl<string>('', { nonNullable: true }),
     deliveryMethod: new FormControl<string>('', { nonNullable: true }),
-    addresses: new FormArray([getAddressForm()]),
+    //addresses: new FormArray([getAddressForm()]), сразу создается форма с пустым адресом
+    addresses: new FormArray<ReturnType<typeof getAddressForm>>([]),
     extraServices: new FormRecord<FormControl<boolean>>({}),
   });
 
@@ -40,15 +42,23 @@ export class ExperimentalComponent implements OnInit {
     return this.orderForm.controls.extraServices;
   }
 
-  ngOnInit() {
-    this.loadExtraServices();
-  }
+  constructor() {
+    this.mockService
+      .getExtraServices()
+      .pipe(takeUntilDestroyed())
+      .subscribe((extraServices) => {
+        this.extraServices = extraServices;
+        this.initExtraServicesControls(extraServices);
+      });
 
-  private loadExtraServices(): void {
-    this.mockService.getExtraServices().subscribe((extraServices) => {
-      this.extraServices = extraServices;
-      this.initExtraServicesControls(extraServices);
-    });
+    this.mockService
+      .getAddresses()
+      .pipe(takeUntilDestroyed())
+      .subscribe((addresses) => {
+        for (const address of addresses) {
+          this.orderForm.controls.addresses.push(getAddressForm(address));
+        }
+      });
   }
 
   private initExtraServicesControls(extraServices: ExtraServices[]): void {
@@ -61,5 +71,13 @@ export class ExperimentalComponent implements OnInit {
 
       features.addControl(extraService.code, new FormControl<boolean>(extraService.value, { nonNullable: true }));
     }
+  }
+
+  addAddress(): void {
+    this.orderForm.controls.addresses.push(getAddressForm());
+  }
+
+  removeAddress(index: number): void {
+    this.orderForm.controls.addresses.removeAt(index);
   }
 }

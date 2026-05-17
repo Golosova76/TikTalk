@@ -111,39 +111,69 @@
         </div>
       </fieldset>
     }
-    <fieldset class="form__section" formArrayName="addresses">
-      <legend class="form__legend">Адрес доставки</legend>
-      <button type="button" class="form__button address">Добавить адрес</button>
-      <div class="form-row">
-        <div class="form-field">
-          <label for="city" class="form-field__label">Город</label>
-          <input id="city" type="text" placeholder="Город" autocomplete="address-level2" class="form-field__control" />
+    <button type="button" (click)="addAddress()" class="form__button address">Добавить адрес</button>
+    @for (group of orderForm.controls.addresses.controls; track group; let i = $index) {
+      <fieldset class="form__section" [formGroup]="group">
+        <legend class="form__legend">Адрес доставки</legend>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="city" class="form-field__label">Город</label>
+            <input
+              id="city"
+              type="text"
+              placeholder="Город"
+              autocomplete="address-level2"
+              formControlName="city"
+              class="form-field__control"
+            />
+          </div>
+          <div class="form-field">
+            <label for="street" class="form-field__label">Улица</label>
+            <input
+              id="street"
+              type="text"
+              placeholder="Улица"
+              autocomplete="address-line1"
+              formControlName="street"
+              class="form-field__control"
+            />
+          </div>
+          <div class="form-field">
+            <label for="house" class="form-field__label">Дом</label>
+            <input
+              id="house"
+              type="text"
+              placeholder="Дом"
+              autocomplete="address-line2"
+              formControlName="house"
+              class="form-field__control"
+            />
+          </div>
+          <div class="form-field">
+            <label for="building" class="form-field__label">Корпус</label>
+            <input
+              id="building"
+              type="text"
+              placeholder="Корпус"
+              autocomplete="address-line2"
+              formControlName="building"
+              class="form-field__control"
+            />
+          </div>
+          <div class="form-field">
+            <label for="apartment" class="form-field__label">Квартира</label>
+            <input
+              id="apartment"
+              type="text"
+              placeholder="Квартира"
+              formControlName="apartment"
+              class="form-field__control"
+            />
+          </div>
         </div>
-        <div class="form-field">
-          <label for="street" class="form-field__label">Улица</label>
-          <input id="street" type="text" placeholder="Улица" autocomplete="address-line1" class="form-field__control" />
-        </div>
-        <div class="form-field">
-          <label for="house" class="form-field__label">Дом</label>
-          <input id="house" type="text" placeholder="Дом" autocomplete="address-line2" class="form-field__control" />
-        </div>
-        <div class="form-field">
-          <label for="building" class="form-field__label">Корпус</label>
-          <input
-            id="building"
-            type="text"
-            placeholder="Корпус"
-            autocomplete="address-line2"
-            class="form-field__control"
-          />
-        </div>
-        <div class="form-field">
-          <label for="apartment" class="form-field__label">Квартира</label>
-          <input id="apartment" type="text" placeholder="Квартира" class="form-field__control" />
-        </div>
-      </div>
-      <button type="button" class="form__button address">Удалить адрес</button>
-    </fieldset>
+        <button type="button" (click)="removeAddress(i)" class="form__button address">Удалить адрес</button>
+      </fieldset>
+    }
     <div class="form__controls">
       <button type="button" class="form__button">Очистить</button>
       <button type="submit" class="form__button">Подтвердить</button>

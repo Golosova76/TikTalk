@@ -36,25 +36,11 @@ export class MockService {
         apartment: '32',
       },
       {
-        city: 'Москва',
-        street: 'Куликовская',
-        house: '24',
-        building: '1',
-        apartment: '32',
-      },
-      {
         city: 'Санкт-Петербург',
         street: 'Бухарестская',
         house: '18A',
         building: '4',
         apartment: '30',
-      },
-      {
-        city: 'Ярославль',
-        street: 'Большая Октябрьская',
-        house: '45',
-        building: '',
-        apartment: '2',
       },
     ]);
   }

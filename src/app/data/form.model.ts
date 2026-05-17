@@ -28,3 +28,8 @@ export interface ExtraServices {
   label: string;
   value: boolean;
 }
+
+export interface Product {
+  name: string;
+  amount: number;
+}
