@@ -161,3 +161,17 @@
   font-size: 12px;
   padding: 5px;
 }
+
+.address-card {
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+  border: 1px solid var(--border-color-exp);
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.form-field__hint {
+  color: var(--primary-primary);
+}

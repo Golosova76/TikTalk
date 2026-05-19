@@ -6,10 +6,14 @@
       <div class="form-field">
         <label for="product" class="form-field__label">Выберите товар</label>
         <select id="product" formControlName="product" class="form-field__control">
-          <option value="">Выберите товар0</option>
-          <option value="product-1">Выберите товар1</option>
-          <option value="product-2">Выберите товар2</option>
+          <option [ngValue]="null" disabled hidden>Выберите товар</option>
+          @for (product of products; track product.id) {
+            <option [ngValue]="product">{{ product.title }}</option>
+          }
         </select>
+        @if (selectedProduct) {
+          <div class="form-field__hint">В наличии: {{ selectedProduct.stock }}</div>
+        }
       </div>
       <div class="form-field">
         <label for="amount" class="form-field__label">Укажите количество</label>
@@ -22,6 +26,9 @@
           placeholder="Количество"
           class="form-field__control"
         />
+        @if (isAmountToLarge) {
+          <div class="form-field__hint">Недосточно товара на складе</div>
+        }
       </div>
     </fieldset>
     <fieldset class="form__section">
@@ -111,69 +118,71 @@
         </div>
       </fieldset>
     }
-    <button type="button" (click)="addAddress()" class="form__button address">Добавить адрес</button>
-    @for (group of orderForm.controls.addresses.controls; track group; let i = $index) {
-      <fieldset class="form__section" [formGroup]="group">
-        <legend class="form__legend">Адрес доставки</legend>
-        <div class="form-row">
-          <div class="form-field">
-            <label for="city" class="form-field__label">Город</label>
-            <input
-              id="city"
-              type="text"
-              placeholder="Город"
-              autocomplete="address-level2"
-              formControlName="city"
-              class="form-field__control"
-            />
-          </div>
-          <div class="form-field">
-            <label for="street" class="form-field__label">Улица</label>
-            <input
-              id="street"
-              type="text"
-              placeholder="Улица"
-              autocomplete="address-line1"
-              formControlName="street"
-              class="form-field__control"
-            />
-          </div>
-          <div class="form-field">
-            <label for="house" class="form-field__label">Дом</label>
-            <input
-              id="house"
-              type="text"
-              placeholder="Дом"
-              autocomplete="address-line2"
-              formControlName="house"
-              class="form-field__control"
-            />
-          </div>
-          <div class="form-field">
-            <label for="building" class="form-field__label">Корпус</label>
-            <input
-              id="building"
-              type="text"
-              placeholder="Корпус"
-              autocomplete="address-line2"
-              formControlName="building"
-              class="form-field__control"
-            />
-          </div>
-          <div class="form-field">
-            <label for="apartment" class="form-field__label">Квартира</label>
-            <input
-              id="apartment"
-              type="text"
-              placeholder="Квартира"
-              formControlName="apartment"
-              class="form-field__control"
-            />
+    <fieldset class="form__section">
+      <legend class="form__legend">Адрес доставки</legend>
+      <button type="button" (click)="addAddress()" class="form__button address">Добавить адрес</button>
+      @for (group of orderForm.controls.addresses.controls; track group; let i = $index) {
+        <div [formGroup]="group" class="address-card">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="city" class="form-field__label">Город</label>
+              <input
+                id="city"
+                type="text"
+                placeholder="Город"
+                autocomplete="address-level2"
+                formControlName="city"
+                class="form-field__control"
+              />
+            </div>
+            <div class="form-field">
+              <label for="street" class="form-field__label">Улица</label>
+              <input
+                id="street"
+                type="text"
+                placeholder="Улица"
+                autocomplete="address-line1"
+                formControlName="street"
+                class="form-field__control"
+              />
+            </div>
+            <div class="form-field">
+              <label for="house" class="form-field__label">Дом</label>
+              <input
+                id="house"
+                type="text"
+                placeholder="Дом"
+                autocomplete="address-line2"
+                formControlName="house"
+                class="form-field__control"
+              />
+            </div>
+            <div class="form-field">
+              <label for="building" class="form-field__label">Корпус</label>
+              <input
+                id="building"
+                type="text"
+                placeholder="Корпус"
+                autocomplete="address-line2"
+                formControlName="building"
+                class="form-field__control"
+              />
+            </div>
+            <div class="form-field">
+              <label for="apartment" class="form-field__label">Квартира</label>
+              <input
+                id="apartment"
+                type="text"
+                placeholder="Квартира"
+                formControlName="apartment"
+                class="form-field__control"
+              />
+            </div>
           </div>
         </div>
         <button type="button" (click)="removeAddress(i)" class="form__button address">Удалить адрес</button>
-      </fieldset>
-    }
+      }
+    </fieldset>
     <div class="form__controls">
       <button type="button" class="form__button">Очистить</button>
       <button type="submit" class="form__button">Подтвердить</button>

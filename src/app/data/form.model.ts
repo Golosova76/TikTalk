@@ -30,6 +30,8 @@ export interface ExtraServices {
 }
 
 export interface Product {
-  name: string;
-  amount: number;
+  id: string;
+  title: string;
+  stock: number;
+  price: number;
 }

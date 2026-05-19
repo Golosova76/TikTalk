@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
-import { Address, ExtraServices, ReceiverType } from '../../data/form.model';
+import { FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Address, ExtraServices, Product, ReceiverType } from '../../data/form.model';
 import { MockService } from './mock.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -23,9 +23,10 @@ function getAddressForm(initialValue: Address = {}) {
 export class ExperimentalComponent {
   private readonly mockService = inject(MockService);
   extraServices: ExtraServices[] = [];
+  products: Product[] = [];
 
   orderForm = new FormGroup({
-    product: new FormControl<string>('', { nonNullable: true }),
+    product: new FormControl<Product | null>(null, { validators: [Validators.required] }),
     amount: new FormControl<number>(0, { nonNullable: true }),
     recipientType: new FormControl<ReceiverType>(ReceiverType.PERSON, { nonNullable: true }),
     firstName: new FormControl<string>('', { nonNullable: true }),
@@ -38,8 +39,19 @@ export class ExperimentalComponent {
     extraServices: new FormRecord<FormControl<boolean>>({}),
   });
 
-  get extraServicesControls(): FormRecord<FormControl<boolean>> {
+  protected get extraServicesControls(): FormRecord<FormControl<boolean>> {
     return this.orderForm.controls.extraServices;
+  }
+
+  protected get selectedProduct(): Product | null {
+    return this.orderForm.controls.product.value;
+  }
+
+  protected get isAmountToLarge(): boolean {
+    const product = this.selectedProduct;
+    const amount = this.orderForm.controls.amount.value;
+
+    return !!product && amount > product.stock;
   }
 
   constructor() {
@@ -58,6 +70,13 @@ export class ExperimentalComponent {
         for (const address of addresses) {
           this.orderForm.controls.addresses.push(getAddressForm(address));
         }
+      });
+
+    this.mockService
+      .getProducts()
+      .pipe(takeUntilDestroyed())
+      .subscribe((products) => {
+        this.products = products;
       });
   }
 
