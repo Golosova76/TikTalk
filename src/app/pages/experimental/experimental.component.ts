@@ -1,6 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Address, ExtraServices, Product, ReceiverType } from '../../data/form.model';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  FormRecord,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from '../../data/form.model';
 import { MockService } from './mock.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -22,22 +32,33 @@ function getAddressForm(initialValue: Address = {}) {
 })
 export class ExperimentalComponent {
   private readonly mockService = inject(MockService);
+  readonly ReceiverType = ReceiverType;
   extraServices: ExtraServices[] = [];
   products: Product[] = [];
 
-  orderForm = new FormGroup({
-    product: new FormControl<Product | null>(null, { validators: [Validators.required] }),
-    amount: new FormControl<number>(0, { nonNullable: true }),
-    recipientType: new FormControl<ReceiverType>(ReceiverType.PERSON, { nonNullable: true }),
-    firstName: new FormControl<string>('', { nonNullable: true }),
-    lastName: new FormControl<string>('', { nonNullable: true }),
-    legalName: new FormControl<string>('', { nonNullable: true }),
-    inn: new FormControl<string>('', { nonNullable: true }),
-    deliveryMethod: new FormControl<string>('', { nonNullable: true }),
-    //addresses: new FormArray([getAddressForm()]), сразу создается форма с пустым адресом
-    addresses: new FormArray<ReturnType<typeof getAddressForm>>([]),
-    extraServices: new FormRecord<FormControl<boolean>>({}),
-  });
+  orderForm = new FormGroup(
+    {
+      product: new FormControl<Product | null>(null, { validators: [Validators.required] }),
+      amount: new FormControl<number>(1, { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
+      recipientType: new FormControl<ReceiverType>(ReceiverType.PERSON, { nonNullable: true }),
+      firstName: new FormControl<string>('', { nonNullable: true }),
+      lastName: new FormControl<string>('', { nonNullable: true }),
+      legalName: new FormControl<string>('', { nonNullable: true }),
+      inn: new FormControl<string>('', { nonNullable: true }),
+      phone: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.pattern(/^\+?[0-9\s()-]{10,20}$/)],
+      }),
+      deliveryMethod: new FormControl<DeliveryMethod | ''>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      //addresses: new FormArray([getAddressForm()]), сразу создается форма с пустым адресом
+      addresses: new FormArray<ReturnType<typeof getAddressForm>>([]),
+      extraServices: new FormRecord<FormControl<boolean>>({}),
+    },
+    { validators: [this.amountInStockValidator()] }
+  );
 
   protected get extraServicesControls(): FormRecord<FormControl<boolean>> {
     return this.orderForm.controls.extraServices;
@@ -47,14 +68,29 @@ export class ExperimentalComponent {
     return this.orderForm.controls.product.value;
   }
 
-  protected get isAmountToLarge(): boolean {
-    const product = this.selectedProduct;
-    const amount = this.orderForm.controls.amount.value;
+  protected get isPersonRecipient(): boolean {
+    return this.orderForm.controls.recipientType.value === ReceiverType.PERSON;
+  }
 
-    return !!product && amount > product.stock;
+  protected get isLegalRecipient(): boolean {
+    return this.orderForm.controls.recipientType.value === ReceiverType.LEGAL;
+  }
+
+  protected get isCourierDelivery(): boolean {
+    return this.orderForm.controls.deliveryMethod.value === 'courier';
   }
 
   constructor() {
+    this.updateRecipientValidators(this.orderForm.controls.recipientType.value);
+
+    this.orderForm.controls.recipientType.valueChanges.pipe(takeUntilDestroyed()).subscribe((recipientType) => {
+      this.updateRecipientValidators(recipientType);
+    });
+
+    this.orderForm.controls.deliveryMethod.valueChanges.pipe(takeUntilDestroyed()).subscribe((deliveryMethod) => {
+      this.updateAddressControls(deliveryMethod);
+    });
+
     this.mockService
       .getExtraServices()
       .pipe(takeUntilDestroyed())
@@ -92,11 +128,81 @@ export class ExperimentalComponent {
     }
   }
 
+  private amountInStockValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const form = control as FormGroup<{
+        product: FormControl<Product | null>;
+        amount: FormControl<number>;
+      }>;
+
+      const product = form.controls.product.value;
+      const amount = form.controls.amount.value;
+
+      if (product === null) {
+        return null;
+      }
+
+      return amount > product.stock ? { amountTooLarge: true } : null;
+    };
+  }
+
+  private updateRecipientValidators(recipientType: ReceiverType): void {
+    const { firstName, lastName, legalName, inn } = this.orderForm.controls;
+
+    firstName.clearValidators();
+    lastName.clearValidators();
+    legalName.clearValidators();
+    inn.clearValidators();
+
+    if (recipientType === ReceiverType.PERSON) {
+      firstName.setValidators([Validators.required]);
+      lastName.setValidators([Validators.required]);
+    }
+
+    if (recipientType === ReceiverType.LEGAL) {
+      legalName.setValidators([Validators.required]);
+      inn.setValidators([Validators.required, Validators.pattern(/^(\d{10}|\d{12})$/)]);
+    }
+
+    firstName.updateValueAndValidity();
+    lastName.updateValueAndValidity();
+    legalName.updateValueAndValidity();
+    inn.updateValueAndValidity();
+  }
+
+  private updateAddressControls(deliveryMethod: DeliveryMethod | ''): void {
+    const addresses = this.orderForm.controls.addresses;
+
+    if (deliveryMethod === 'courier' && addresses.length === 0) {
+      addresses.push(getAddressForm());
+    }
+
+    for (const addressGroup of addresses.controls) {
+      const { city, street, house } = addressGroup.controls;
+      city.clearValidators();
+      street.clearValidators();
+      house.clearValidators();
+      if (deliveryMethod === 'courier') {
+        city.setValidators([Validators.required]);
+        street.setValidators([Validators.required]);
+        house.setValidators([Validators.required]);
+      }
+      city.updateValueAndValidity();
+      street.updateValueAndValidity();
+      house.updateValueAndValidity();
+    }
+  }
+
   addAddress(): void {
     this.orderForm.controls.addresses.push(getAddressForm());
+    this.updateAddressControls(this.orderForm.controls.deliveryMethod.value);
   }
 
   removeAddress(index: number): void {
-    this.orderForm.controls.addresses.removeAt(index);
+    const addresses = this.orderForm.controls.addresses;
+    if (addresses.length <= 1) {
+      return;
+    }
+    addresses.removeAt(index);
   }
 }

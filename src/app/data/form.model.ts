@@ -5,6 +5,8 @@ export const ReceiverType = {
 
 export type ReceiverType = (typeof ReceiverType)[keyof typeof ReceiverType];
 
+export type DeliveryMethod = 'pickup' | 'courier';
+
 // если адрес приходит с бэка (если будет реализовано добавить Dto -> AddressDto
 export interface Address {
   city?: string;

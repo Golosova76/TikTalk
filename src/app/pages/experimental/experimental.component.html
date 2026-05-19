@@ -12,7 +12,7 @@
           }
         </select>
         @if (selectedProduct) {
-          <div class="form-field__hint">В наличии: {{ selectedProduct.stock }}</div>
+          <div id="amount-stock" class="form-field__hint">В наличии: {{ selectedProduct.stock }}</div>
         }
       </div>
       <div class="form-field">
@@ -24,10 +24,11 @@
           type="number"
           formControlName="amount"
           placeholder="Количество"
+          aria-describedby="amount-stock amount-error"
           class="form-field__control"
         />
-        @if (isAmountToLarge) {
-          <div class="form-field__hint">Недосточно товара на складе</div>
+        @if (orderForm.hasError("amountTooLarge") && orderForm.controls.amount.touched) {
+          <div id="amount-error" aria-live="polite" class="form-field__error">Недостаточно товара на складе</div>
         }
       </div>
     </fieldset>
@@ -36,57 +37,82 @@
       <fieldset class="choice-group">
         <legend class="choice-group__legend">Укажите тип получателя</legend>
         <label class="choice-group__label">
-          <input value="person" type="radio" formControlName="recipientType" class="choice-group__control" />
+          <input
+            [value]="ReceiverType.PERSON"
+            type="radio"
+            formControlName="recipientType"
+            class="choice-group__control"
+          />
           <span class="choice-group__text">Физическое лицо</span>
         </label>
         <label class="choice-group__label">
-          <input value="legal" type="radio" formControlName="recipientType" class="choice-group__control" />
+          <input
+            [value]="ReceiverType.LEGAL"
+            type="radio"
+            formControlName="recipientType"
+            class="choice-group__control"
+          />
           <span class="choice-group__text">Юридическое лицо</span>
         </label>
       </fieldset>
       <div class="form-row">
+        @if (isPersonRecipient) {
+          <div class="form-field">
+            <label for="firstName" class="form-field__label">Имя</label>
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              placeholder="Имя"
+              autocomplete="given-name"
+              class="form-field__control"
+            />
+          </div>
+          <div class="form-field">
+            <label for="lastName" class="form-field__label">Фамилия</label>
+            <input
+              id="lastName"
+              type="text"
+              placeholder="Фамилия"
+              autocomplete="family-name"
+              formControlName="lastName"
+              class="form-field__control"
+            />
+          </div>
+        }
+        @if (isLegalRecipient) {
+          <div class="form-field">
+            <label for="legalName" class="form-field__label">Название организации</label>
+            <input
+              id="legalName"
+              type="text"
+              placeholder="Название организации"
+              autocomplete="organization"
+              formControlName="legalName"
+              class="form-field__control"
+            />
+          </div>
+          <div class="form-field">
+            <label for="inn" class="form-field__label">ИНН</label>
+            <input
+              id="inn"
+              type="text"
+              placeholder="10 или 12 цифр"
+              inputmode="numeric"
+              formControlName="inn"
+              class="form-field__control"
+            />
+          </div>
+        }
         <div class="form-field">
-          <label for="firstName" class="form-field__label">Имя</label>
+          <label for="phone" class="form-field__label">Телефон</label>
           <input
-            id="firstName"
-            type="text"
-            formControlName="firstName"
-            placeholder="Имя"
-            autocomplete="given-name"
-            class="form-field__control"
-          />
-        </div>
-        <div class="form-field">
-          <label for="lastName" class="form-field__label">Фамилия</label>
-          <input
-            id="lastName"
-            type="text"
-            placeholder="Фамилия"
-            autocomplete="family-name"
-            formControlName="lastName"
-            class="form-field__control"
-          />
-        </div>
-        <div class="form-field">
-          <label for="legalName" class="form-field__label">Название организации</label>
-          <input
-            id="legalName"
-            type="text"
-            placeholder="Название организации"
-            autocomplete="organization"
-            formControlName="legalName"
-            class="form-field__control"
-          />
-        </div>
-        <div class="form-field">
-          <label for="inn" class="form-field__label">ИНН</label>
-          <input
-            id="inn"
-            type="text"
-            placeholder="10 или 12 цифр"
-            inputmode="numeric"
-            pattern="[0-9]{10}|[0-9]{12}"
-            formControlName="inn"
+            id="phone"
+            type="tel"
+            placeholder="Телефон"
+            autocomplete="tel"
+            inputmode="tel"
+            formControlName="phone"
             class="form-field__control"
           />
         </div>
@@ -105,6 +131,74 @@
         </label>
       </div>
     </fieldset>
+    @if (isCourierDelivery) {
+      <fieldset class="form__section">
+        <legend class="form__legend">Адрес доставки</legend>
+        <button type="button" (click)="addAddress()" class="form__button address">Добавить адрес</button>
+        @for (group of orderForm.controls.addresses.controls; track group; let i = $index) {
+          <div [formGroup]="group" class="address-card">
+            <div class="form-row">
+              <div class="form-field">
+                <label [for]="'city-' + i" class="form-field__label">Город</label>
+                <input
+                  [id]="'city-' + i"
+                  type="text"
+                  placeholder="Город"
+                  autocomplete="address-level2"
+                  formControlName="city"
+                  class="form-field__control"
+                />
+              </div>
+              <div class="form-field">
+                <label [for]="'street-' + i" class="form-field__label">Улица</label>
+                <input
+                  [id]="'street-' + i"
+                  type="text"
+                  placeholder="Улица"
+                  autocomplete="address-line1"
+                  formControlName="street"
+                  class="form-field__control"
+                />
+              </div>
+              <div class="form-field">
+                <label [for]="'house-' + i" class="form-field__label">Дом</label>
+                <input
+                  [id]="'house-' + i"
+                  type="text"
+                  placeholder="Дом"
+                  autocomplete="address-line1"
+                  formControlName="house"
+                  class="form-field__control"
+                />
+              </div>
+              <div class="form-field">
+                <label [for]="'building-' + i" class="form-field__label">Корпус</label>
+                <input
+                  [id]="'building-' + i"
+                  type="text"
+                  placeholder="Корпус"
+                  formControlName="building"
+                  class="form-field__control"
+                />
+              </div>
+              <div class="form-field">
+                <label [for]="'apartment-' + i" class="form-field__label">Квартира</label>
+                <input
+                  [id]="'apartment-' + i"
+                  type="text"
+                  placeholder="Квартира"
+                  formControlName="apartment"
+                  class="form-field__control"
+                />
+              </div>
+            </div>
+            @if (orderForm.controls.addresses.length > 1) {
+              <button type="button" (click)="removeAddress(i)" class="form__button address">Удалить адрес</button>
+            }
+          </div>
+        }
+      </fieldset>
+    }
     @if (extraServices.length > 0) {
       <fieldset class="form__section" [formGroup]="extraServicesControls">
         <legend class="form__legend">Дополнительные услуги</legend>
@@ -118,71 +212,6 @@
         </div>
       </fieldset>
     }
-    <fieldset class="form__section">
-      <legend class="form__legend">Адрес доставки</legend>
-      <button type="button" (click)="addAddress()" class="form__button address">Добавить адрес</button>
-      @for (group of orderForm.controls.addresses.controls; track group; let i = $index) {
-        <div [formGroup]="group" class="address-card">
-          <div class="form-row">
-            <div class="form-field">
-              <label for="city" class="form-field__label">Город</label>
-              <input
-                id="city"
-                type="text"
-                placeholder="Город"
-                autocomplete="address-level2"
-                formControlName="city"
-                class="form-field__control"
-              />
-            </div>
-            <div class="form-field">
-              <label for="street" class="form-field__label">Улица</label>
-              <input
-                id="street"
-                type="text"
-                placeholder="Улица"
-                autocomplete="address-line1"
-                formControlName="street"
-                class="form-field__control"
-              />
-            </div>
-            <div class="form-field">
-              <label for="house" class="form-field__label">Дом</label>
-              <input
-                id="house"
-                type="text"
-                placeholder="Дом"
-                autocomplete="address-line2"
-                formControlName="house"
-                class="form-field__control"
-              />
-            </div>
-            <div class="form-field">
-              <label for="building" class="form-field__label">Корпус</label>
-              <input
-                id="building"
-                type="text"
-                placeholder="Корпус"
-                autocomplete="address-line2"
-                formControlName="building"
-                class="form-field__control"
-              />
-            </div>
-            <div class="form-field">
-              <label for="apartment" class="form-field__label">Квартира</label>
-              <input
-                id="apartment"
-                type="text"
-                placeholder="Квартира"
-                formControlName="apartment"
-                class="form-field__control"
-              />
-            </div>
-          </div>
-        </div>
-        <button type="button" (click)="removeAddress(i)" class="form__button address">Удалить адрес</button>
-      }
-    </fieldset>
     <div class="form__controls">
       <button type="button" class="form__button">Очистить</button>
       <button type="submit" class="form__button">Подтвердить</button>
