@@ -13,6 +13,7 @@ import {
 import { Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from '../../data/form.model';
 import { MockService } from './mock.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ControlErrorComponent } from './control-error/control-error.component';
 
 function getAddressForm(initialValue: Address = {}) {
   return new FormGroup({
@@ -26,7 +27,7 @@ function getAddressForm(initialValue: Address = {}) {
 
 @Component({
   selector: 'app-experimental',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ControlErrorComponent],
   templateUrl: './experimental.component.html',
   styleUrl: './experimental.component.scss',
 })
@@ -204,5 +205,35 @@ export class ExperimentalComponent {
       return;
     }
     addresses.removeAt(index);
+  }
+
+  onSubmit(): void {
+    this.orderForm.markAllAsTouched();
+    this.orderForm.updateValueAndValidity();
+
+    console.log('[orderForm valid]', this.orderForm.valid);
+    console.log('[orderForm group errors]', this.orderForm.errors);
+
+    console.log('[firstName errors]', this.orderForm.controls.firstName.errors);
+    console.log('[lastName errors]', this.orderForm.controls.lastName.errors);
+    console.log('[legalName errors]', this.orderForm.controls.legalName.errors);
+    console.log('[inn errors]', this.orderForm.controls.inn.errors);
+    console.log('[phone errors]', this.orderForm.controls.phone.errors);
+
+    console.log('[orderForm value]', this.orderForm.getRawValue());
+
+    this.orderForm.controls.addresses.controls.forEach((addressGroup, index) => {
+      console.log(`[address ${index} city errors]`, addressGroup.controls.city.errors);
+      console.log(`[address ${index} street errors]`, addressGroup.controls.street.errors);
+      console.log(`[address ${index} house errors]`, addressGroup.controls.house.errors);
+    });
+
+    if (this.orderForm.invalid) {
+      return;
+    }
+
+    const formValue = this.orderForm.getRawValue();
+
+    console.log('[submit payload]', formValue);
   }
 }

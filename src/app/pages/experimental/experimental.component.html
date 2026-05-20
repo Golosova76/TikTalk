@@ -1,5 +1,5 @@
 <div class="form-wrapper">
-  <form class="form" [formGroup]="orderForm">
+  <form class="form" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
     <h1 class="form__title">Оформление заказа</h1>
     <fieldset class="form__section">
       <legend class="form__legend">Товар</legend>
@@ -11,6 +11,7 @@
             <option [ngValue]="product">{{ product.title }}</option>
           }
         </select>
+        <app-control-error [control]="orderForm.controls.product" requiredMessage="Выберите товар"> </app-control-error>
         @if (selectedProduct) {
           <div id="amount-stock" class="form-field__hint">В наличии: {{ selectedProduct.stock }}</div>
         }
@@ -27,6 +28,7 @@
           aria-describedby="amount-stock amount-error"
           class="form-field__control"
         />
+        <app-control-error [control]="orderForm.controls.amount"></app-control-error>
         @if (orderForm.hasError("amountTooLarge") && orderForm.controls.amount.touched) {
           <div id="amount-error" aria-live="polite" class="form-field__error">Недостаточно товара на складе</div>
         }
@@ -67,6 +69,7 @@
               autocomplete="given-name"
               class="form-field__control"
             />
+            <app-control-error [control]="orderForm.controls.firstName"></app-control-error>
           </div>
           <div class="form-field">
             <label for="lastName" class="form-field__label">Фамилия</label>
@@ -78,6 +81,7 @@
               formControlName="lastName"
               class="form-field__control"
             />
+            <app-control-error [control]="orderForm.controls.lastName"></app-control-error>
           </div>
         }
         @if (isLegalRecipient) {
@@ -91,6 +95,7 @@
               formControlName="legalName"
               class="form-field__control"
             />
+            <app-control-error [control]="orderForm.controls.legalName"></app-control-error>
           </div>
           <div class="form-field">
             <label for="inn" class="form-field__label">ИНН</label>
@@ -102,6 +107,8 @@
               formControlName="inn"
               class="form-field__control"
             />
+            <app-control-error [control]="orderForm.controls.inn" patternMessage="ИНН должен содержать 10 или 12 цифр">
+            </app-control-error>
           </div>
         }
         <div class="form-field">
@@ -115,6 +122,8 @@
             formControlName="phone"
             class="form-field__control"
           />
+          <app-control-error [control]="orderForm.controls.phone" patternMessage="Введите телефон в корректном формате">
+          </app-control-error>
         </div>
       </div>
     </fieldset>
@@ -130,6 +139,8 @@
           <span class="choice-group__text">Доставка курьером</span>
         </label>
       </div>
+      <app-control-error [control]="orderForm.controls.deliveryMethod" requiredMessage="Выберите способ доставки">
+      </app-control-error>
     </fieldset>
     @if (isCourierDelivery) {
       <fieldset class="form__section">
@@ -148,6 +159,7 @@
                   formControlName="city"
                   class="form-field__control"
                 />
+                <app-control-error [control]="group.controls.city"></app-control-error>
               </div>
               <div class="form-field">
                 <label [for]="'street-' + i" class="form-field__label">Улица</label>
@@ -159,6 +171,7 @@
                   formControlName="street"
                   class="form-field__control"
                 />
+                <app-control-error [control]="group.controls.street"></app-control-error>
               </div>
               <div class="form-field">
                 <label [for]="'house-' + i" class="form-field__label">Дом</label>
@@ -170,6 +183,7 @@
                   formControlName="house"
                   class="form-field__control"
                 />
+                <app-control-error [control]="group.controls.house"></app-control-error>
               </div>
               <div class="form-field">
                 <label [for]="'building-' + i" class="form-field__label">Корпус</label>
