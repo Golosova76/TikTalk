@@ -238,6 +238,31 @@ export class ExperimentalComponent {
 
     const formValue = this.orderForm.getRawValue();
 
-    console.log('[submit payload]', formValue);
+    const payload = {
+      productId: formValue.product?.id,
+      amount: formValue.amount,
+
+      recipientType: formValue.recipientType,
+      recipient:
+        formValue.recipientType === ReceiverType.PERSON
+          ? {
+              firstName: formValue.firstName,
+              lastName: formValue.lastName,
+            }
+          : {
+              legalName: formValue.legalName,
+              inn: formValue.inn,
+            },
+
+      phone: formValue.phone,
+      deliveryMethod: formValue.deliveryMethod,
+
+      addresses: formValue.deliveryMethod === 'courier' ? formValue.addresses : [],
+
+      extraServices: formValue.extraServices,
+    };
+
+    console.log('[getRawValue]', formValue);
+    console.log('[submit payload]', payload);
   }
 }
