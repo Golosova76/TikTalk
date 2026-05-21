@@ -11,7 +11,7 @@ export class MockService {
       {
         code: 'call',
         label: 'Позвонить перед доставкой',
-        value: true,
+        value: false,
       },
       {
         code: 'floor',
@@ -21,7 +21,7 @@ export class MockService {
       {
         code: 'receipt',
         label: 'Отправить электронный чек',
-        value: false,
+        value: true,
       },
     ]);
   }

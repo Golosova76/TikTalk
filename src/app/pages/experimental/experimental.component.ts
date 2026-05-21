@@ -25,6 +25,10 @@ function getAddressForm(initialValue: Address = {}) {
   });
 }
 
+function requiredTrimmed(control: AbstractControl<string>): ValidationErrors | null {
+  return control.value.trim().length === 0 ? { required: true } : null;
+}
+
 @Component({
   selector: 'app-experimental',
   imports: [ReactiveFormsModule, ControlErrorComponent],
@@ -100,14 +104,14 @@ export class ExperimentalComponent {
         this.initExtraServicesControls(extraServices);
       });
 
-    this.mockService
-      .getAddresses()
-      .pipe(takeUntilDestroyed())
-      .subscribe((addresses) => {
-        for (const address of addresses) {
-          this.orderForm.controls.addresses.push(getAddressForm(address));
-        }
-      });
+    //this.mockService
+    //  .getAddresses()
+    //  .pipe(takeUntilDestroyed())
+    //  .subscribe((addresses) => {
+    //    for (const address of addresses) {
+    //      this.orderForm.controls.addresses.push(getAddressForm(address));
+    //    }
+    //  });
 
     this.mockService
       .getProducts()
@@ -184,9 +188,9 @@ export class ExperimentalComponent {
       street.clearValidators();
       house.clearValidators();
       if (deliveryMethod === 'courier') {
-        city.setValidators([Validators.required]);
-        street.setValidators([Validators.required]);
-        house.setValidators([Validators.required]);
+        city.setValidators([requiredTrimmed]);
+        street.setValidators([requiredTrimmed]);
+        house.setValidators([requiredTrimmed]);
       }
       city.updateValueAndValidity();
       street.updateValueAndValidity();
@@ -207,26 +211,26 @@ export class ExperimentalComponent {
     addresses.removeAt(index);
   }
 
+  onReset() {
+    this.orderForm.reset();
+
+    this.orderForm.controls.addresses.clear();
+
+    for (const extraService of this.extraServices) {
+      const control = this.orderForm.controls.extraServices.controls[extraService.code];
+
+      if (control) {
+        control.reset(extraService.value);
+      }
+    }
+
+    this.updateRecipientValidators(ReceiverType.PERSON);
+    this.updateAddressControls('');
+  }
+
   onSubmit(): void {
     this.orderForm.markAllAsTouched();
     this.orderForm.updateValueAndValidity();
-
-    console.log('[orderForm valid]', this.orderForm.valid);
-    console.log('[orderForm group errors]', this.orderForm.errors);
-
-    console.log('[firstName errors]', this.orderForm.controls.firstName.errors);
-    console.log('[lastName errors]', this.orderForm.controls.lastName.errors);
-    console.log('[legalName errors]', this.orderForm.controls.legalName.errors);
-    console.log('[inn errors]', this.orderForm.controls.inn.errors);
-    console.log('[phone errors]', this.orderForm.controls.phone.errors);
-
-    console.log('[orderForm value]', this.orderForm.getRawValue());
-
-    this.orderForm.controls.addresses.controls.forEach((addressGroup, index) => {
-      console.log(`[address ${index} city errors]`, addressGroup.controls.city.errors);
-      console.log(`[address ${index} street errors]`, addressGroup.controls.street.errors);
-      console.log(`[address ${index} house errors]`, addressGroup.controls.house.errors);
-    });
 
     if (this.orderForm.invalid) {
       return;
