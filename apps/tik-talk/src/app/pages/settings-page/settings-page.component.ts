@@ -8,7 +8,7 @@ import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '@tt/auth';
 
 @Component({
   selector: 'app-settings-page',

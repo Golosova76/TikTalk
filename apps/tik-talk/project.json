@@ -1,0 +1,88 @@
+{
+  "name": "tik-talk",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "sourceRoot": "apps/tik-talk/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "options": {
+        "outputPath": "dist/apps/tik-talk",
+        "index": "apps/tik-talk/src/index.html",
+        "browser": "apps/tik-talk/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/tik-talk/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/tik-talk/src/assets", "apps/tik-talk/src/favicon.ico"],
+        "styles": ["apps/tik-talk/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["apps/tik-talk/src"]
+        },
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kB",
+              "maximumError": "1MB"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kB",
+              "maximumError": "4kB"
+            }
+          ],
+          "outputHashing": "all",
+          "baseHref": "/TikTalk/"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": ["{options.outputPath}"]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "tik-talk:build:production"
+        },
+        "development": {
+          "buildTarget": "tik-talk:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "polyfills": ["zone.js", "zone.js/testing"],
+        "tsConfig": "apps/tik-talk/tsconfig.spec.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/tik-talk/src/assets", "apps/tik-talk/src/favicon.ico"],
+        "styles": ["apps/tik-talk/src/styles.scss"],
+        "scripts": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/tik-talk/**/*.ts", "apps/tik-talk/**/*.html"]
+      }
+    }
+  }
+}
