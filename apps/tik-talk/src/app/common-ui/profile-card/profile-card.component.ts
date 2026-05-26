@@ -1,8 +1,8 @@
 import { Component, inject, input } from '@angular/core';
-import { Profile } from '../../data/interfaces/profile.interface';
-import { ImgUrlPipe } from '../../helpers/pipes/img-url.pipe';
 import { Router, RouterLink } from '@angular/router';
-import { SvgIconComponent } from '../svg-icon/svg-icon.component';
+import {ImgUrlPipe, SvgIconComponent} from "@tt/common-ui";
+import {Profile} from "@tt/profile";
+
 
 @Component({
   selector: 'app-profile-card',

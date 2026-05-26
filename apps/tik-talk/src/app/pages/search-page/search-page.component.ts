@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, inject, Renderer2 } from '@angular/core';
 import { ProfileCardComponent } from '../../common-ui/profile-card/profile-card.component';
-import { ProfileService } from '../../data/services/profile.service';
 import { ProfileFiltersComponent } from './profile-filters/profile-filters.component';
 import { debounceTime, fromEvent } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {ProfileService} from "@tt/profile";
 
 @Component({
   selector: 'app-search-page',

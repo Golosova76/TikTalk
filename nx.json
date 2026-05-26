@@ -33,11 +33,13 @@
     "@nx/angular:library": {
       "linter": "eslint",
       "unitTestRunner": "none",
-      "style": "scss"
+      "style": "scss",
+      "skipTests": "true"
     },
     "@nx/angular:component": {
       "style": "scss",
-      "type": "component"
+      "type": "component",
+      "skipTests": "true"
     },
     "@nx/angular:directive": {
       "type": "directive"

@@ -20,7 +20,11 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@tt/auth": ["./libs/auth/src/index.ts"]
+      "@tt/auth": ["./libs/auth/src/index.ts"],
+      "@tt/posts": ["./libs/posts/src/index.ts"],
+      "@tt/profile": ["./libs/profile/src/index.ts"],
+      "@tt/common-ui": ["./libs/common-ui/src/index.ts"],
+      "@tt/shared": ["./libs/shared/src/index.ts"]
     }
   },
   "include": ["src/**/*"],

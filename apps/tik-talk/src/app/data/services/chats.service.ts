@@ -1,9 +1,10 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
-import { ProfileService } from './profile.service';
 import { map, tap } from 'rxjs';
-import { BASE_API_URL } from '../links.constants';
+import {ProfileService} from "@tt/profile";
+import {BASE_API_URL} from "@tt/shared";
+
 
 @Injectable({
   providedIn: 'root',

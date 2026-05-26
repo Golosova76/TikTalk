@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SvgIconComponent } from '../../../common-ui/svg-icon/svg-icon.component';
 import { ChatsBtnComponent } from '../chats-btn/chats-btn.component';
 import { ChatsService } from '../../../data/services/chats.service';
 import { AsyncPipe } from '@angular/common';
@@ -8,6 +7,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map, startWith, switchMap } from 'rxjs';
 import { LastMessageRes } from '../../../data/interfaces/chats.interface';
 import { toObservable } from '@angular/core/rxjs-interop';
+import {SvgIconComponent} from "@tt/common-ui";
 
 @Component({
   selector: 'app-chats-list',

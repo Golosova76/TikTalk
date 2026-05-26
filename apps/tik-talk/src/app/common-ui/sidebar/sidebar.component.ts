@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { AsyncPipe } from '@angular/common';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
-import { ProfileService } from '../../data/services/profile.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AvatarCircleComponent } from '../avatar-circle/avatar-circle.component';
 import { ChatsService } from '../../data/services/chats.service';
+import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
+import {ProfileService} from "@tt/profile";
 
 @Component({
   selector: 'app-sidebar',

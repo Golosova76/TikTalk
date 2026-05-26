@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '@tt/auth';
 import { Router } from '@angular/router';
-import { SvgIconComponent } from '../../common-ui/svg-icon/svg-icon.component';
+import {SvgIconComponent} from "@tt/common-ui";
 
 @Component({
   selector: 'app-login-page',
