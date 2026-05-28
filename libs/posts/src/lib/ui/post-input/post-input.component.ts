@@ -1,7 +1,8 @@
 import { Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from "@tt/profile";
+import { GlobalStoreService} from "@tt/shared";
+
 
 @Component({
   selector: 'app-post-input',
@@ -10,9 +11,9 @@ import {ProfileService} from "@tt/profile";
   styleUrl: './post-input.component.scss',
 })
 export class PostInputComponent {
-  r2 = inject(Renderer2);
+  private readonly r2 = inject(Renderer2);
 
-  profile = inject(ProfileService).me;
+  profile = inject(GlobalStoreService).me;
 
   @Input() showTitle = false;
   @Input() placeholder = 'Напишите что-нибудь...';
