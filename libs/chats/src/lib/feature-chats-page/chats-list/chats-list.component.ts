@@ -10,7 +10,7 @@ import {SvgIconComponent} from "@tt/common-ui";
 import {LastMessageRes} from "@tt/interfaces/chats";
 
 @Component({
-  selector: 'app-chats-list',
+  selector: 'tt-chats-list',
   imports: [
     FormsModule,
     ReactiveFormsModule,

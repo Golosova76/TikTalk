@@ -1,8 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
-import {ProfileService} from "@tt/profile";
-import {BASE_API_URL} from "@tt/shared";
+import {BASE_API_URL, GlobalStoreService} from "@tt/shared";
 import {Chat, LastMessageRes, Message} from "@tt/interfaces/chats/chats.interface";
 
 
@@ -11,7 +10,8 @@ import {Chat, LastMessageRes, Message} from "@tt/interfaces/chats/chats.interfac
 })
 export class ChatsService {
   private readonly http = inject(HttpClient);
-  me = inject(ProfileService).me;
+  private readonly globalStoreService = inject(GlobalStoreService);
+  readonly me = this.globalStoreService.me;
 
   activeChatMessages = signal<Message[]>([]);
 
@@ -39,7 +39,12 @@ export class ChatsService {
   getChatById(chatId: number) {
     return this.http.get<Chat>(`${this.chatUrl}${chatId}`).pipe(
       map((chat) => {
-        const currentMeId = this.me()!.id;
+        const me = this.me();
+        if (!me) {
+          throw new Error('Current user is not loaded');
+        }
+
+        const currentMeId = me.id;
         const isUserFirst = chat.userFirst.id === currentMeId;
         const companion = isUserFirst ? chat.userSecond : chat.userFirst;
 

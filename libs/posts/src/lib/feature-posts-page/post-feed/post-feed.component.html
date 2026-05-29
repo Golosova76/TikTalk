@@ -1,8 +1,8 @@
-<app-post-input [showTitle]="true" [placeholder]="'Напишите что-нибудь...'" (created)="onCreatePost($event)">
-</app-post-input>
+<tt-post-input [showTitle]="true" [placeholder]="'Напишите что-нибудь...'" (created)="onCreatePost($event)">
+</tt-post-input>
 
 <div class="scrollable-feed">
   @for (post of feed(); track post.id) {
-    <app-post [post]="post"></app-post>
+    <tt-post [post]="post"></tt-post>
   }
 </div>

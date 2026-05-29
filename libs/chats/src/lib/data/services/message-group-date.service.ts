@@ -17,12 +17,9 @@ export class MessageGroupDateService {
       }
 
       const key = date.toFormat('yyyy-MM-dd');
-
-      if (!map.has(key)) {
-        map.set(key, []);
-      }
-
-      map.get(key)!.push(message);
+      const group = map.get(key) ?? [];
+      group.push(message);
+      map.set(key, group);
     }
 
     const result: MessageGroup[] = [];

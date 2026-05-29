@@ -19,7 +19,7 @@ import {PostInputComponent} from "@tt/posts";
 import {Chat, MessageGroup} from "@tt/interfaces/chats";
 
 @Component({
-  selector: 'app-chat-workspace-wrapper',
+  selector: 'tt-chat-workspace-wrapper',
   imports: [PostInputComponent, ChatWorkspaceMessageComponent],
   templateUrl: './chat-workspace-wrapper.component.html',
   styleUrl: './chat-workspace-wrapper.component.scss',

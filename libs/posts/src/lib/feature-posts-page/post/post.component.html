@@ -1,6 +1,6 @@
 @if (post(); as post) {
   <div class="post-avatar">
-    <app-avatar-circle [avatarUrl]="post.author.avatarUrl" [class]="'size32'"></app-avatar-circle>
+    <tt-avatar-circle [avatarUrl]="post.author.avatarUrl" [class]="'size32'"></tt-avatar-circle>
   </div>
 
   <main class="post-column">
@@ -31,16 +31,16 @@
 
     <div class="post-comments">
       @for (comment of comments() | sortComments; track comment.id) {
-        <app-comment [comment]="comment"></app-comment>
+        <tt-comment [comment]="comment"></tt-comment>
       }
     </div>
 
-    <app-post-input
+    <tt-post-input
       [showTitle]="false"
       [placeholder]="'Напишите комментарий...'"
       (created)="onCreateComment($event)"
       borderStyle="dashed"
     >
-    </app-post-input>
+    </tt-post-input>
   </main>
 }

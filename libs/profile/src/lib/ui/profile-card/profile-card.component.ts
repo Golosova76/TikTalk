@@ -3,10 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 import {ImgUrlPipe, SvgIconComponent} from "@tt/common-ui";
 import {Profile} from "@tt/interfaces/profile";
 
-
-
 @Component({
-  selector: 'app-profile-card',
+  selector: 'tt-profile-card',
   imports: [ImgUrlPipe, RouterLink, SvgIconComponent],
   templateUrl: './profile-card.component.html',
   styleUrl: './profile-card.component.scss',

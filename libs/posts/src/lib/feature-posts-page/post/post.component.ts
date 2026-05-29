@@ -6,11 +6,11 @@ import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
 import type { Post, PostComment } from '../../data';
 import {AvatarCircleComponent, LuxonDatePipe, SortCommentsPipe, SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from "@tt/profile";
+import {GlobalStoreService} from "@tt/shared";
 
 
 @Component({
-  selector: 'app-post',
+  selector: 'tt-post',
   imports: [
     AvatarCircleComponent,
     SvgIconComponent,
@@ -30,7 +30,7 @@ export class PostComponent implements OnInit {
 
   comments = signal<PostComment[]>([]);
 
-  profile = inject(ProfileService).me;
+  profile = inject(GlobalStoreService).me;
 
   ngOnInit() {
     const post = this.post();

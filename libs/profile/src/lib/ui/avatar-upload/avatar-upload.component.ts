@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import {DndDirective, SvgIconComponent} from "@tt/common-ui";
 
 @Component({
-  selector: 'app-avatar-upload',
+  selector: 'tt-avatar-upload',
   imports: [SvgIconComponent, DndDirective],
   templateUrl: './avatar-upload.component.html',
   styleUrl: './avatar-upload.component.scss',

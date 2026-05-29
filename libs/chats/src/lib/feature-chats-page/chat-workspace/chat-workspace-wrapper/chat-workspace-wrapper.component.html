@@ -3,16 +3,16 @@
     <div class="message-date-title">{{ group.dateTitle }}</div>
 
     @for (message of group.messages; track message.id) {
-      <app-chat-workspace-message [message]="message"></app-chat-workspace-message>
+      <tt-chat-workspace-message [message]="message"></tt-chat-workspace-message>
     }
   }
 </div>
 <div class="messages-input">
-  <app-post-input
+  <tt-post-input
     [showTitle]="false"
     [placeholder]="'Напишите что-нибудь...'"
     (created)="onCreateMessage($event)"
     borderStyle="solid"
   >
-  </app-post-input>
+  </tt-post-input>
 </div>

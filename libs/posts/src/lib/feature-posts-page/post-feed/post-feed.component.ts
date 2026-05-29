@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
 import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
-import {ProfileService} from "@tt/profile";
 import { PostInputComponent } from "../../ui";
 import { PostService } from "../../data";
 import { PostComponent } from '../post/post.component';
+import {GlobalStoreService} from "@tt/shared";
 
 
 
 
 @Component({
-  selector: 'app-post-feed',
+  selector: 'tt-post-feed',
   imports: [PostInputComponent, PostComponent],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
@@ -21,7 +21,7 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
 
   feed = this.postService.posts;
 
-  profile = inject(ProfileService).me;
+  profile = inject(GlobalStoreService).me;
 
   ngOnInit() {
     this.postService.fetchPosts().subscribe();

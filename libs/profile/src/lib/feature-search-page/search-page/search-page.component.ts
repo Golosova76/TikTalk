@@ -3,10 +3,10 @@ import { ProfileCardComponent } from '../../ui/profile-card/profile-card.compone
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 import { debounceTime, fromEvent } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {ProfileService} from "@tt/profile";
+import {ProfileService} from "../../data/services/profile.service";
 
 @Component({
-  selector: 'app-search-page',
+  selector: 'tt-search-page',
   imports: [ProfileCardComponent, ProfileFiltersComponent],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',

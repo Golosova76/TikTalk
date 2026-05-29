@@ -4,7 +4,7 @@ import {Profile} from "@tt/interfaces/profile";
 
 
 @Component({
-  selector: 'app-subscriber-card',
+  selector: 'tt-subscriber-card',
   imports: [ImgUrlPipe],
   templateUrl: './subscriber-card.component.html',
   styleUrl: './subscriber-card.component.scss',

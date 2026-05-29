@@ -23,7 +23,7 @@
 
       <div class="sidebar__names">
         @for (profile of subscribers$ | async; track profile.id) {
-          <app-subscriber-card [profile]="profile"></app-subscriber-card>
+          <tt-subscriber-card [profile]="profile"></tt-subscriber-card>
         }
       </div>
 
@@ -37,7 +37,7 @@
   <footer class="sidebar__footer">
     <div class="footer-avatar">
       @if (me(); as me) {
-        <app-avatar-circle [avatarUrl]="me.avatarUrl" [class]="'size32'"></app-avatar-circle>
+        <tt-avatar-circle [avatarUrl]="me.avatarUrl" [class]="'size32'"></tt-avatar-circle>
         <div class="footer-name">{{ me.username }}</div>
         <a [routerLink]="['/settings']" class="settings-button">
           <svg icon="settings" class="footer-avatar-icon"></svg>

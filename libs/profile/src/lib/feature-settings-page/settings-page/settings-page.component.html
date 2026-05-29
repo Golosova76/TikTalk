@@ -2,7 +2,7 @@
   <div class="settings-about">
     <header class="profile-page__header">
       @if (profile$ | async; as profile) {
-        <app-profile-header [profile]="profile" layoutClass="vertical-layout"></app-profile-header>
+        <tt-profile-header [profile]="profile" layoutClass="vertical-layout"></tt-profile-header>
       }
     </header>
     <div class="profile-page__line">
@@ -53,7 +53,7 @@
         <div class="tt-form-label">
           <span class="tt-form-label__text">Аватарка</span>
           <div class="tt-form-avatar">
-            <app-avatar-upload></app-avatar-upload>
+            <tt-avatar-upload></tt-avatar-upload>
           </div>
         </div>
         <label class="tt-form-label">

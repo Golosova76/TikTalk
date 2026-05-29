@@ -31,7 +31,7 @@ function requiredTrimmed(control: AbstractControl<string>): ValidationErrors | n
 }
 
 @Component({
-  selector: 'app-experimental',
+  selector: 'tt-experimental',
   imports: [ReactiveFormsModule, ControlErrorComponent],
   templateUrl: './experimental.component.html',
   styleUrl: './experimental.component.scss',

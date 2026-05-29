@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-control-error',
+  selector: 'tt-control-error',
   imports: [],
   templateUrl: './control-error.component.html',
   styleUrl: './control-error.component.scss',

@@ -5,7 +5,7 @@ import {Profile} from "@tt/interfaces/profile";
 
 
 @Component({
-  selector: 'app-profile-header',
+  selector: 'tt-profile-header',
   imports: [NgClass, AvatarCircleComponent],
   templateUrl: './profile-header.component.html',
   styleUrl: './profile-header.component.scss',

@@ -1,6 +1,6 @@
 @if (profile$ | async; as profile) {
   <header class="profile-page__header">
-    <app-profile-header [profile]="profile" layoutClass="horizontal-layout"></app-profile-header>
+    <tt-profile-header [profile]="profile" layoutClass="horizontal-layout"></tt-profile-header>
 
     <div class="header-settings">
       @if (isMyPage()) {
@@ -20,14 +20,14 @@
   <main class="profile-page__body">
     <div class="profile-page__chat">
       <h2 class="visually-hidden">Мой чат</h2>
-      <app-post-feed></app-post-feed>
+      <tt-post-feed></tt-post-feed>
     </div>
     <div class="profile-page__about">
       <h3 class="profile-page__subscribers">Подписчики</h3>
       <div class="subscribers-wrapper">
         @for (subscriber of subscribers$ | async; track subscriber.id) {
           <a [routerLink]="['/profile', subscriber.id]" class="subscriber-avatar-button">
-            <app-avatar-circle [avatarUrl]="subscriber.avatarUrl" [class]="'size36'"></app-avatar-circle>
+            <tt-avatar-circle [avatarUrl]="subscriber.avatarUrl" [class]="'size36'"></tt-avatar-circle>
           </a>
         }
         <a class="subscribers-search" [routerLink]="['/search']">

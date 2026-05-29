@@ -4,7 +4,7 @@ import {Message} from "@tt/interfaces/chats";
 
 
 @Component({
-  selector: 'app-chat-workspace-message',
+  selector: 'tt-chat-workspace-message',
   imports: [AvatarCircleComponent, LuxonDatePipe],
   templateUrl: './chat-workspace-message.component.html',
   styleUrl: './chat-workspace-message.component.scss',

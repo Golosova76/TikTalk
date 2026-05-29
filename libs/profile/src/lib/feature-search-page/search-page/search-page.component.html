@@ -1,9 +1,9 @@
 <div class="profile-card__filter">
-  <app-profile-filters></app-profile-filters>
+  <tt-profile-filters></tt-profile-filters>
 </div>
 
 <div class="profile-card__wrapper scrollable-feed">
   @for (profile of profiles(); track profile.id) {
-    <app-profile-card [profile]="profile" [isSubscriber]="subscriberIds().has(profile.id)"></app-profile-card>
+    <tt-profile-card [profile]="profile" [isSubscriber]="subscriberIds().has(profile.id)"></tt-profile-card>
   }
 </div>

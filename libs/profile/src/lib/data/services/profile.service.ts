@@ -18,7 +18,7 @@ export class ProfileService {
   private readonly http = inject(HttpClient);
   #globalStoreService = inject(GlobalStoreService);
 
-  me = signal<Profile | null>(null);
+  me = this.#globalStoreService.me;
   filteredProfiles = signal<Profile[]>([]);
 
   getTestAccounts() {
@@ -29,7 +29,6 @@ export class ProfileService {
     return this.http
       .get<Profile>(`${BASE_API_URL}account/me`)
       .pipe(tap((res) => {
-        this.me.set(res);
         this.#globalStoreService.me.set(res);
       }));
   }

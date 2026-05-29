@@ -2,12 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ChatsService } from '../../../../chats/src/lib/data/services/chats.service';
+
 import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
 import {ProfileService} from "@tt/profile";
+import {ChatsService} from "@tt/chats";
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'tt-sidebar',
   imports: [SvgIconComponent, SubscriberCardComponent, AsyncPipe, RouterLink, RouterLinkActive, AvatarCircleComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',

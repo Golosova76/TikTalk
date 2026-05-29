@@ -8,10 +8,10 @@ import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@tt/auth';
 import {SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from "@tt/profile";
+import {ProfileService} from "../../data/services/profile.service";
 
 @Component({
-  selector: 'app-settings-page',
+  selector: 'tt-settings-page',
   imports: [
     ProfileHeaderComponent,
     ReactiveFormsModule,

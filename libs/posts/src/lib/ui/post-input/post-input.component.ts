@@ -5,7 +5,7 @@ import { GlobalStoreService} from "@tt/shared";
 
 
 @Component({
-  selector: 'app-post-input',
+  selector: 'tt-post-input',
   imports: [AvatarCircleComponent, SvgIconComponent, FormsModule],
   templateUrl: './post-input.component.html',
   styleUrl: './post-input.component.scss',
