@@ -18,8 +18,6 @@ export class SortCommentsPipe implements PipeTransform {
       return [];
     }
 
-    return [...comments].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    return [...comments].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 }

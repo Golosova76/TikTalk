@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import {DndDirective, SvgIconComponent} from "@tt/common-ui";
+import { DndDirective, SvgIconComponent } from '@tt/common-ui';
 
 @Component({
   selector: 'tt-avatar-upload',

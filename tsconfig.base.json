@@ -28,7 +28,8 @@
       "@tt/chats": ["./libs/chats/src/index.ts"],
       "@tt/experimental": ["./libs/experimental/src/index.ts"],
       "@tt/layout": ["./libs/layout/src/index.ts"],
-      "@tt/interfaces/*": ["./libs/interfaces/src/lib/*"]
+      "@tt/interfaces/*": ["./libs/interfaces/src/lib/*"],
+      "@tt/data-access": ["./libs/data-access/src/index.ts"]
     }
   },
   "include": ["src/**/*"],

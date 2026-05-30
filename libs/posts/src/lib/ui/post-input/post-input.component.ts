@@ -1,8 +1,7 @@
 import { Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
-import { GlobalStoreService} from "@tt/shared";
-
+import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
+import { GlobalStoreService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-post-input',

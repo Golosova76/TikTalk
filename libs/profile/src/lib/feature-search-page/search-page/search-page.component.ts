@@ -3,7 +3,8 @@ import { ProfileCardComponent } from '../../ui/profile-card/profile-card.compone
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 import { debounceTime, fromEvent } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {ProfileService} from "../../data/services/profile.service";
+import { ProfileService, selectFilteredProfiles } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-search-page',
@@ -15,8 +16,9 @@ export class SearchPageComponent implements AfterViewInit {
   private readonly profileService = inject(ProfileService);
   private readonly hostElement = inject(ElementRef);
   private readonly r2 = inject(Renderer2);
+  private readonly store = inject(Store);
 
-  profiles = this.profileService.filteredProfiles;
+  profiles = this.store.selectSignal(selectFilteredProfiles);
 
   subscriberIds = toSignal(this.profileService.getSubscribersIds(), {
     initialValue: new Set<number>(),

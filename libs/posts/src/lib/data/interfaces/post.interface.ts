@@ -1,5 +1,4 @@
-import {Profile} from "@tt/interfaces/profile";
-
+import { Profile } from '@tt/data-access';
 
 export interface PostCreateDto {
   title: string;

@@ -15,8 +15,8 @@ import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-wor
 import { debounceTime, firstValueFrom, fromEvent, Subject, takeUntil } from 'rxjs';
 import { MessageGroupDateService } from '../../../data/services/message-group-date.service';
 import { toObservable } from '@angular/core/rxjs-interop';
-import {PostInputComponent} from "@tt/posts";
-import {Chat, MessageGroup} from "@tt/interfaces/chats";
+import { PostInputComponent } from '@tt/posts';
+import { Chat, MessageGroup } from '@tt/interfaces/chats';
 
 @Component({
   selector: 'tt-chat-workspace-wrapper',

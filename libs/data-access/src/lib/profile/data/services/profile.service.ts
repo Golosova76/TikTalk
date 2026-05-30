@@ -1,15 +1,10 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
-import {BASE_API_URL, GlobalStoreService, Pageble} from "@tt/shared";
-import {Profile} from "@tt/interfaces/profile";
-
-
-type ProfileFilterParams = Partial<{
-  firstName: string;
-  lastName: string;
-  stack: string;
-}>;
+import { BASE_API_URL } from '@tt/shared';
+import { Profile, ProfileFilterParams } from '../interfaces/profile.interface';
+import { GlobalStoreService } from '../../../data';
+import { Pageble } from '../interfaces/pageble.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,19 +13,21 @@ export class ProfileService {
   private readonly http = inject(HttpClient);
   #globalStoreService = inject(GlobalStoreService);
 
-  me = this.#globalStoreService.me;
-  filteredProfiles = signal<Profile[]>([]);
+  //me = this.#globalStoreService.me;
+  //ProfileService не хранит me
+  //ProfileService только делает HTTP-запрос
+  //после успешного ответа обновляет GlobalStoreService.me
 
   getTestAccounts() {
     return this.http.get<Profile[]>(`${BASE_API_URL}account/test_accounts`);
   }
 
   getMe() {
-    return this.http
-      .get<Profile>(`${BASE_API_URL}account/me`)
-      .pipe(tap((res) => {
+    return this.http.get<Profile>(`${BASE_API_URL}account/me`).pipe(
+      tap((res) => {
         this.#globalStoreService.me.set(res);
-      }));
+      })
+    );
   }
 
   getAccount(id: string) {
@@ -52,7 +49,7 @@ export class ProfileService {
   patchProfile(profile: Partial<Profile>) {
     return this.http
       .patch<Profile>(`${BASE_API_URL}account/me`, profile)
-      .pipe(tap((updatedProfile) => this.me.set(updatedProfile)));
+      .pipe(tap((updatedProfile) => this.#globalStoreService.me.set(updatedProfile)));
   }
 
   uploadAvatar(file: File) {
@@ -63,10 +60,8 @@ export class ProfileService {
   }
 
   filterProfiles(params: ProfileFilterParams) {
-    return this.http
-      .get<Pageble<Profile>>(`${BASE_API_URL}account/accounts`, {
-        params,
-      })
-      .pipe(tap((res) => this.filteredProfiles.set(res.items)));
+    return this.http.get<Pageble<Profile>>(`${BASE_API_URL}account/accounts`, {
+      params,
+    });
   }
 }

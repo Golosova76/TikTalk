@@ -3,10 +3,10 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
-import {PostFeedComponent} from "@tt/posts";
-import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
-import { ProfileService } from "../../data/services/profile.service";
-import { ProfileHeaderComponent } from "../../ui/profile-header/profile-header.component";
+import { PostFeedComponent } from '@tt/posts';
+import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
+import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
+import { GlobalStoreService, ProfileService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-profile-page',
@@ -18,8 +18,10 @@ export class ProfilePageComponent {
   private readonly profileService = inject(ProfileService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly globalStoreService = inject(GlobalStoreService);
+  readonly me = this.globalStoreService.me;
 
-  me$ = toObservable(this.profileService.me);
+  me$ = toObservable(this.me);
 
   subscribers$ = this.profileService.getSubscribersShortList(5);
 
@@ -27,14 +29,13 @@ export class ProfilePageComponent {
 
   profile$ = this.route.params.pipe(
     switchMap(({ id }) => {
-      this.isMyPage.set(id === 'me' || id === this.profileService.me()?.id);
+      this.isMyPage.set(id === 'me' || id === this.me()?.id);
       if (id === 'me') return this.me$;
       return this.profileService.getAccount(id);
     })
   );
 
   async sendMessage(userId: number) {
-    //const res = await firstValueFrom(this.chatsService.createChat(userId));
-    await this.router.navigate(['/chats', 'new'], {queryParams: {userId: userId}});
+    await this.router.navigate(['/chats', 'new'], { queryParams: { userId: userId } });
   }
 }

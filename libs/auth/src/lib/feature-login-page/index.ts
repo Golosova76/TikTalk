@@ -1,3 +1,3 @@
-import { LoginPageComponent } from "./login-page/login-page.component";
+import { LoginPageComponent } from './login-page/login-page.component';
 
-export { LoginPageComponent }
+export { LoginPageComponent };

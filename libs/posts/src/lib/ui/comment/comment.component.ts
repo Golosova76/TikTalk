@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import {AvatarCircleComponent, LuxonDatePipe} from "@tt/common-ui";
-import { PostComment } from "../../data";
+import { AvatarCircleComponent, LuxonDatePipe } from '@tt/common-ui';
+import { PostComment } from '../../data';
 
 @Component({
   selector: 'tt-comment',

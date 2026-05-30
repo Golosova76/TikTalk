@@ -5,9 +5,8 @@ import { PostService } from '../../data';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
 import type { Post, PostComment } from '../../data';
-import {AvatarCircleComponent, LuxonDatePipe, SortCommentsPipe, SvgIconComponent} from "@tt/common-ui";
-import {GlobalStoreService} from "@tt/shared";
-
+import { AvatarCircleComponent, LuxonDatePipe, SortCommentsPipe, SvgIconComponent } from '@tt/common-ui';
+import { GlobalStoreService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-post',

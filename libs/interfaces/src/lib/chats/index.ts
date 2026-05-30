@@ -1,3 +1,3 @@
-import { Chat, LastMessageRes, Message, MessageGroup } from "./chats.interface";
+import { Chat, LastMessageRes, Message, MessageGroup } from './chats.interface';
 
-export type { Chat, LastMessageRes, MessageGroup, Message }
+export type { Chat, LastMessageRes, MessageGroup, Message };

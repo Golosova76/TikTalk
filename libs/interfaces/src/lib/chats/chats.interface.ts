@@ -1,6 +1,4 @@
-import { Profile } from "../profile/profile.interface";
-
-
+import { Profile } from '@tt/data-access';
 export interface Chat {
   id: number;
   userFirst: Profile;

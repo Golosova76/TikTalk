@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
-import {BASE_API_URL, GlobalStoreService} from "@tt/shared";
-import {Chat, LastMessageRes, Message} from "@tt/interfaces/chats/chats.interface";
-
+import { BASE_API_URL } from '@tt/shared';
+import { Chat, LastMessageRes, Message } from '@tt/interfaces/chats/chats.interface';
+import { GlobalStoreService } from '@tt/data-access';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,3 @@
-import { SettingsPageComponent } from "./settings-page/settings-page.component";
+import { SettingsPageComponent } from './settings-page/settings-page.component';
 
-
-export { SettingsPageComponent }
+export { SettingsPageComponent };

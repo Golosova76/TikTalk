@@ -6,8 +6,8 @@ import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map, startWith, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
-import {SvgIconComponent} from "@tt/common-ui";
-import {LastMessageRes} from "@tt/interfaces/chats";
+import { SvgIconComponent } from '@tt/common-ui';
+import { LastMessageRes } from '@tt/interfaces/chats';
 
 @Component({
   selector: 'tt-chats-list',

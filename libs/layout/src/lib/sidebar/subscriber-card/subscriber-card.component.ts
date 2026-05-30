@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import {ImgUrlPipe} from "@tt/common-ui";
-import {Profile} from "@tt/interfaces/profile";
-
+import { ImgUrlPipe } from '@tt/common-ui';
+import { Profile } from '@tt/data-access';
 
 @Component({
   selector: 'tt-subscriber-card',

@@ -10,3 +10,9 @@ export interface Profile {
   city: string;
   description: string;
 }
+
+export type ProfileFilterParams = Partial<{
+  firstName: string;
+  lastName: string;
+  stack: string;
+}>;

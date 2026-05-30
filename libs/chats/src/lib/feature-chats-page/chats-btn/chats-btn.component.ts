@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import {AvatarCircleComponent, LuxonDatePipe} from "@tt/common-ui";
-import {LastMessageRes} from "@tt/interfaces/chats";
+import { AvatarCircleComponent, LuxonDatePipe } from '@tt/common-ui';
+import { LastMessageRes } from '@tt/interfaces/chats';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector

@@ -2,10 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
-import {AvatarCircleComponent, SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from "@tt/profile";
-import {ChatsService} from "@tt/chats";
+import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
+import { ChatsService } from '@tt/chats';
+import { GlobalStoreService, ProfileService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-sidebar',
@@ -16,10 +15,11 @@ import {ChatsService} from "@tt/chats";
 export class SidebarComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly chatsService = inject(ChatsService);
+  private readonly globalStoreService = inject(GlobalStoreService);
+
+  readonly me = this.globalStoreService.me;
 
   subscribers$ = this.profileService.getSubscribersShortList(5);
-
-  me = this.profileService.me;
 
   readonly unreadMessagesCount = this.chatsService.unreadMessagesCount;
 

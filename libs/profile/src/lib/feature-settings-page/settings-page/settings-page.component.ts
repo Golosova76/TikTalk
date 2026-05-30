@@ -7,8 +7,8 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@tt/auth';
-import {SvgIconComponent} from "@tt/common-ui";
-import {ProfileService} from "../../data/services/profile.service";
+import { SvgIconComponent } from '@tt/common-ui';
+import { GlobalStoreService, ProfileService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-settings-page',
@@ -28,8 +28,10 @@ export class SettingsPageComponent {
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+  private readonly globalStoreService = inject(GlobalStoreService);
+  readonly me = this.globalStoreService.me;
 
-  profile$ = toObservable(this.profileService.me);
+  profile$ = toObservable(this.me);
 
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
@@ -44,8 +46,8 @@ export class SettingsPageComponent {
   constructor() {
     effect(() => {
       this.form.patchValue({
-        ...this.profileService.me(),
-        stack: this.mergeStack(this.profileService.me()?.stack),
+        ...this.me(),
+        stack: this.mergeStack(this.me()?.stack),
       });
     });
   }
@@ -88,7 +90,7 @@ export class SettingsPageComponent {
   }
 
   onUndo(): void {
-    const profile = this.profileService.me();
+    const profile = this.me();
 
     this.form.patchValue({
       ...profile,

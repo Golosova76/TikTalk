@@ -1,5 +1,5 @@
-import {Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from "./interfaces/form.model"
+import { Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from './interfaces/form.model';
 
-export type { ExtraServices, Product, Address, DeliveryMethod }
+export type { ExtraServices, Product, Address, DeliveryMethod };
 
-export { ReceiverType }
+export { ReceiverType };

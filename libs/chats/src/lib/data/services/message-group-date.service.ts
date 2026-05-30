@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
-import {Message, MessageGroup} from "@tt/interfaces/chats";
+import { Message, MessageGroup } from '@tt/interfaces/chats';
 
 @Injectable({
   providedIn: 'root',

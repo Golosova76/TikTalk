@@ -1,8 +1,7 @@
 import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import {BehaviorSubject, catchError, filter, finalize, switchMap, throwError} from 'rxjs';
-import { AuthService } from "./auth.service";
-
+import { BehaviorSubject, catchError, filter, finalize, switchMap, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
 
 const isRefreshing$ = new BehaviorSubject<boolean>(false);
 
@@ -26,11 +25,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-const refreshAndProceed = (
-  authService: AuthService,
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn
-) => {
+const refreshAndProceed = (authService: AuthService, req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   if (!isRefreshing$.value) {
     isRefreshing$.next(true);
 
@@ -47,7 +42,6 @@ const refreshAndProceed = (
     if (!token) return next(req);
     return next(addToken(req, token));
   }
-
 
   return isRefreshing$.pipe(
     filter((isRefreshing) => !isRefreshing),

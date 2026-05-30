@@ -1,12 +1,9 @@
 import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
 import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
-import { PostInputComponent } from "../../ui";
-import { PostService } from "../../data";
+import { PostInputComponent } from '../../ui';
+import { PostService } from '../../data';
 import { PostComponent } from '../post/post.component';
-import {GlobalStoreService} from "@tt/shared";
-
-
-
+import { GlobalStoreService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-post-feed',

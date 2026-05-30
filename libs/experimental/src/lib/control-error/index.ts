@@ -1,3 +1,3 @@
-import { ControlErrorComponent } from "./control-error.component";
+import { ControlErrorComponent } from './control-error.component';
 
-export { ControlErrorComponent }
+export { ControlErrorComponent };

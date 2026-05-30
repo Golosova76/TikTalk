@@ -12,9 +12,8 @@ import {
 } from '@angular/forms';
 import { MockService } from './mock.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {ControlErrorComponent} from "../control-error";
-import {Address, DeliveryMethod, ExtraServices, Product, ReceiverType} from "../data";
-
+import { ControlErrorComponent } from '../control-error';
+import { Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from '../data';
 
 function getAddressForm(initialValue: Address = {}) {
   return new FormGroup({

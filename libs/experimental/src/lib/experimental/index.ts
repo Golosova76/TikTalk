@@ -1,4 +1,4 @@
-import { ExperimentalComponent } from "./experimental.component";
-import { MockService } from "./mock.service";
+import { ExperimentalComponent } from './experimental.component';
+import { MockService } from './mock.service';
 
-export { MockService, ExperimentalComponent }
+export { MockService, ExperimentalComponent };
