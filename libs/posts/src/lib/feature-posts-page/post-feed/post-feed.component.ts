@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
 import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
 import { PostInputComponent } from '../../ui';
-import { PostService } from '../../data';
 import { PostComponent } from '../post/post.component';
-import { GlobalStoreService } from '@tt/data-access';
+import {GlobalStoreService, postsActions, PostService, selectPosts} from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-post-feed',
@@ -15,13 +15,14 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
   private readonly postService = inject(PostService);
   private readonly hostElement = inject(ElementRef);
   private readonly r2 = inject(Renderer2);
+  private readonly store = inject(Store);
 
-  feed = this.postService.posts;
+  posts = this.store.selectSignal(selectPosts);
 
   profile = inject(GlobalStoreService).me;
 
   ngOnInit() {
-    this.postService.fetchPosts().subscribe();
+    this.store.dispatch(postsActions.loadPosts());
   }
 
   ngAfterViewInit() {

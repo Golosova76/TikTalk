@@ -5,11 +5,15 @@ import { Profile, ProfileFilterParams } from '../data';
 export interface ProfileState {
   profiles: Profile[];
   profileFilters: ProfileFilterParams;
+  loading: boolean;
+  error: unknown | null;
 }
 
 export const initialState: ProfileState = {
   profiles: [],
   profileFilters: {},
+  loading: false,
+  error: null,
 };
 
 export const profileFeature = createFeature({

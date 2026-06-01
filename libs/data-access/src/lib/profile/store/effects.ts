@@ -11,7 +11,7 @@ export class ProfileEffects {
   private readonly profileService = inject(ProfileService);
   actions$ = inject(Actions);
 
-  filterProfiles = createEffect(() => {
+  filterProfiles$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(profileActions.filterEvents),
       switchMap(({ filters }) => {

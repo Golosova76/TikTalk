@@ -2,7 +2,7 @@
 </tt-post-input>
 
 <div class="scrollable-feed">
-  @for (post of feed(); track post.id) {
+  @for (post of posts(); track post.id) {
     <tt-post [post]="post"></tt-post>
   }
 </div>

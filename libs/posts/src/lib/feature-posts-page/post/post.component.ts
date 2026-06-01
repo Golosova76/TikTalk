@@ -1,12 +1,10 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { PostService } from '../../data';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
-import type { Post, PostComment } from '../../data';
 import { AvatarCircleComponent, LuxonDatePipe, SortCommentsPipe, SvgIconComponent } from '@tt/common-ui';
-import { GlobalStoreService } from '@tt/data-access';
+import {GlobalStoreService, Post, PostComment, PostService} from '@tt/data-access';
 
 @Component({
   selector: 'tt-post',

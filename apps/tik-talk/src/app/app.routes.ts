@@ -5,7 +5,7 @@ import { chatsRoutes } from '@tt/chats';
 import { ExperimentalComponent } from '@tt/experimental';
 import { LayoutComponent } from '@tt/layout';
 import { provideState } from '@ngrx/store';
-import { profileFeature } from '@tt/data-access';
+import { PostEffects, postsFeature, profileFeature } from '@tt/data-access';
 import { provideEffects } from '@ngrx/effects';
 import { ProfileEffects } from '@tt/data-access';
 
@@ -20,7 +20,11 @@ export const routes: Routes = [
         component: SearchPageComponent,
         providers: [provideState(profileFeature), provideEffects(ProfileEffects)],
       },
-      { path: 'profile/:id', component: ProfilePageComponent },
+      {
+        path: 'profile/:id',
+        component: ProfilePageComponent,
+        providers: [provideState(postsFeature), provideEffects(PostEffects)],
+      },
       { path: 'settings', component: SettingsPageComponent },
       { path: 'experimental', component: ExperimentalComponent },
       { path: 'chats', loadChildren: () => chatsRoutes },
