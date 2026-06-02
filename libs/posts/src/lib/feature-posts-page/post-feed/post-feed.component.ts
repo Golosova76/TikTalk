@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
-import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
+import { debounceTime, fromEvent } from 'rxjs';
 import { PostInputComponent } from '../../ui';
 import { PostComponent } from '../post/post.component';
-import {GlobalStoreService, postsActions, PostService, selectPosts} from '@tt/data-access';
+import { GlobalStoreService, postsActions, PostService, selectPosts } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -44,16 +44,15 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
     this.r2.setStyle(feedElement, 'height', `${height}px`);
   }
 
-  async onCreatePost(data: { title?: string; text: string }) {
+  onCreatePost(data: { title?: string; text: string }) {
     const user = this.profile();
     if (!user || !data.title || !data.text) return;
+    const payload = {
+      title: data.title,
+      content: data.text,
+      authorId: user.id,
+    };
 
-    await firstValueFrom(
-      this.postService.createPost({
-        title: data.title,
-        content: data.text,
-        authorId: user.id,
-      })
-    );
+    this.store.dispatch(postsActions.createPost({ payload }));
   }
 }

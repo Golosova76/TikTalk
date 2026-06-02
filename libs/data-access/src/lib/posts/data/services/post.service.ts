@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap } from 'rxjs';
+import { map } from 'rxjs';
 import { BASE_API_URL } from '@tt/shared';
-import {CommentCreateDto, Post, PostComment, PostCreateDto} from "../interfaces/post.interface";
-
+import { CommentCreateDto, Post, PostComment, PostCreateDto } from '../interfaces/post.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +10,8 @@ import {CommentCreateDto, Post, PostComment, PostCreateDto} from "../interfaces/
 export class PostService {
   private readonly http = inject(HttpClient);
 
-  //posts = signal<Post[]>([]);
-
   createPost(payload: PostCreateDto) {
-    return this.http.post<Post>(`${BASE_API_URL}post/`, payload).pipe(
-      switchMap(() => {
-        return this.fetchPosts();
-      })
-    );
+    return this.http.post<Post>(`${BASE_API_URL}post/`, payload);
   }
 
   fetchPosts() {

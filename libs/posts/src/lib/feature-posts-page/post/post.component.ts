@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
 import { AvatarCircleComponent, LuxonDatePipe, SortCommentsPipe, SvgIconComponent } from '@tt/common-ui';
-import {GlobalStoreService, Post, PostComment, PostService} from '@tt/data-access';
+import { GlobalStoreService, Post, PostComment, PostService } from '@tt/data-access';
 
 @Component({
   selector: 'tt-post',
