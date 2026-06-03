@@ -5,12 +5,14 @@ import { Post } from '../data';
 export interface PostsState {
   posts: Post[];
   loading: boolean;
+  deletingPostId: number | null;
   error: unknown | null;
 }
 
 export const postInitialState: PostsState = {
   posts: [],
   loading: false,
+  deletingPostId: null,
   error: null,
 };
 
@@ -83,7 +85,27 @@ export const postsFeature = createFeature({
       ...state,
       loading: false,
       error: payload.error,
-    }))
+    })),
+
+    /*delete Post*/
+    on(postsActions.deletePost, (state, payload) => ({
+      ...state,
+      deletingPostId: payload.postId,
+      error: null,
+    })),
+
+    on(postsActions.deletePostSuccess, (state,  payload) => ({
+      ...state,
+      posts: state.posts.filter((post) => post.id !== payload.postId),
+      deletingPostId: null,
+      error: null,
+    })),
+
+    on(postsActions.deletePostFailure, (state, payload) => ({
+      ...state,
+      deletingPostId: null,
+      error: payload.error,
+    })),
     /**/
   ),
 });

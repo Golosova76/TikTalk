@@ -15,7 +15,16 @@
           <p class="post-content__content">{{ post.content }}</p>
         </div>
       </div>
-      <div class="button-points">...</div>
+      <div class="post-menu">
+        <button type="button" (click)="togglePostMenu()" class="button-points">...</button>
+        @if (isPostMenuOpened()) {
+          <div class="post-menu__dropdown">
+            <button type="button" class="post-menu__item">Изменить</button>
+            <button type="button" (click)="onDeletePost()" class="post-menu__item .post-menu__item_delete">Удалить</button>
+          </div>
+        }
+
+      </div>
     </div>
 
     <div class="post-counters">

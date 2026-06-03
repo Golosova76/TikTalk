@@ -15,5 +15,9 @@ export const postsActions = createActionGroup({
     'create comment': props<{ payload: CommentCreateDto }>(),
     'create comment success': props<{ postId: number; comments: PostComment[] }>(),
     'create comment failure': props<{ error: unknown }>(),
+
+    'delete post': props<{ postId: number }>(),
+    'delete post success': props<{ postId: number }>(),
+    'delete post failure': props<{ error: unknown }>(),
   },
 });

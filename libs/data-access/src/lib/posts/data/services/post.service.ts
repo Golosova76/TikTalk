@@ -26,6 +26,6 @@ export class PostService {
   }
 
   deletePost(postId: number) {
-    return this.http.delete<Post>(`${BASE_API_URL}post/${postId}`);
+    return this.http.delete<void>(`${BASE_API_URL}post/${postId}`);
   }
 }

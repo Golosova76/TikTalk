@@ -53,5 +53,17 @@ export class PostEffects {
     );
   });
 
+  deletePosts$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(postsActions.deletePost),
+      switchMap(({ postId }) => {
+        return this.postService.deletePost(postId).pipe(
+          map(() => postsActions.deletePostSuccess({ postId })),
+          catchError((error: unknown) => of(postsActions.deletePostFailure({ error })))
+        );
+      })
+    );
+  });
+
   /**/
 }

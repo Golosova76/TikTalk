@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import {Component, computed, inject, input, signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
@@ -23,9 +23,11 @@ import { Store } from '@ngrx/store';
 export class PostComponent {
   private readonly store = inject(Store);
 
-  protected readonly post = input.required<Post>();
+  public readonly post = input.required<Post>();
 
   protected readonly comments = computed(() => this.post().comments);
+
+  protected readonly isPostMenuOpened = signal(false);
 
   profile = inject(GlobalStoreService).me;
 
@@ -42,5 +44,16 @@ export class PostComponent {
     };
 
     this.store.dispatch(postsActions.createComment({ payload: comment }));
+  }
+
+  protected togglePostMenu(): void {
+    this.isPostMenuOpened.update((value) => !value);
+  }
+
+  protected onDeletePost(): void {
+    const post = this.post();
+
+    this.store.dispatch(postsActions.deletePost({postId: post.id}));
+    this.isPostMenuOpened.set(false);
   }
 }
