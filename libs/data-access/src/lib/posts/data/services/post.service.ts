@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
 import { BASE_API_URL } from '@tt/shared';
 import { CommentCreateDto, Post, PostComment, PostCreateDto } from '../interfaces/post.interface';
 
@@ -19,10 +18,14 @@ export class PostService {
   }
 
   createComment(payload: CommentCreateDto) {
-    return this.http.post<PostComment>(`${BASE_API_URL}comment/`, payload).pipe();
+    return this.http.post<PostComment>(`${BASE_API_URL}comment/`, payload);
   }
 
   getCommentsByPostId(postId: number) {
-    return this.http.get<Post>(`${BASE_API_URL}post/${postId}`).pipe(map((res) => res.comments));
+    return this.http.get<Post>(`${BASE_API_URL}post/${postId}`);
+  }
+
+  deletePost(postId: number) {
+    return this.http.delete<Post>(`${BASE_API_URL}post/${postId}`);
   }
 }

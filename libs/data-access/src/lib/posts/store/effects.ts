@@ -35,5 +35,23 @@ export class PostEffects {
     );
   });
 
+  createComment$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(postsActions.createComment),
+      switchMap(({ payload }) => {
+        return this.postService.createComment(payload).pipe(
+          switchMap(() => {
+            return this.postService
+              .getCommentsByPostId(payload.postId)
+              .pipe(
+                map((post) => postsActions.createCommentSuccess({ postId: payload.postId, comments: post.comments }))
+              );
+          }),
+          catchError((error: unknown) => of(postsActions.createCommentFailure({ error })))
+        );
+      })
+    );
+  });
+
   /**/
 }

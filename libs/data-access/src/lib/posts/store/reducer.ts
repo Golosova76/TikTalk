@@ -57,6 +57,33 @@ export const postsFeature = createFeature({
       ...state,
       loading: false,
       error: payload.error,
+    })),
+
+    /*create Comment*/
+    on(postsActions.createComment, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    })),
+
+    on(postsActions.createCommentSuccess, (state, payload) => ({
+      ...state,
+      posts: state.posts.map((post) => {
+        if (post.id !== payload.postId) return post;
+        return {
+          ...post,
+          comments: payload.comments,
+        };
+      }),
+      loading: false,
+      error: null,
+    })),
+
+    on(postsActions.createCommentFailure, (state, payload) => ({
+      ...state,
+      loading: false,
+      error: payload.error,
     }))
+    /**/
   ),
 });
