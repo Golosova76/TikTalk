@@ -10,7 +10,7 @@ export interface ProfileState {
   error: unknown | null;
 }
 
-export const initialState: ProfileState = {
+export const profileInitialState: ProfileState = {
   profiles: [],
   filtersForm: {
     firstName: '',
@@ -24,7 +24,7 @@ export const initialState: ProfileState = {
 export const profileFeature = createFeature({
   name: 'profileFeature',
   reducer: createReducer(
-    initialState,
+    profileInitialState,
 
     on(profileActions.filterEvents, (state, payload) => ({
       ...state,

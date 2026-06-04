@@ -1,7 +1,8 @@
 import { Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
-import { GlobalStoreService } from '@tt/data-access';
+import { selectCurrentUserMe } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-post-input',
@@ -11,8 +12,9 @@ import { GlobalStoreService } from '@tt/data-access';
 })
 export class PostInputComponent {
   private readonly r2 = inject(Renderer2);
+  private readonly store = inject(Store);
 
-  profile = inject(GlobalStoreService).me;
+  readonly profile = this.store.selectSignal(selectCurrentUserMe);
 
   @Input() showTitle = false;
   @Input() placeholder = 'Напишите что-нибудь...';

@@ -5,8 +5,9 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { PostFeedComponent } from '@tt/posts';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
-import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
-import { GlobalStoreService, ProfileService } from '@tt/data-access';
+import { ProfileHeaderComponent } from '../../ui';
+import { ProfileService, selectCurrentUserMe } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-profile-page',
@@ -18,8 +19,8 @@ export class ProfilePageComponent {
   private readonly profileService = inject(ProfileService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly globalStoreService = inject(GlobalStoreService);
-  readonly me = this.globalStoreService.me;
+  private readonly store = inject(Store);
+  readonly me = this.store.selectSignal(selectCurrentUserMe);
 
   me$ = toObservable(this.me);
 

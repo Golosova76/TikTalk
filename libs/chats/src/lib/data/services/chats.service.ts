@@ -3,15 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
 import { BASE_API_URL } from '@tt/shared';
 import { Chat, LastMessageRes, Message } from '@tt/interfaces/chats/chats.interface';
-import { GlobalStoreService } from '@tt/data-access';
+import { selectCurrentUserMe } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
   private readonly http = inject(HttpClient);
-  private readonly globalStoreService = inject(GlobalStoreService);
-  readonly me = this.globalStoreService.me;
+  private readonly store = inject(Store);
+
+  readonly me = this.store.selectSignal(selectCurrentUserMe);
 
   activeChatMessages = signal<Message[]>([]);
 

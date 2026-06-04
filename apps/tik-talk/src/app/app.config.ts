@@ -4,9 +4,10 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authTokenInterceptor } from '@tt/auth';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { CurrentUserEffects, currentUserFeature } from '@tt/data-access';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authTokenInterceptor])),
     provideStore(),
     provideEffects(),
+    provideState(currentUserFeature),
+    provideEffects(CurrentUserEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

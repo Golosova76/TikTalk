@@ -1,14 +1,15 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
-import { ProfileHeaderComponent } from '../../../../../../libs/profile/src/lib/ui/profile-header/profile-header.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.component';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { AvatarUploadComponent } from '../../ui';
 import { AsyncPipe } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '@tt/auth';
 import { SvgIconComponent } from '@tt/common-ui';
-import { GlobalStoreService, ProfileService } from '@tt/data-access';
+import { Profile, ProfileService } from '@tt/data-access';
+import { Store } from '@ngrx/store';
+import { currentUserActions, selectCurrentUserMe } from '@tt/data-access';
+import { ProfileHeaderComponent } from '../../ui';
 
 @Component({
   selector: 'tt-settings-page',
@@ -26,16 +27,15 @@ import { GlobalStoreService, ProfileService } from '@tt/data-access';
 export class SettingsPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly profileService = inject(ProfileService);
-  private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
-  private readonly globalStoreService = inject(GlobalStoreService);
-  readonly me = this.globalStoreService.me;
+  private readonly store = inject(Store);
 
-  profile$ = toObservable(this.me);
+  readonly me = this.store.selectSignal(selectCurrentUserMe);
+  readonly profile$ = this.store.select(selectCurrentUserMe);
 
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     username: [{ value: '', disabled: true }, Validators.required],
@@ -62,17 +62,16 @@ export class SettingsPageComponent {
       await firstValueFrom(this.profileService.uploadAvatar(this.avatarUploader.avatar));
     }
 
-    // Преобразуем значения формы, заменяя null на undefined
-    const formValue = {
-      ...this.form.value,
-      stack: this.splitStack(this.form.value.stack),
+    const formValue = this.form.getRawValue();
+
+    const profile: Partial<Profile> = {
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      description: formValue.description,
+      stack: this.splitStack(formValue.stack),
     };
 
-    const cleanedValue = Object.fromEntries(
-      Object.entries(formValue).map(([key, value]) => [key, value === null ? undefined : value])
-    );
-
-    await firstValueFrom(this.profileService.patchProfile(cleanedValue));
+    this.store.dispatch(currentUserActions.patchMe({ profile: profile }));
   }
 
   splitStack(stack: string | null | string[] | undefined): string[] {

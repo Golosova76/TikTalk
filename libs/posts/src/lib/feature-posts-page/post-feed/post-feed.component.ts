@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from 
 import { debounceTime, fromEvent } from 'rxjs';
 import { PostInputComponent } from '../../ui';
 import { PostComponent } from '../post/post.component';
-import { GlobalStoreService, postsActions, PostService, selectPosts } from '@tt/data-access';
+import { postsActions, PostService, selectCurrentUserMe, selectPosts } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -19,7 +19,7 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
 
   posts = this.store.selectSignal(selectPosts);
 
-  profile = inject(GlobalStoreService).me;
+  readonly profile = this.store.selectSignal(selectCurrentUserMe);
 
   ngOnInit() {
     this.store.dispatch(postsActions.loadPosts());

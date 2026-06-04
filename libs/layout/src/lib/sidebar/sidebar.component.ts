@@ -4,7 +4,8 @@ import { SubscriberCardComponent } from './subscriber-card/subscriber-card.compo
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
 import { ChatsService } from '@tt/chats';
-import { GlobalStoreService, ProfileService } from '@tt/data-access';
+import { currentUserActions, ProfileService, selectCurrentUserMe } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-sidebar',
@@ -15,9 +16,9 @@ import { GlobalStoreService, ProfileService } from '@tt/data-access';
 export class SidebarComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly chatsService = inject(ChatsService);
-  private readonly globalStoreService = inject(GlobalStoreService);
+  private readonly store = inject(Store);
 
-  readonly me = this.globalStoreService.me;
+  readonly me = this.store.selectSignal(selectCurrentUserMe);
 
   subscribers$ = this.profileService.getSubscribersShortList(5);
 
@@ -44,6 +45,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.profileService.getMe().subscribe();
+    this.store.dispatch(currentUserActions.loadMe());
     this.chatsService.getMyChats().subscribe();
   }
 }

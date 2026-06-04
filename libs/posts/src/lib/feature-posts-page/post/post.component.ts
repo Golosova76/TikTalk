@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
 import { AvatarCircleComponent, LuxonDatePipe, SortCommentsPipe, SvgIconComponent } from '@tt/common-ui';
-import { GlobalStoreService, Post, postsActions } from '@tt/data-access';
+import { Post, postsActions, selectCurrentUserMe } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -29,7 +29,7 @@ export class PostComponent {
 
   protected readonly isPostMenuOpened = signal(false);
 
-  profile = inject(GlobalStoreService).me;
+  readonly profile = this.store.selectSignal(selectCurrentUserMe);
 
   protected onCreateComment(data: { text: string }) {
     const user = this.profile();
