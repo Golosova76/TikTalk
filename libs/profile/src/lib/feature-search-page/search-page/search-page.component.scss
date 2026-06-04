@@ -11,6 +11,7 @@
 .profile-card__wrapper {
   display: grid;
   grid-gap: 8px;
+  align-content: start;
 }
 
 .scrollable-feed {

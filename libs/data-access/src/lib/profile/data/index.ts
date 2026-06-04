@@ -1,5 +1,5 @@
-import { Profile, ProfileFilterParams } from './interfaces/profile.interface';
+import { Profile, ProfileFilterParams, ProfileFiltersState } from './interfaces/profile.interface';
 import { ProfileService } from './services/profile.service';
 
 export { ProfileService };
-export type { Profile, ProfileFilterParams };
+export type { Profile, ProfileFilterParams, ProfileFiltersState };

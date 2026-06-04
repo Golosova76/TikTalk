@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, signal} from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
@@ -53,7 +53,7 @@ export class PostComponent {
   protected onDeletePost(): void {
     const post = this.post();
 
-    this.store.dispatch(postsActions.deletePost({postId: post.id}));
+    this.store.dispatch(postsActions.deletePost({ postId: post.id }));
     this.isPostMenuOpened.set(false);
   }
 }

@@ -94,7 +94,7 @@ export const postsFeature = createFeature({
       error: null,
     })),
 
-    on(postsActions.deletePostSuccess, (state,  payload) => ({
+    on(postsActions.deletePostSuccess, (state, payload) => ({
       ...state,
       posts: state.posts.filter((post) => post.id !== payload.postId),
       deletingPostId: null,
@@ -105,7 +105,7 @@ export const postsFeature = createFeature({
       ...state,
       deletingPostId: null,
       error: payload.error,
-    })),
+    }))
     /**/
   ),
 });

@@ -16,3 +16,9 @@ export type ProfileFilterParams = Partial<{
   lastName: string;
   stack: string;
 }>;
+
+export interface ProfileFiltersState {
+  firstName: string;
+  lastName: string;
+  stack: string;
+}

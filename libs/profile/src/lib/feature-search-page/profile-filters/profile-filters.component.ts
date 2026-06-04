@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith, Subscription } from 'rxjs';
-import { profileActions } from '@tt/data-access';
+import { profileActions, selectProfileFiltersForm } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -14,6 +14,8 @@ export class ProfileFiltersComponent implements OnDestroy {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly store = inject(Store);
 
+  readonly profileFiltersFormStore = this.store.selectSignal(selectProfileFiltersForm);
+
   searchForm = this.fb.group({
     firstName: [''],
     lastName: [''],
@@ -23,10 +25,11 @@ export class ProfileFiltersComponent implements OnDestroy {
   searchFormSub!: Subscription;
 
   constructor() {
+    this.searchForm.setValue(this.profileFiltersFormStore(), { emitEvent: false });
     this.searchFormSub = this.searchForm.valueChanges
-      .pipe(startWith({}), debounceTime(300))
-      .subscribe((formValue): void => {
-        this.store.dispatch(profileActions.filterEvents({ filters: formValue }));
+      .pipe(startWith(this.searchForm.getRawValue()), debounceTime(300))
+      .subscribe((): void => {
+        this.store.dispatch(profileActions.filterEvents({ filtersForm: this.searchForm.getRawValue() }));
       });
   }
 

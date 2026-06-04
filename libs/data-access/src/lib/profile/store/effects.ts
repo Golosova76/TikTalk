@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ProfileService } from '../data';
+import { ProfileFilterParams, ProfileFiltersState, ProfileService } from '../data';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { profileActions } from './actions';
 import { map, switchMap } from 'rxjs';
@@ -14,10 +14,26 @@ export class ProfileEffects {
   filterProfiles$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(profileActions.filterEvents),
-      switchMap(({ filters }) => {
+      switchMap(({ filtersForm }) => {
+        const filters = this.mapFiltersFormToParams(filtersForm);
         return this.profileService.filterProfiles(filters);
       }),
       map((response) => profileActions.filterProfilesSuccess({ profiles: response.items }))
     );
   });
+
+  private mapFiltersFormToParams(filtersForm: ProfileFiltersState): ProfileFilterParams {
+    const params: ProfileFilterParams = {};
+
+    if (filtersForm.firstName.trim()) {
+      params.firstName = filtersForm.firstName.trim();
+    }
+    if (filtersForm.lastName.trim()) {
+      params.lastName = filtersForm.lastName.trim();
+    }
+    if (filtersForm.stack.trim()) {
+      params.stack = filtersForm.stack.trim();
+    }
+    return params;
+  }
 }
