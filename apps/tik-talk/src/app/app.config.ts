@@ -7,7 +7,7 @@ import { authTokenInterceptor } from '@tt/auth';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { CurrentUserEffects, currentUserFeature } from '@tt/data-access';
+import { ChatEffects, chatsFeature, CurrentUserEffects, currentUserFeature } from '@tt/data-access';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideEffects(),
     provideState(currentUserFeature),
+    provideState(chatsFeature),
     provideEffects(CurrentUserEffects),
+    provideEffects(ChatEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

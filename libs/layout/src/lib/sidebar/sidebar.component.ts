@@ -3,8 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
-import { ChatsService } from '@tt/chats';
-import { currentUserActions, ProfileService, selectCurrentUserMe } from '@tt/data-access';
+import { currentUserActions, ProfileService, selectCurrentUserMe, selectUnreadMessagesCount } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -15,14 +14,14 @@ import { Store } from '@ngrx/store';
 })
 export class SidebarComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
-  private readonly chatsService = inject(ChatsService);
   private readonly store = inject(Store);
 
   readonly me = this.store.selectSignal(selectCurrentUserMe);
 
   subscribers$ = this.profileService.getSubscribersShortList(5);
+  unreadMessagesCount = this.store.selectSignal(selectUnreadMessagesCount);
 
-  readonly unreadMessagesCount = this.chatsService.unreadMessagesCount;
+  //readonly unreadMessagesCount = this.chatsService.unreadMessagesCount;
 
   menuItems = [
     {
@@ -44,8 +43,6 @@ export class SidebarComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.profileService.getMe().subscribe();
     this.store.dispatch(currentUserActions.loadMe());
-    this.chatsService.getMyChats().subscribe();
   }
 }

@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatsBtnComponent } from '../chats-btn/chats-btn.component';
-import { ChatsService } from '../../data/services/chats.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map, startWith, switchMap } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { SvgIconComponent } from '@tt/common-ui';
-import { LastMessageRes } from '@tt/interfaces/chats';
+import { LastMessageRes, selectChatsLastMessage } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-chats-list',
@@ -24,11 +23,13 @@ import { LastMessageRes } from '@tt/interfaces/chats';
   styleUrl: './chats-list.component.scss',
 })
 export class ChatsListComponent {
-  private chatsService = inject(ChatsService);
+  private readonly store = inject(Store);
+
+  chatsLastMessage = this.store.select(selectChatsLastMessage);
 
   filterChatsControl = new FormControl('');
 
-  chats$ = toObservable(this.chatsService.chatsLastMessage).pipe(
+  chats$ = this.chatsLastMessage.pipe(
     switchMap((chats) =>
       this.filterChatsControl.valueChanges.pipe(
         startWith(''),

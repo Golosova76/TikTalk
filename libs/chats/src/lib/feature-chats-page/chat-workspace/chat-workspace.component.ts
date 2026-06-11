@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ChatsService } from '../../data/services/chats.service';
-import { filter, of, switchMap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { filter, of, switchMap, tap } from 'rxjs';
 import { ChatWorkspaceWrapperComponent } from './chat-workspace-wrapper/chat-workspace-wrapper.component';
 import { ChatWorkspaceHeaderComponent } from './chat-workspace-header/chat-workspace-header.component';
 import { AsyncPipe } from '@angular/common';
+import { chatsActions, selectActiveChat } from '@tt/data-access';
+import { Store } from '@ngrx/store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-chat-workspace',
@@ -14,26 +16,29 @@ import { AsyncPipe } from '@angular/common';
 })
 export class ChatWorkspaceComponent {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly chatsService = inject(ChatsService);
+  private readonly store = inject(Store);
 
-  activeChat$ = this.route.params.pipe(
-    switchMap(({ id }) => {
-      if (id === 'new') {
-        return this.route.queryParams.pipe(
-          filter(({ userId }) => userId),
-          switchMap(({ userId }) => {
-            return this.chatsService.createChat(userId).pipe(
-              switchMap((chat) => {
-                this.router.navigate(['chats', chat.id]).then();
-                return of(null);
+  readonly activeChat$ = this.store.select(selectActiveChat);
+
+  constructor() {
+    this.route.params
+      .pipe(
+        switchMap(({ id }) => {
+          if (id === 'new') {
+            return this.route.queryParams.pipe(
+              filter(({ userId }) => !!userId),
+              tap(({ userId }) => {
+                this.store.dispatch(chatsActions.createChat({ userId: Number(userId) }));
               })
             );
-          })
-        );
-      }
+          }
 
-      return this.chatsService.getChatById(id);
-    })
-  );
+          this.store.dispatch(chatsActions.loadChatById({ chatId: Number(id) }));
+
+          return of(null);
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe();
+  }
 }

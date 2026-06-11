@@ -10,13 +10,18 @@ import {
   Renderer2,
   signal,
 } from '@angular/core';
-import { ChatsService } from '../../../data/services/chats.service';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
 import { debounceTime, firstValueFrom, fromEvent, Subject, takeUntil } from 'rxjs';
-import { MessageGroupDateService } from '../../../data/services/message-group-date.service';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { PostInputComponent } from '@tt/posts';
-import { Chat, MessageGroup } from '@tt/interfaces/chats';
+import {
+  chatsActions,
+  ChatsService,
+  MessageGroup,
+  MessageGroupDateService,
+  selectActiveChatMessages,
+} from '@tt/data-access';
+import { ChatView } from '@tt/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-chat-workspace-wrapper',
@@ -29,15 +34,17 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
   private readonly messageGroupDateService = inject(MessageGroupDateService);
   private readonly hostElement = inject(ElementRef);
   private readonly r2 = inject(Renderer2);
+  private readonly store = inject(Store);
+
   private destroy$ = new Subject<void>();
   private previousChatId: number | null = null;
 
-  chat = input.required<Chat>();
+  chat = input.required<ChatView>();
 
   groupMessages = signal<MessageGroup[]>([]);
 
-  messages = this.chatService.activeChatMessages;
-  messages$ = toObservable(this.messages);
+  readonly messages$ = this.store.select(selectActiveChatMessages);
+  readonly messages = this.store.selectSignal(selectActiveChatMessages);
 
   constructor() {
     effect(() => {
@@ -88,11 +95,12 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
     await firstValueFrom(this.chatService.sendMessage(this.chat().id, data.text));
     await firstValueFrom(this.chatService.getChatById(this.chat().id));
 
-    await firstValueFrom(this.chatService.getMyChats());
+    //await firstValueFrom(this.chatService.getMyChats());
 
     this.scrollToBottom();
 
-    this.chatService.getMyChats().subscribe();
+    //this.chatService.getMyChats().subscribe();
+    this.store.dispatch(chatsActions.loadMyChats());
   }
 
   private scrollToBottom(): void {

@@ -29,9 +29,7 @@ export class ProfileService {
   }
 
   filterProfiles(params: ProfileFilterParams) {
-    return this.http.get<Pageble<Profile>>(`${BASE_API_URL}account/accounts`, {
-      params,
-    });
+    return this.http.get<Pageble<Profile>>(`${BASE_API_URL}account/accounts`, { params });
   }
 
   getSubscribersShortList(subsAmount = 3) {

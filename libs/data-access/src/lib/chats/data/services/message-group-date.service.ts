@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
-import { Message, MessageGroup } from '@tt/interfaces/chats';
+import { MessageGroup, MessageView } from '../interfaces/chats.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageGroupDateService {
-  groupMessagesByDate(messages: Message[]): MessageGroup[] {
-    const map = new Map<string, Message[]>();
+  groupMessagesByDate(messages: MessageView[]): MessageGroup[] {
+    const map = new Map<string, MessageView[]>();
 
     for (const message of messages) {
       const date = DateTime.fromISO(message.createdAt, { zone: 'utc' }).toLocal();

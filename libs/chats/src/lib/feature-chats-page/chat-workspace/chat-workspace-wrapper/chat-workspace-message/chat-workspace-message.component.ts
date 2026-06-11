@@ -1,6 +1,6 @@
 import { Component, HostBinding, input } from '@angular/core';
 import { AvatarCircleComponent, LuxonDatePipe } from '@tt/common-ui';
-import { Message } from '@tt/interfaces/chats';
+import { MessageView } from '@tt/data-access';
 
 @Component({
   selector: 'tt-chat-workspace-message',
@@ -9,7 +9,7 @@ import { Message } from '@tt/interfaces/chats';
   styleUrl: './chat-workspace-message.component.scss',
 })
 export class ChatWorkspaceMessageComponent {
-  message = input.required<Message>();
+  message = input.required<MessageView>();
 
   @HostBinding('class.is-mine')
   get isMine() {

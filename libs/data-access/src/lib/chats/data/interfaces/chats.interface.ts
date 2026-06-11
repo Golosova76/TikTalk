@@ -1,10 +1,11 @@
-import { Profile } from '@tt/data-access';
+import { Profile } from '../../../profile/data';
+
 export interface Chat {
   id: number;
   userFirst: Profile;
   userSecond: Profile;
   messages: Message[];
-  companion?: Profile;
+  //companion?: Profile;
 }
 
 export interface Message {
@@ -15,8 +16,8 @@ export interface Message {
   createdAt: string;
   isRead: boolean;
   updatedAt: string;
-  user?: Profile;
-  isMine?: boolean;
+  //user?: Profile;
+  //isMine?: boolean;
 }
 
 export interface LastMessageRes {
@@ -29,5 +30,15 @@ export interface LastMessageRes {
 
 export interface MessageGroup {
   dateTitle: string;
-  messages: Message[];
+  messages: MessageView[];
+}
+
+export interface ChatView extends Chat {
+  companion: Profile;
+  messages: MessageView[];
+}
+
+export interface MessageView extends Message {
+  user: Profile;
+  isMine: boolean;
 }
