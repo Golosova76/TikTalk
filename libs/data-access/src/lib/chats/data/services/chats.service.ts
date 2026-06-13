@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BASE_API_URL } from '@tt/shared';
-import { Store } from '@ngrx/store';
 import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
 
 @Injectable({

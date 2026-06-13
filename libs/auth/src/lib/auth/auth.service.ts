@@ -9,23 +9,33 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
-  cookieService = inject(CookieService);
+  private readonly cookieService = inject(CookieService);
 
-  router = inject(Router);
+  private readonly router = inject(Router);
 
   baseApiUrl = 'https://icherniakov.ru/yt-course/auth/';
 
   token: string | null = null;
   refreshToken: string | null = null;
 
-  get isAuth() {
+  getAccessToken(): string | null {
     if (!this.token) {
-      this.token = this.cookieService.get('token');
-      this.refreshToken = this.cookieService.get('refreshToken');
+      this.token = this.cookieService.get('token') || null;
     }
-    return !!this.token;
+    return this.token;
+  }
+
+  getRefreshToken(): string | null {
+    if (!this.refreshToken) {
+      this.refreshToken = this.cookieService.get('refreshToken') || null;
+    }
+    return this.refreshToken;
+  }
+
+  get isAuth() {
+    return !!this.getAccessToken();
   }
 
   login(payload: { username: string; password: string }) {
@@ -34,13 +44,20 @@ export class AuthService {
     fd.append('username', payload.username);
     fd.append('password', payload.password);
 
-    return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(tap((value) => this.saveTokens(value)));
+    return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(
+      tap((value) => this.saveTokens(value))
+    );
   }
 
   refreshAuthToken() {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      this.logout();
+      return throwError(() => new Error('Refresh token is missing'));
+    }
     return this.http
       .post<TokenResponse>(`${this.baseApiUrl}refresh`, {
-        refresh_token: this.refreshToken,
+        refresh_token: refreshToken,
       })
       .pipe(
         tap((value) => this.saveTokens(value)),
@@ -52,17 +69,18 @@ export class AuthService {
   }
 
   logout() {
-    this.cookieService.deleteAll();
+    this.cookieService.delete('token', '/');
+    this.cookieService.delete('refreshToken', '/');
     this.token = null;
     this.refreshToken = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then();
   }
 
   saveTokens(res: TokenResponse) {
     this.token = res.access_token;
     this.refreshToken = res.refresh_token;
 
-    this.cookieService.set('token', this.token);
-    this.cookieService.set('refreshToken', this.refreshToken);
+    this.cookieService.set('token', this.token, {path: '/', sameSite: 'Lax'});
+    this.cookieService.set('refreshToken', this.refreshToken, {path: '/', sameSite: 'Lax'});
   }
 }

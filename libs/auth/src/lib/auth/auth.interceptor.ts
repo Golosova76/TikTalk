@@ -7,7 +7,7 @@ const isRefreshing$ = new BehaviorSubject<boolean>(false);
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.token;
+  const token = authService.getAccessToken();
 
   if (!token) return next(req);
 
@@ -38,7 +38,7 @@ const refreshAndProceed = (authService: AuthService, req: HttpRequest<unknown>, 
   }
 
   if (req.url.includes('refresh')) {
-    const token = authService.token;
+    const token = authService.getAccessToken();
     if (!token) return next(req);
     return next(addToken(req, token));
   }
@@ -46,7 +46,7 @@ const refreshAndProceed = (authService: AuthService, req: HttpRequest<unknown>, 
   return isRefreshing$.pipe(
     filter((isRefreshing) => !isRefreshing),
     switchMap(() => {
-      const token = authService.token;
+      const token = authService.getAccessToken();
       if (!token) return next(req);
       return next(addToken(req, token));
     })
