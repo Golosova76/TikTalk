@@ -3,16 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { BASE_API_URL } from '@tt/shared';
 import { Store } from '@ngrx/store';
 import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
-import { selectCurrentUserMe } from '../../../current-user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
   private readonly http = inject(HttpClient);
-  private readonly store = inject(Store);
-
-  readonly me = this.store.selectSignal(selectCurrentUserMe);
 
   chatUrl = `${BASE_API_URL}chat/`;
   messageUrl = `${BASE_API_URL}message/`;

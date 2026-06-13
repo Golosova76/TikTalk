@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { catchError, filter, map, mergeMap, of, switchMap, take, tap } from 'rxjs';
 import { Chat, ChatsService } from '../data';
 import { chatsActions } from './actions';
 import { Router } from '@angular/router';
-import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { patchChatWithCurrentUser } from '../data/mapper/chat.mapper';
 import { selectCurrentUserMe } from '../../current-user';
+import { Profile } from '../../profile/data';
 
 @Injectable({
   providedIn: 'root',
@@ -64,21 +64,42 @@ export class ChatEffects {
   loadChatById$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(chatsActions.loadChatById),
-      concatLatestFrom(() => this.store.select(selectCurrentUserMe)),
 
-      switchMap(([{ chatId }, me]) => {
-        if (!me) {
-          return of(chatsActions.loadChatByIdFailure({ error: new Error('Current user is not loaded') }));
-        }
+      switchMap(({ chatId }) => {
+        return this.store.select(selectCurrentUserMe).pipe(
+          filter((me): me is Profile => me !== null),
+          take(1),
 
-        return this.chatService.getChatById(chatId).pipe(
-          map((chat: Chat) => {
-            const chatView = patchChatWithCurrentUser(chat, me.id);
-            return chatsActions.loadChatByIdSuccess({ chat: chatView });
-          }),
-          catchError((error: unknown) => of(chatsActions.loadChatByIdFailure({ error })))
+          switchMap((me) => {
+            return this.chatService.getChatById(chatId).pipe(
+              map((chat: Chat) => {
+                const chatView = patchChatWithCurrentUser(chat, me.id);
+                return chatsActions.loadChatByIdSuccess({ chat: chatView });
+              }),
+              catchError((error: unknown) => of(chatsActions.loadChatByIdFailure({ error })))
+            );
+          })
         );
       })
+    );
+  });
+
+  sendMessage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(chatsActions.sendMessage),
+      switchMap(({ chatId, text }) => {
+        return this.chatService.sendMessage(chatId, text).pipe(
+          map((message) => chatsActions.sendMessageSuccess({ chatId, message })),
+          catchError((error: unknown) => of(chatsActions.sendMessageFailure({ error })))
+        );
+      })
+    );
+  });
+
+  refreshChatAfterSendMessage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(chatsActions.sendMessageSuccess),
+      mergeMap(({ chatId }) => [chatsActions.loadChatById({ chatId }), chatsActions.loadMyChats()])
     );
   });
 

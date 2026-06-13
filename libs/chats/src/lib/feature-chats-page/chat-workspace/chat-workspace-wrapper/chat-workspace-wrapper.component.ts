@@ -11,15 +11,9 @@ import {
   signal,
 } from '@angular/core';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
-import { debounceTime, firstValueFrom, fromEvent, Subject, takeUntil } from 'rxjs';
+import { debounceTime, fromEvent, Subject, takeUntil } from 'rxjs';
 import { PostInputComponent } from '@tt/posts';
-import {
-  chatsActions,
-  ChatsService,
-  MessageGroup,
-  MessageGroupDateService,
-  selectActiveChatMessages,
-} from '@tt/data-access';
+import { chatsActions, MessageGroup, MessageGroupDateService, selectActiveChatMessages } from '@tt/data-access';
 import { ChatView } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
@@ -30,7 +24,6 @@ import { Store } from '@ngrx/store';
   styleUrl: './chat-workspace-wrapper.component.scss',
 })
 export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnDestroy {
-  private readonly chatService = inject(ChatsService);
   private readonly messageGroupDateService = inject(MessageGroupDateService);
   private readonly hostElement = inject(ElementRef);
   private readonly r2 = inject(Renderer2);
@@ -58,6 +51,7 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
   ngOnInit(): void {
     this.messages$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.updateGroupedMessages();
+      this.scrollToBottom();
     });
   }
 
@@ -65,7 +59,7 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
     this.resizeFeed();
 
     fromEvent(window, 'resize')
-      .pipe(debounceTime(300))
+      .pipe(debounceTime(300), takeUntil(this.destroy$))
       .subscribe(() => {
         this.resizeFeed();
       });
@@ -91,16 +85,8 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
     this.groupMessages.set(grouped);
   }
 
-  async onCreateMessage(data: { text: string }) {
-    await firstValueFrom(this.chatService.sendMessage(this.chat().id, data.text));
-    await firstValueFrom(this.chatService.getChatById(this.chat().id));
-
-    //await firstValueFrom(this.chatService.getMyChats());
-
-    this.scrollToBottom();
-
-    //this.chatService.getMyChats().subscribe();
-    this.store.dispatch(chatsActions.loadMyChats());
+  onCreateMessage(data: { text: string }) {
+    this.store.dispatch(chatsActions.sendMessage({ chatId: this.chat().id, text: data.text }));
   }
 
   private scrollToBottom(): void {

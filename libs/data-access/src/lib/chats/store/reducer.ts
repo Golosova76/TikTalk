@@ -9,6 +9,7 @@ export interface ChatsState {
   loadingActiveChat: boolean;
   loadingChatsLastMessage: boolean;
   creatingChat: boolean;
+  sendingMessage: boolean;
 
   error: unknown | null;
 }
@@ -19,6 +20,7 @@ export const chatsInitialState: ChatsState = {
   loadingActiveChat: false,
   loadingChatsLastMessage: false,
   creatingChat: false,
+  sendingMessage: false,
   error: null,
 };
 
@@ -36,7 +38,16 @@ export const chatsFeature = createFeature({
 
     on(chatsActions.loadMyChatsSuccess, (state, payload) => ({
       ...state,
-      chatsLastMessage: payload.chats,
+      chatsLastMessage: payload.chats.map((chat) => {
+        if (chat.id !== state.activeChat?.id) {
+          return chat;
+        }
+
+        return {
+          ...chat,
+          unreadMessages: 0,
+        };
+      }),
       loadingChatsLastMessage: false,
       error: null,
     })),
@@ -50,6 +61,7 @@ export const chatsFeature = createFeature({
     /*load Chat by ID*/
     on(chatsActions.loadChatById, (state) => ({
       ...state,
+      activeChat: null,
       loadingActiveChat: true,
       error: null,
     })),
@@ -63,6 +75,7 @@ export const chatsFeature = createFeature({
 
     on(chatsActions.loadChatByIdFailure, (state, payload) => ({
       ...state,
+      activeChat: null,
       loadingActiveChat: false,
       error: payload.error,
     })),
@@ -83,6 +96,25 @@ export const chatsFeature = createFeature({
     on(chatsActions.createChatFailure, (state, payload) => ({
       ...state,
       creatingChat: false,
+      error: payload.error,
+    })),
+
+    /* send Message */
+    on(chatsActions.sendMessage, (state) => ({
+      ...state,
+      sendingMessage: true,
+      error: null,
+    })),
+
+    on(chatsActions.sendMessageSuccess, (state) => ({
+      ...state,
+      sendingMessage: false,
+      error: null,
+    })),
+
+    on(chatsActions.sendMessageFailure, (state, payload) => ({
+      ...state,
+      sendingMessage: false,
       error: payload.error,
     }))
 

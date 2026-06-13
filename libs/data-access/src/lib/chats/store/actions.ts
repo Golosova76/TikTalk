@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Chat, ChatView, LastMessageRes } from '../data';
+import { Chat, ChatView, LastMessageRes, Message } from '../data';
 
 export const chatsActions = createActionGroup({
   source: 'Chats',
@@ -15,5 +15,9 @@ export const chatsActions = createActionGroup({
     'create chat': props<{ userId: number }>(),
     'create chat success': props<{ chat: Chat }>(),
     'create chat failure': props<{ error: unknown }>(),
+
+    'send message': props<{ chatId: number; text: string }>(),
+    'send message success': props<{ chatId: number; message: Message }>(),
+    'send message failure': props<{ error: unknown }>(),
   },
 });
