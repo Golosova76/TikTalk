@@ -57,6 +57,26 @@ export const currentUserFeature = createFeature({
       ...state,
       loading: false,
       error: payload.error,
-    }))
+    })),
+
+    /*save settings*/
+    on(currentUserActions.saveSettings, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    })),
+
+    on(currentUserActions.saveSettingsSuccess, (state, { me }) => ({
+      ...state,
+      me,
+      loading: false,
+      error: null,
+    })),
+
+    on(currentUserActions.saveSettingsFailure, (state, payload) => ({
+      ...state,
+      loading: false,
+      error: payload.error,
+    })),
   ),
 });

@@ -34,4 +34,26 @@ export class CurrentUserEffects {
       )
     );
   });
+
+  saveSettings$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(currentUserActions.saveSettings),
+      switchMap(({ profile, avatar }) => {
+        const patchProfile$ = this.profileService.patchProfile(profile);
+
+        const saveSettingsRequest$ = avatar
+          ? this.profileService.uploadAvatar(avatar).pipe(
+            switchMap(() => patchProfile$)
+          )
+          : patchProfile$;
+
+        return saveSettingsRequest$.pipe(
+          map((me) => currentUserActions.saveSettingsSuccess({ me })),
+          catchError((error: unknown) =>
+            of(currentUserActions.saveSettingsFailure({ error }))
+          )
+        );
+      })
+    );
+  });
 }

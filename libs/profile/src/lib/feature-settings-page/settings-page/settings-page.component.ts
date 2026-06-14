@@ -1,12 +1,11 @@
 import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
 import { AvatarUploadComponent } from '../../ui';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@tt/auth';
 import { SvgIconComponent } from '@tt/common-ui';
-import { Profile, ProfileService } from '@tt/data-access';
+import { Profile } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 import { currentUserActions, selectCurrentUserMe } from '@tt/data-access';
 import { ProfileHeaderComponent } from '../../ui';
@@ -26,7 +25,6 @@ import { ProfileHeaderComponent } from '../../ui';
 })
 export class SettingsPageComponent {
   private readonly fb = inject(FormBuilder);
-  private readonly profileService = inject(ProfileService);
   private readonly authService = inject(AuthService);
   private readonly store = inject(Store);
 
@@ -52,15 +50,11 @@ export class SettingsPageComponent {
     });
   }
 
-  async onSave() {
+  onSave() {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
 
     if (this.form.invalid) return;
-
-    if (this.avatarUploader.avatar) {
-      await firstValueFrom(this.profileService.uploadAvatar(this.avatarUploader.avatar));
-    }
 
     const formValue = this.form.getRawValue();
 
@@ -71,7 +65,7 @@ export class SettingsPageComponent {
       stack: this.splitStack(formValue.stack),
     };
 
-    this.store.dispatch(currentUserActions.patchMe({ profile: profile }));
+    this.store.dispatch(currentUserActions.saveSettings({ profile, avatar: this.avatarUploader.avatar ?? null }));
   }
 
   splitStack(stack: string | null | string[] | undefined): string[] {
