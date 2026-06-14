@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, ElementRef, inject, Renderer2 } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2} from '@angular/core';
 import { ProfileCardComponent } from '../../ui/profile-card/profile-card.component';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 import { debounceTime, fromEvent } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ProfileService, selectFilteredProfiles } from '@tt/data-access';
+import {profileActions, selectFilteredProfiles, selectSubscriberIds} from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -12,17 +11,18 @@ import { Store } from '@ngrx/store';
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
 })
-export class SearchPageComponent implements AfterViewInit {
-  private readonly profileService = inject(ProfileService);
+export class SearchPageComponent implements AfterViewInit, OnInit {
   private readonly hostElement = inject(ElementRef);
   private readonly r2 = inject(Renderer2);
   private readonly store = inject(Store);
 
   profiles = this.store.selectSignal(selectFilteredProfiles);
 
-  subscriberIds = toSignal(this.profileService.getSubscribersIds(), {
-    initialValue: new Set<number>(),
-  });
+  subscriberIds = this.store.selectSignal(selectSubscriberIds);
+
+  ngOnInit() {
+    this.store.dispatch(profileActions.loadSubscribers())
+  }
 
   ngAfterViewInit() {
     this.resizeFeed();

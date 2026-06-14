@@ -5,9 +5,8 @@ import { chatsRoutes } from '@tt/chats';
 import { ExperimentalComponent } from '@tt/experimental';
 import { LayoutComponent } from '@tt/layout';
 import { provideState } from '@ngrx/store';
-import { PostEffects, postsFeature, profileFeature } from '@tt/data-access';
+import { PostEffects, postsFeature } from '@tt/data-access';
 import { provideEffects } from '@ngrx/effects';
-import { ProfileEffects } from '@tt/data-access';
 
 export const routes: Routes = [
   {
@@ -15,11 +14,7 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'profile/me', pathMatch: 'full' },
-      {
-        path: 'search',
-        component: SearchPageComponent,
-        providers: [provideState(profileFeature), provideEffects(ProfileEffects)],
-      },
+      { path: 'search', component: SearchPageComponent },
       {
         path: 'profile/:id',
         component: ProfilePageComponent,

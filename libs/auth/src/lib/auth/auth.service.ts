@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { tap, throwError } from 'rxjs';
 import { TokenResponse } from './auth.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import {BASE_API_URL} from "@tt/shared";
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class AuthService {
 
   private readonly router = inject(Router);
 
-  baseApiUrl = 'https://icherniakov.ru/yt-course/auth/';
+  baseApiUrl = `${BASE_API_URL}auth/`;
 
   token: string | null = null;
   refreshToken: string | null = null;
@@ -51,20 +52,10 @@ export class AuthService {
 
   refreshAuthToken() {
     const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
-      this.logout();
-      return throwError(() => new Error('Refresh token is missing'));
-    }
-    return this.http
-      .post<TokenResponse>(`${this.baseApiUrl}refresh`, {
-        refresh_token: refreshToken,
-      })
+    if (!refreshToken) {return throwError(() => new Error('Refresh token is missing'));}
+    return this.http.post<TokenResponse>(`${this.baseApiUrl}refresh`, { refresh_token: refreshToken, })
       .pipe(
         tap((value) => this.saveTokens(value)),
-        catchError((error: HttpErrorResponse) => {
-          this.logout();
-          return throwError(() => error);
-        })
       );
   }
 

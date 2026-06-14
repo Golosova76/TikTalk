@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { ProfileFilterParams, ProfileFiltersState, ProfileService } from '../data';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { profileActions } from './actions';
-import { map, switchMap } from 'rxjs';
+import {catchError, map, of, switchMap} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,18 @@ import { map, switchMap } from 'rxjs';
 export class ProfileEffects {
   private readonly profileService = inject(ProfileService);
   actions$ = inject(Actions);
+
+  loadSubscribers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(profileActions.loadSubscribers),
+      switchMap(() => {
+        return this.profileService.getSubscribers().pipe(
+          map((response) =>  profileActions.loadSubscribersSuccess({ subscribers: response.items })),
+          catchError((error: unknown) => of(profileActions.loadSubscribersFailure({ error })))
+        );
+      }),
+    );
+  });
 
   filterProfiles$ = createEffect(() => {
     return this.actions$.pipe(

@@ -22,7 +22,7 @@
       <div class="sidebar__title">Подписчики</div>
 
       <div class="sidebar__names">
-        @for (profile of subscribers$ | async; track profile.id) {
+        @for (profile of subscribers(); track profile.id) {
           <tt-subscriber-card [profile]="profile"></tt-subscriber-card>
         }
       </div>

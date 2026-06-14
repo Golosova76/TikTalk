@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -6,7 +6,11 @@ import { AsyncPipe } from '@angular/common';
 import { PostFeedComponent } from '@tt/posts';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
 import { ProfileHeaderComponent } from '../../ui';
-import { ProfileService, selectCurrentUserMe } from '@tt/data-access';
+import {
+  ProfileService,
+  selectCurrentUserMe,
+  selectSubscribersShortList
+} from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -24,7 +28,7 @@ export class ProfilePageComponent {
 
   me$ = toObservable(this.me);
 
-  subscribers$ = this.profileService.getSubscribersShortList(5);
+  readonly subscribers = this.store.selectSignal(selectSubscribersShortList(5))
 
   isMyPage = signal(false);
 

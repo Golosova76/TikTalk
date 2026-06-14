@@ -6,7 +6,10 @@ import { ProfileFiltersState } from '../data/interfaces/profile.interface';
 export interface ProfileState {
   profiles: Profile[];
   filtersForm: ProfileFiltersState;
+  subscribers: Profile[];
+  subscriberIds: number[];
   loading: boolean;
+  loadingSubscribers: boolean;
   error: unknown | null;
 }
 
@@ -17,6 +20,9 @@ export const profileInitialState: ProfileState = {
     lastName: '',
     stack: '',
   },
+  subscribers: [],
+  subscriberIds: [],
+  loadingSubscribers: false,
   loading: false,
   error: null,
 };
@@ -26,6 +32,7 @@ export const profileFeature = createFeature({
   reducer: createReducer(
     profileInitialState,
 
+    /* profile */
     on(profileActions.filterEvents, (state, payload) => ({
       ...state,
       filtersForm: payload.filtersForm,
@@ -44,6 +51,27 @@ export const profileFeature = createFeature({
       ...state,
       loading: false,
       error: payload.error,
-    }))
+    })),
+
+    /* profile */
+    on(profileActions.loadSubscribers, (state) => ({
+      ...state,
+      loadingSubscribers: true,
+      error: null,
+    })),
+
+    on(profileActions.loadSubscribersSuccess, (state, { subscribers }) => ({
+      ...state,
+      subscribers,
+      subscriberIds: subscribers.map((profile) => profile.id),
+      loadingSubscribers: false,
+      error: null,
+    })),
+
+    on(profileActions.loadSubscribersFailure, (state, { error }) => ({
+      ...state,
+      loadingSubscribers: false,
+      error,
+    })),
   ),
 });
