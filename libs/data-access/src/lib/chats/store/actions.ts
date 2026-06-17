@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Chat, ChatView, LastMessageRes, Message } from '../data';
+import {ChatWSInMessage, ChatWSNewMessage} from "../data/interfaces/chats-websocket.interface";
 
 export const chatsActions = createActionGroup({
   source: 'Chats',
@@ -19,5 +20,15 @@ export const chatsActions = createActionGroup({
     'send message': props<{ chatId: number; text: string }>(),
     'send message success': props<{ chatId: number; message: Message }>(),
     'send message failure': props<{ error: unknown }>(),
+
+    'ws connect': emptyProps(),
+    'ws connect failure': props<{ error: unknown }>(),
+
+    'ws message received': props<{ message: ChatWSInMessage }>(),
+    'ws unread received': props<{ count: number }>(),
+    'ws new message received': props<{ message: ChatWSNewMessage }>(),
+    'ws error received': props<{ error: string }>(),
+
+    'ws send message': props<{ text: string; chatId: number }>(),
   },
 });

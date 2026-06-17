@@ -13,7 +13,13 @@ import {
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
 import { debounceTime, fromEvent, Subject, takeUntil } from 'rxjs';
 import { PostInputComponent } from '@tt/posts';
-import { chatsActions, MessageGroup, MessageGroupDateService, selectActiveChatMessages } from '@tt/data-access';
+import {
+  chatsActions,
+  MessageGroup,
+  MessageGroupDateService,
+  MessageView,
+  selectActiveChatMessages
+} from '@tt/data-access';
 import { ChatView } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
@@ -37,7 +43,6 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
   groupMessages = signal<MessageGroup[]>([]);
 
   readonly messages$ = this.store.select(selectActiveChatMessages);
-  readonly messages = this.store.selectSignal(selectActiveChatMessages);
 
   constructor() {
     effect(() => {
@@ -49,8 +54,8 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnInit(): void {
-    this.messages$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.updateGroupedMessages();
+    this.messages$.pipe(takeUntil(this.destroy$)).subscribe(( messages) => {
+      this.updateGroupedMessages(messages);
       this.scrollToBottom();
     });
   }
@@ -79,16 +84,16 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
     this.destroy$.complete();
   }
 
-  updateGroupedMessages(): void {
-    const current = this.messages();
-    const grouped = this.messageGroupDateService.groupMessagesByDate(current);
+  updateGroupedMessages(messages: MessageView[]): void {
+    const grouped = this.messageGroupDateService.groupMessagesByDate(messages);
     this.groupMessages.set(grouped);
   }
 
   onCreateMessage(data: { text: string }) {
-    this.store.dispatch(chatsActions.sendMessage({ chatId: this.chat().id, text: data.text }));
+    //this.store.dispatch(chatsActions.sendMessage({ chatId: this.chat().id, text: data.text }));
+    this.store.dispatch(chatsActions.wsSendMessage({ chatId: this.chat().id, text: data.text }));
   }
-
+/*
   private scrollToBottom(): void {
     requestAnimationFrame(() => {
       const feedElement = this.hostElement.nativeElement.querySelector('.scrollable-chat');
@@ -96,6 +101,18 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
       if (!feedElement) return;
 
       feedElement.scrollTop = feedElement.scrollHeight;
+    });
+  }
+*/
+  private scrollToBottom(): void {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const feedElement = this.hostElement.nativeElement.querySelector('.scrollable-chat');
+
+        if (!feedElement) return;
+
+        feedElement.scrollTop = feedElement.scrollHeight;
+      });
     });
   }
 }

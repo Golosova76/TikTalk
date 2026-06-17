@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, map, mergeMap, of, switchMap, take, tap } from 'rxjs';
+import {catchError, exhaustMap, filter, map, mergeMap, of, switchMap, take, tap} from 'rxjs';
 import { Chat, ChatsService } from '../data';
 import { chatsActions } from './actions';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { patchChatWithCurrentUser } from '../data/mapper/chat.mapper';
 import { selectCurrentUserMe } from '../../current-user';
 import { Profile } from '../../profile/data';
+import {isWSErrorMessage, isWSNewMessage, isWSUnreadMessage} from "../data/interfaces/chats-websocket.interface";
 
 @Injectable({
   providedIn: 'root',
@@ -102,6 +103,52 @@ export class ChatEffects {
       mergeMap(({ chatId }) => [chatsActions.loadChatById({ chatId }), chatsActions.loadMyChats()])
     );
   });
+
+  connectWs$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(chatsActions.wsConnect),
+      exhaustMap(() => {
+        return this.chatService.connectWs().pipe(
+          map((message) => chatsActions.wsMessageReceived({ message })),
+          catchError((error: unknown) =>
+            of(chatsActions.wsConnectFailure({ error }))
+          )
+        );
+      })
+    );
+  });
+
+  handleWsMessage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(chatsActions.wsMessageReceived),
+      map(({ message }) => {
+        if (isWSErrorMessage(message)) {
+          return chatsActions.wsErrorReceived({ error: message.message });
+        }
+        if (isWSUnreadMessage(message)) {
+          return chatsActions.wsUnreadReceived({ count: message.data.count });
+        }
+        if (isWSNewMessage(message)) {
+          return chatsActions.wsNewMessageReceived({ message });
+        }
+        return chatsActions.wsErrorReceived({
+          error: 'Unknown websocket message',
+        });
+      })
+    );
+  });
+
+  sendWsMessage$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(chatsActions.wsSendMessage),
+        tap(({ chatId, text }) => {
+          this.chatService.sendWsMessage(text, chatId);
+        })
+      );
+    },
+    { dispatch: false }
+  );
 
   /**/
 }

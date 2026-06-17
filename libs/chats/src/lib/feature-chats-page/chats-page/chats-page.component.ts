@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ChatsListComponent } from '../chats-list/chats-list.component';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { chatsActions } from '@tt/data-access';
+import {chatsActions} from '@tt/data-access';
 
 @Component({
   selector: 'tt-chats-page',
@@ -12,6 +12,10 @@ import { chatsActions } from '@tt/data-access';
 })
 export class ChatsPageComponent implements OnInit {
   private readonly store = inject(Store);
+
+  constructor() {
+    this.store.dispatch(chatsActions.wsConnect());
+  }
 
   ngOnInit() {
     this.store.dispatch(chatsActions.loadMyChats());

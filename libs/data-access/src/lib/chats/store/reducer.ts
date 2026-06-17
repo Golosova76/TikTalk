@@ -1,10 +1,12 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { ChatView, LastMessageRes } from '../data';
 import { chatsActions } from './actions';
+import {mapWSMessageDataToMessageView} from "../data/mapper/chat.mapper";
 
 export interface ChatsState {
   activeChat: ChatView | null;
   chatsLastMessage: LastMessageRes[];
+  totalUnreadCount: number;
 
   loadingActiveChat: boolean;
   loadingChatsLastMessage: boolean;
@@ -17,6 +19,7 @@ export interface ChatsState {
 export const chatsInitialState: ChatsState = {
   activeChat: null,
   chatsLastMessage: [],
+  totalUnreadCount: 0,
   loadingActiveChat: false,
   loadingChatsLastMessage: false,
   creatingChat: false,
@@ -116,7 +119,39 @@ export const chatsFeature = createFeature({
       ...state,
       sendingMessage: false,
       error: payload.error,
-    }))
+    })),
+
+    /* Websocket */
+    on(chatsActions.wsUnreadReceived, (state, { count }) => ({
+      ...state,
+      totalUnreadCount: count,
+    })),
+
+    on(chatsActions.wsNewMessageReceived, (state, { message }) => {
+      const activeChat = state.activeChat;
+
+      if (!activeChat) {
+        return state;
+      }
+
+      if (activeChat.id !== message.data.chat_id) {
+        return state;
+      }
+
+      const messageView = mapWSMessageDataToMessageView(message.data, activeChat);
+
+      if (!messageView) {
+        return state;
+      }
+
+      return {
+        ...state,
+        activeChat: {
+          ...activeChat,
+          messages: [...activeChat.messages, messageView],
+        },
+      };
+    }),
 
     /**/
   ),
