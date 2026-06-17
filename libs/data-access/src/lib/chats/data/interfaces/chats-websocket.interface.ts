@@ -48,3 +48,16 @@ export function isWSErrorMessage(message: ChatWSInMessage): message is ChatWSErr
   return message.status === 'error';
 }
 
+export type ChatWsConnectionStatus =
+  | 'idle'
+  | 'connecting'
+  | 'connected'
+  | 'disconnected'
+  | 'reconnecting'
+  | 'error';
+
+export interface ChatWSCloseInfo {
+  code: number;
+  reason: string;
+  wasClean: boolean;
+}

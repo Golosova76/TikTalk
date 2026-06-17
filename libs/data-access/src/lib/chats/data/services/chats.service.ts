@@ -20,11 +20,17 @@ export class ChatsService {
   messageUrl = `${BASE_API_URL}message/`;
   chatWSUrl = `${BASE_API_URL}chat/ws`;
 
-  connectWs(): Observable<ChatWSInMessage> {
+
+  connectWs(params?: {
+    onOpen?: () => void;
+    onClose?: (event: CloseEvent) => void;
+  }): Observable<ChatWSInMessage> {
     return this.wsAdapter.connect({
       url: this.chatWSUrl,
       token: this.authService.getAccessToken(),
-    })
+      onOpen: params?.onOpen,
+      onClose: params?.onClose,
+    });
   }
 
   createChat(userId: number) {
@@ -51,5 +57,9 @@ export class ChatsService {
 
   sendWsMessage(text: string, chatId: number): void {
     this.wsAdapter.sendMessage(text, chatId);
+  }
+
+  disconnectWs(): void {
+    this.wsAdapter.disconnect();
   }
 }

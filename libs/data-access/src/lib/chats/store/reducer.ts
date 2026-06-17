@@ -2,6 +2,7 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { ChatView, LastMessageRes } from '../data';
 import { chatsActions } from './actions';
 import {mapWSMessageDataToMessageView} from "../data/mapper/chat.mapper";
+import {ChatWsConnectionStatus} from "../data/interfaces/chats-websocket.interface";
 
 export interface ChatsState {
   activeChat: ChatView | null;
@@ -12,6 +13,9 @@ export interface ChatsState {
   loadingChatsLastMessage: boolean;
   creatingChat: boolean;
   sendingMessage: boolean;
+
+  wsConnectionStatus: ChatWsConnectionStatus;
+  wsShouldReconnect: boolean;
 
   error: unknown | null;
 }
@@ -24,6 +28,8 @@ export const chatsInitialState: ChatsState = {
   loadingChatsLastMessage: false,
   creatingChat: false,
   sendingMessage: false,
+  wsConnectionStatus: 'idle',
+  wsShouldReconnect: false,
   error: null,
 };
 
@@ -119,6 +125,48 @@ export const chatsFeature = createFeature({
       ...state,
       sendingMessage: false,
       error: payload.error,
+    })),
+
+    /* Websocket */
+    /* Websocket connect*/
+    on(chatsActions.wsConnect, (state) => ({
+      ...state,
+      wsConnectionStatus: 'connecting',
+      wsShouldReconnect: true,
+      error: null,
+    })),
+
+    on(chatsActions.wsConnected, (state) => ({
+      ...state,
+      wsConnectionStatus: 'connected',
+      error: null,
+    })),
+
+    on(chatsActions.wsDisconnected, (state) => ({
+      ...state,
+      wsConnectionStatus: 'disconnected',
+    })),
+
+    on(chatsActions.wsDisconnect, (state) => ({
+      ...state,
+      wsConnectionStatus: 'disconnected',
+      wsShouldReconnect: false,
+    })),
+
+    on(chatsActions.wsReconnect, (state) => ({
+      ...state,
+      wsConnectionStatus: 'reconnecting',
+    })),
+
+    on(chatsActions.wsConnectFailure, (state, { error }) => ({
+      ...state,
+      wsConnectionStatus: 'error',
+      error,
+    })),
+
+    on(chatsActions.wsErrorReceived, (state, { error }) => ({
+      ...state,
+      error,
     })),
 
     /* Websocket */

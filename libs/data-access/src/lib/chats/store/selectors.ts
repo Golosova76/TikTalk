@@ -7,13 +7,12 @@ export const selectChatsLastMessage = chatsFeature.selectChatsLastMessage;
 export const selectChatsLoading = chatsFeature.selectLoadingChatsLastMessage;
 export const selectActiveChatLoading = chatsFeature.selectLoadingActiveChat;
 export const selectChatsError = chatsFeature.selectError;
-/*
-export const selectUnreadMessagesCount = createSelector(selectChatsLastMessage, (chats) =>
-  chats.reduce((total, chat) => total + chat.unreadMessages, 0)
-);
-*/
+
 export const selectUnreadMessagesCount = chatsFeature.selectTotalUnreadCount;
 
 export const selectActiveChatMessages = createSelector(selectActiveChat, (activeChat) =>
   activeChat ? activeChat.messages : []
 );
+
+export const selectWsConnectionStatus = chatsFeature.selectWsConnectionStatus;
+export const selectWsShouldReconnect = chatsFeature.selectWsShouldReconnect;

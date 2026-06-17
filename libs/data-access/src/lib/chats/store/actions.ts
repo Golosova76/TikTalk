@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Chat, ChatView, LastMessageRes, Message } from '../data';
-import {ChatWSInMessage, ChatWSNewMessage} from "../data/interfaces/chats-websocket.interface";
+import {ChatWSCloseInfo, ChatWSNewMessage} from "../data/interfaces/chats-websocket.interface";
 
 export const chatsActions = createActionGroup({
   source: 'Chats',
@@ -21,13 +21,19 @@ export const chatsActions = createActionGroup({
     'send message success': props<{ chatId: number; message: Message }>(),
     'send message failure': props<{ error: unknown }>(),
 
-    'ws connect': emptyProps(),
-    'ws connect failure': props<{ error: unknown }>(),
+    /* WebSocket */
 
-    'ws message received': props<{ message: ChatWSInMessage }>(),
-    'ws unread received': props<{ count: number }>(),
-    'ws new message received': props<{ message: ChatWSNewMessage }>(),
-    'ws error received': props<{ error: string }>(),
+    'ws connect': emptyProps(),    // WS хочу открыть
+    'ws connected': emptyProps(),  // WS успешно открылся
+    'ws connect failure': props<{ error: unknown }>(), // ошибка подключения WS или работы WS
+
+    'ws disconnected': props<{ closeInfo?: ChatWSCloseInfo }>(), // закрытие соединения WS
+    'ws reconnect': emptyProps(), // заново подключится
+    'ws disconnect': emptyProps(),  // закрыть WS вручную
+
+    'ws unread received': props<{ count: number }>(), // с сервера пришло обновл кол-во unread
+    'ws new message received': props<{ message: ChatWSNewMessage }>(), //сервер прислал новое сообщение
+    'ws error received': props<{ error: string }>(), //сервер прислал ошибку через WS
 
     'ws send message': props<{ text: string; chatId: number }>(),
   },

@@ -5,6 +5,9 @@ import {ChatWSInMessage} from "./chats-websocket.interface";
 export interface ChatConnectionWSParams {
   url: string;
   token: string | null;
+  onOpen?: () => void;
+  onClose?: (event: CloseEvent) => void;
+
 }
 
 export interface ChatsWebsocketAdapter {

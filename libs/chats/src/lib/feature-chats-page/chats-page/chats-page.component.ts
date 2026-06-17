@@ -13,10 +13,6 @@ import {chatsActions} from '@tt/data-access';
 export class ChatsPageComponent implements OnInit {
   private readonly store = inject(Store);
 
-  constructor() {
-    this.store.dispatch(chatsActions.wsConnect());
-  }
-
   ngOnInit() {
     this.store.dispatch(chatsActions.loadMyChats());
   }
