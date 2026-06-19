@@ -87,25 +87,6 @@ export class ChatEffects {
     );
   });
 
-  sendMessage$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(chatsActions.sendMessage),
-      switchMap(({ chatId, text }) => {
-        return this.chatService.sendMessage(chatId, text).pipe(
-          map((message) => chatsActions.sendMessageSuccess({ chatId, message })),
-          catchError((error: unknown) => of(chatsActions.sendMessageFailure({ error })))
-        );
-      })
-    );
-  });
-
-  refreshChatAfterSendMessage$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(chatsActions.sendMessageSuccess),
-      mergeMap(({ chatId }) => [chatsActions.loadChatById({ chatId }), chatsActions.loadMyChats()])
-    );
-  });
-
   connectWs$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(chatsActions.wsConnect),
@@ -142,6 +123,13 @@ export class ChatEffects {
           )
         );
       })
+    );
+  });
+
+  refreshMyChatsAfterWsNewMessage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(chatsActions.wsNewMessageReceived),
+      map(() => chatsActions.loadMyChats())
     );
   });
 

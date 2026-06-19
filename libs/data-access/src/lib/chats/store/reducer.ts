@@ -12,7 +12,7 @@ export interface ChatsState {
   loadingActiveChat: boolean;
   loadingChatsLastMessage: boolean;
   creatingChat: boolean;
-  sendingMessage: boolean;
+  //sendingMessage: boolean;
 
   wsConnectionStatus: ChatWsConnectionStatus;
   wsShouldReconnect: boolean;
@@ -27,7 +27,7 @@ export const chatsInitialState: ChatsState = {
   loadingActiveChat: false,
   loadingChatsLastMessage: false,
   creatingChat: false,
-  sendingMessage: false,
+  //sendingMessage: false,
   wsConnectionStatus: 'idle',
   wsShouldReconnect: false,
   error: null,
@@ -108,27 +108,8 @@ export const chatsFeature = createFeature({
       error: payload.error,
     })),
 
-    /* send Message */
-    on(chatsActions.sendMessage, (state) => ({
-      ...state,
-      sendingMessage: true,
-      error: null,
-    })),
-
-    on(chatsActions.sendMessageSuccess, (state) => ({
-      ...state,
-      sendingMessage: false,
-      error: null,
-    })),
-
-    on(chatsActions.sendMessageFailure, (state, payload) => ({
-      ...state,
-      sendingMessage: false,
-      error: payload.error,
-    })),
-
     /* Websocket */
-    /* Websocket connect*/
+    /* connect */
     on(chatsActions.wsConnect, (state) => ({
       ...state,
       wsConnectionStatus: 'connecting',
@@ -194,10 +175,7 @@ export const chatsFeature = createFeature({
 
       return {
         ...state,
-        activeChat: {
-          ...activeChat,
-          messages: [...activeChat.messages, messageView],
-        },
+        activeChat: {...activeChat, messages: [...activeChat.messages, messageView] },
       };
     }),
 

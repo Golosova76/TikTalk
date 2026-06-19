@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Chat, ChatView, LastMessageRes, Message } from '../data';
+import { Chat, ChatView, LastMessageRes } from '../data';
 import {ChatWSCloseInfo, ChatWSNewMessage} from "../data/interfaces/chats-websocket.interface";
 
 export const chatsActions = createActionGroup({
@@ -17,12 +17,7 @@ export const chatsActions = createActionGroup({
     'create chat success': props<{ chat: Chat }>(),
     'create chat failure': props<{ error: unknown }>(),
 
-    'send message': props<{ chatId: number; text: string }>(),
-    'send message success': props<{ chatId: number; message: Message }>(),
-    'send message failure': props<{ error: unknown }>(),
-
     /* WebSocket */
-
     'ws connect': emptyProps(),    // WS хочу открыть
     'ws connected': emptyProps(),  // WS успешно открылся
     'ws connect failure': props<{ error: unknown }>(), // ошибка подключения WS или работы WS

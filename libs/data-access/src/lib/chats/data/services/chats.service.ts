@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BASE_API_URL } from '@tt/shared';
-import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
+import { Chat, LastMessageRes } from '../interfaces/chats.interface';
 import {ChatsWebsocketService} from "./chats-websocket.service";
 import {AuthService} from "@tt/auth";
 import {ChatWSInMessage} from "../interfaces/chats-websocket.interface";
@@ -45,15 +45,6 @@ export class ChatsService {
     return this.http.get<Chat>(`${this.chatUrl}${chatId}`);
   }
 
-  sendMessage(chatId: number, message: string) {
-    return this.http.post<Message>(
-      `${this.messageUrl}send/${chatId}`,
-      {},
-      {
-        params: { message },
-      }
-    );
-  }
 
   sendWsMessage(text: string, chatId: number): void {
     this.wsAdapter.sendMessage(text, chatId);
