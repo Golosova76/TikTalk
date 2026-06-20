@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { ChatView, LastMessageRes } from '../data';
+import {ChatView, getTotalUnreadCount, LastMessageRes, markChatAsRead} from '../data';
 import { chatsActions } from './actions';
 import {mapWSMessageDataToMessageView} from "../data/mapper/chat.mapper";
 import {ChatWsConnectionStatus} from "../data/interfaces/chats-websocket.interface";
@@ -45,21 +45,17 @@ export const chatsFeature = createFeature({
       error: null,
     })),
 
-    on(chatsActions.loadMyChatsSuccess, (state, payload) => ({
-      ...state,
-      chatsLastMessage: payload.chats.map((chat) => {
-        if (chat.id !== state.activeChat?.id) {
-          return chat;
-        }
+    on(chatsActions.loadMyChatsSuccess, (state, payload) => {
+      const chatsLastMessage = markChatAsRead(payload.chats, state.activeChat?.id);
 
-        return {
-          ...chat,
-          unreadMessages: 0,
-        };
-      }),
-      loadingChatsLastMessage: false,
-      error: null,
-    })),
+      return {
+        ...state,
+        chatsLastMessage,
+        totalUnreadCount: getTotalUnreadCount(chatsLastMessage),
+        loadingChatsLastMessage: false,
+        error: null,
+      };
+    }),
 
     on(chatsActions.loadMyChatsFailure, (state, payload) => ({
       ...state,
@@ -75,12 +71,18 @@ export const chatsFeature = createFeature({
       error: null,
     })),
 
-    on(chatsActions.loadChatByIdSuccess, (state, payload) => ({
-      ...state,
-      activeChat: payload.chat,
-      loadingActiveChat: false,
-      error: null,
-    })),
+    on(chatsActions.loadChatByIdSuccess, (state, payload) => {
+      const chatsLastMessage = markChatAsRead(state.chatsLastMessage, payload.chat.id);
+
+      return {
+        ...state,
+        activeChat: payload.chat,
+        chatsLastMessage,
+        totalUnreadCount: getTotalUnreadCount(chatsLastMessage),
+        loadingActiveChat: false,
+        error: null,
+      };
+    }),
 
     on(chatsActions.loadChatByIdFailure, (state, payload) => ({
       ...state,
