@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatsBtnComponent } from '../chats-btn/chats-btn.component';
 import { AsyncPipe } from '@angular/common';
@@ -21,6 +21,7 @@ import { Store } from '@ngrx/store';
   ],
   templateUrl: './chats-list.component.html',
   styleUrl: './chats-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatsListComponent {
   private readonly store = inject(Store);

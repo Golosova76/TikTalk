@@ -38,7 +38,8 @@
     "@nx/angular:component": {
       "style": "scss",
       "type": "component",
-      "skipTests": "true"
+      "skipTests": "true",
+      "changeDetection": "OnPush"
     },
     "@nx/angular:directive": {
       "type": "directive"

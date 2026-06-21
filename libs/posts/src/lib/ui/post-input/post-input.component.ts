@@ -1,4 +1,13 @@
-import { Component, EventEmitter, HostBinding, inject, Input, Output, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostBinding,
+  inject,
+  Input,
+  Output,
+  Renderer2
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
 import { selectCurrentUserMe } from '@tt/data-access';
@@ -9,6 +18,7 @@ import { Store } from '@ngrx/store';
   imports: [AvatarCircleComponent, SvgIconComponent, FormsModule],
   templateUrl: './post-input.component.html',
   styleUrl: './post-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostInputComponent {
   private readonly r2 = inject(Renderer2);

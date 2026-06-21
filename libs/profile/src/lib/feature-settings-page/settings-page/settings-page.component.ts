@@ -1,4 +1,4 @@
-import { Component, effect, inject, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, ViewChild} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvatarUploadComponent } from '../../ui';
 import { AsyncPipe } from '@angular/common';
@@ -22,6 +22,7 @@ import { ProfileHeaderComponent } from '../../ui';
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPageComponent {
   private readonly fb = inject(FormBuilder);

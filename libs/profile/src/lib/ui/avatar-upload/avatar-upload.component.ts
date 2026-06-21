@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import { DndDirective, SvgIconComponent } from '@tt/common-ui';
 
 @Component({
@@ -6,6 +6,7 @@ import { DndDirective, SvgIconComponent } from '@tt/common-ui';
   imports: [SvgIconComponent, DndDirective],
   templateUrl: './avatar-upload.component.html',
   styleUrl: './avatar-upload.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarUploadComponent {
   preview = signal<string>('assets/img/avatar-placeholder-big.svg');

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, of, switchMap, tap } from 'rxjs';
 import { ChatWorkspaceWrapperComponent } from './chat-workspace-wrapper/chat-workspace-wrapper.component';
@@ -13,6 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [ChatWorkspaceWrapperComponent, ChatWorkspaceHeaderComponent, AsyncPipe],
   templateUrl: './chat-workspace.component.html',
   styleUrl: './chat-workspace.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatWorkspaceComponent {
   private readonly route = inject(ActivatedRoute);

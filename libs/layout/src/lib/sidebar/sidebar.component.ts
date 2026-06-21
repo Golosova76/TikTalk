@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
   imports: [SvgIconComponent, SubscriberCardComponent, RouterLink, RouterLinkActive, AvatarCircleComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit {
   private readonly store = inject(Store);

@@ -1,4 +1,4 @@
-import { Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -18,6 +18,8 @@ import { Store } from '@ngrx/store';
   imports: [ProfileHeaderComponent, AsyncPipe, SvgIconComponent, RouterLink, PostFeedComponent, AvatarCircleComponent],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class ProfilePageComponent {
   private readonly profileService = inject(ProfileService);

@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy,
   Component,
   effect,
   ElementRef,
@@ -28,6 +28,7 @@ import { Store } from '@ngrx/store';
   imports: [PostInputComponent, ChatWorkspaceMessageComponent],
   templateUrl: './chat-workspace-wrapper.component.html',
   styleUrl: './chat-workspace-wrapper.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly messageGroupDateService = inject(MessageGroupDateService);

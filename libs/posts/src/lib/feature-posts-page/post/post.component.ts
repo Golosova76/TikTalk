@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from '../../ui';
 import { PostInputComponent } from '../../ui';
@@ -19,6 +19,7 @@ import { Store } from '@ngrx/store';
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
   private readonly store = inject(Store);
