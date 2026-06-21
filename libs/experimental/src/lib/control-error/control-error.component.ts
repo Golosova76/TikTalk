@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
@@ -6,6 +6,7 @@ import { AbstractControl } from '@angular/forms';
   imports: [],
   templateUrl: './control-error.component.html',
   styleUrl: './control-error.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlErrorComponent {
   public readonly control = input.required<AbstractControl | null>();

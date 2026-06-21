@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -34,6 +34,7 @@ function requiredTrimmed(control: AbstractControl<string>): ValidationErrors | n
   imports: [ReactiveFormsModule, ControlErrorComponent],
   templateUrl: './experimental.component.html',
   styleUrl: './experimental.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperimentalComponent {
   private readonly mockService = inject(MockService);
