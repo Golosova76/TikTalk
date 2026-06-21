@@ -1,20 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, throwError } from 'rxjs';
+import {catchError, finalize, map, Observable, of, shareReplay, tap, throwError} from 'rxjs';
 import { TokenResponse } from './auth.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import {BASE_API_URL} from "@tt/shared";
+import {isTokenExpiringSoon} from "./auth-token.utils";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-
   private readonly cookieService = inject(CookieService);
-
   private readonly router = inject(Router);
+  private refreshTokenRequest$: Observable<TokenResponse> | null = null;
 
   baseApiUrl = `${BASE_API_URL}auth/`;
 
@@ -52,11 +52,44 @@ export class AuthService {
 
   refreshAuthToken() {
     const refreshToken = this.getRefreshToken();
+
     if (!refreshToken) {return throwError(() => new Error('Refresh token is missing'));}
-    return this.http.post<TokenResponse>(`${this.baseApiUrl}refresh`, { refresh_token: refreshToken, })
-      .pipe(
-        tap((value) => this.saveTokens(value)),
-      );
+
+    if (!this.refreshTokenRequest$) {
+      this.refreshTokenRequest$ =  this.http.post<TokenResponse>(`${this.baseApiUrl}refresh`, {refresh_token: refreshToken,})
+        .pipe(
+          tap((value) => this.saveTokens(value)),
+          finalize(() => {
+            this.refreshTokenRequest$ = null;
+          }),
+          shareReplay({ bufferSize: 1, refCount: false })
+        );
+    }
+
+    return this.refreshTokenRequest$;
+  }
+
+  getValidAccessToken(): Observable<string> {
+    const accessToken = this.getAccessToken();
+
+    if (accessToken && !isTokenExpiringSoon(accessToken)) {
+      return of(accessToken);
+    }
+
+    const refreshToken = this.getRefreshToken();
+
+    if (!refreshToken) {
+      this.logout();
+      return throwError(() => new Error('Refresh token is missing'));
+    }
+
+    return this.refreshAuthToken().pipe(
+      map((res) => res.access_token),
+      catchError((error: unknown) => {
+        this.logout();
+        return throwError(() => error);
+      })
+    );
   }
 
   logout() {

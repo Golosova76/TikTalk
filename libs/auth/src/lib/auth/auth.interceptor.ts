@@ -2,19 +2,13 @@ import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from
 import { inject } from '@angular/core';
 import {
   catchError,
-  finalize,
-  Observable,
-  shareReplay,
   switchMap,
   throwError
 } from 'rxjs';
 import { AuthService } from './auth.service';
-import {TokenResponse} from "./auth.interface";
+
 import {BASE_API_URL} from "@tt/shared";
-
-const TOKEN_REFRESH_THRESHOLD_MS = 60_000;
-
-let refreshTokenRequest$: Observable<TokenResponse> | null = null;
+import {isTokenExpiringSoon} from "./auth-token.utils";
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
@@ -54,27 +48,22 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-const refreshAndProceed = (authService: AuthService, req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  return getRefreshTokenRequest(authService).pipe(
+const refreshAndProceed = (
+  authService: AuthService,
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+) => {
+  return authService.refreshAuthToken().pipe(
+    catchError((error: unknown) => {
+      return logoutAndFail(authService, error);
+    }),
     switchMap((res) => {
       return next(addToken(req, res.access_token));
     })
   );
 };
 
-const getRefreshTokenRequest = (authService: AuthService): Observable<TokenResponse> => {
-  if (!refreshTokenRequest$) {
-    refreshTokenRequest$ = authService.refreshAuthToken().pipe(
-      catchError((error: unknown) => {
-        return logoutAndFail(authService, error);
-      }),
-      finalize(() => { refreshTokenRequest$ = null; }),
-      shareReplay({ bufferSize: 1, refCount: false, })
-    );
-  }
 
-  return refreshTokenRequest$;
-};
 
 const logoutAndFail = (authService: AuthService, error: unknown) => {
   authService.logout();
@@ -101,35 +90,4 @@ const isAuthError = (error: HttpErrorResponse): boolean => {
   return error.status === 401 || error.status === 403;
 };
 
-const getTokenExpirationTime = (token: string): number | null => {
-  try {
-    const payloadBase64 = token.split('.')[1];
 
-    if (!payloadBase64) {
-      return null;
-    }
-
-    const normalizedPayload = payloadBase64
-      .replace(/-/g, '+')
-      .replace(/_/g, '/');
-
-    const payloadJson = atob(normalizedPayload);
-    const payload = JSON.parse(payloadJson) as { exp?: number };
-
-    if (!payload.exp) {
-      return null;
-    }
-
-    return payload.exp * 1000;
-  } catch {
-    return null;
-  }
-};
-
-const isTokenExpiringSoon = (token: string, thresholdMs = TOKEN_REFRESH_THRESHOLD_MS): boolean => {
-  const expirationTime = getTokenExpirationTime(token);
-
-  if (!expirationTime) return true;
-
-  return expirationTime - Date.now() <= thresholdMs;
-};

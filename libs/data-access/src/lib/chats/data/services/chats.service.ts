@@ -5,7 +5,7 @@ import { Chat, LastMessageRes } from '../interfaces/chats.interface';
 import {ChatsWebsocketService} from "./chats-websocket.service";
 import {AuthService} from "@tt/auth";
 import {ChatWSInMessage} from "../interfaces/chats-websocket.interface";
-import {Observable} from "rxjs";
+import {Observable, switchMap} from "rxjs";
 
 
 @Injectable({
@@ -17,20 +17,35 @@ export class ChatsService {
   private readonly wsAdapter = inject(ChatsWebsocketService);
 
   chatUrl = `${BASE_API_URL}chat/`;
-  messageUrl = `${BASE_API_URL}message/`;
   chatWSUrl = `${BASE_API_URL}chat/ws`;
 
-
+/*
   connectWs(params?: {
     onOpen?: () => void;
     onClose?: (event: CloseEvent) => void;
   }): Observable<ChatWSInMessage> {
     return this.wsAdapter.connect({
       url: this.chatWSUrl,
-      token: this.authService.getAccessToken(),
+      token: this.authService.getValidAccessToken(),
       onOpen: params?.onOpen,
       onClose: params?.onClose,
     });
+  }
+*/
+  connectWs(params?: {
+    onOpen?: () => void;
+    onClose?: (event: CloseEvent) => void;
+  }): Observable<ChatWSInMessage> {
+    return this.authService.getValidAccessToken().pipe(
+      switchMap((token) => {
+        return this.wsAdapter.connect({
+          url: this.chatWSUrl,
+          token,
+          onOpen: params?.onOpen,
+          onClose: params?.onClose,
+        });
+      })
+    );
   }
 
   createChat(userId: number) {
