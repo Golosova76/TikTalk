@@ -16,7 +16,7 @@
         "outputPath": "dist/apps/tik-talk",
         "index": "apps/tik-talk/src/index.html",
         "browser": "apps/tik-talk/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/tik-talk/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/tik-talk/src/assets", "apps/tik-talk/src/favicon.ico"],
@@ -70,7 +70,7 @@
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "polyfills": ["zone.js", "zone.js/testing"],
+        "polyfills": [],
         "tsConfig": "apps/tik-talk/tsconfig.spec.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/tik-talk/src/assets", "apps/tik-talk/src/favicon.ico"],
