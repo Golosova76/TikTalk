@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ImgUrlPipe } from '@tt/common-ui';
 import { Profile } from '@tt/data-access';
 

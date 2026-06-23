@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -6,11 +6,7 @@ import { AsyncPipe } from '@angular/common';
 import { PostFeedComponent } from '@tt/posts';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
 import { ProfileHeaderComponent } from '../../ui';
-import {
-  ProfileService,
-  selectCurrentUserMe,
-  selectSubscribersShortList
-} from '@tt/data-access';
+import { ProfileService, selectCurrentUserMe, selectSubscribersShortList } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -19,7 +15,6 @@ import { Store } from '@ngrx/store';
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-
 })
 export class ProfilePageComponent {
   private readonly profileService = inject(ProfileService);
@@ -30,7 +25,7 @@ export class ProfilePageComponent {
 
   me$ = toObservable(this.me);
 
-  readonly subscribers = this.store.selectSignal(selectSubscribersShortList(5))
+  readonly subscribers = this.store.selectSignal(selectSubscribersShortList(5));
 
   isMyPage = signal(false);
 

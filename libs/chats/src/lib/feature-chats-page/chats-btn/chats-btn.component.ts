@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AvatarCircleComponent, LuxonDatePipe } from '@tt/common-ui';
 import { LastMessageRes } from '@tt/data-access';
 

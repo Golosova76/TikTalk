@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import {Store} from "@ngrx/store";
-import {chatsActions} from "@tt/data-access";
+import { Store } from '@ngrx/store';
+import { chatsActions } from '@tt/data-access';
 
 @Component({
   selector: 'tt-layout',

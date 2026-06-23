@@ -2,11 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BASE_API_URL } from '@tt/shared';
 import { Chat, LastMessageRes } from '../interfaces/chats.interface';
-import {ChatsWebsocketService} from "./chats-websocket.service";
-import {AuthService} from "@tt/auth";
-import {ChatWSInMessage} from "../interfaces/chats-websocket.interface";
-import {Observable, switchMap} from "rxjs";
-
+import { ChatsWebsocketService } from './chats-websocket.service';
+import { AuthService } from '@tt/auth';
+import { ChatWSInMessage } from '../interfaces/chats-websocket.interface';
+import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +18,7 @@ export class ChatsService {
   chatUrl = `${BASE_API_URL}chat/`;
   chatWSUrl = `${BASE_API_URL}chat/ws`;
 
-/*
+  /*
   connectWs(params?: {
     onOpen?: () => void;
     onClose?: (event: CloseEvent) => void;
@@ -32,10 +31,7 @@ export class ChatsService {
     });
   }
 */
-  connectWs(params?: {
-    onOpen?: () => void;
-    onClose?: (event: CloseEvent) => void;
-  }): Observable<ChatWSInMessage> {
+  connectWs(params?: { onOpen?: () => void; onClose?: (event: CloseEvent) => void }): Observable<ChatWSInMessage> {
     return this.authService.getValidAccessToken().pipe(
       switchMap((token) => {
         return this.wsAdapter.connect({
@@ -59,7 +55,6 @@ export class ChatsService {
   getChatById(chatId: number) {
     return this.http.get<Chat>(`${this.chatUrl}${chatId}`);
   }
-
 
   sendWsMessage(text: string, chatId: number): void {
     this.wsAdapter.sendMessage(text, chatId);

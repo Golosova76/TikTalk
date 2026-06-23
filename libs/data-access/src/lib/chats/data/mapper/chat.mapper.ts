@@ -1,5 +1,5 @@
 import { Chat, ChatView, Message, MessageView } from '../interfaces/chats.interface';
-import {ChatWSMessageData} from "../interfaces/chats-websocket.interface";
+import { ChatWSMessageData } from '../interfaces/chats-websocket.interface';
 
 export function patchChatWithCurrentUser(chat: Chat, currentUserId: number): ChatView {
   const isUserFirst = chat.userFirst.id === currentUserId;

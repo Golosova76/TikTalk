@@ -1,4 +1,4 @@
-import {ApplicationConfig, isDevMode, provideZonelessChangeDetection} from '@angular/core';
+import { ApplicationConfig, isDevMode, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -13,7 +13,7 @@ import {
   CurrentUserEffects,
   currentUserFeature,
   ProfileEffects,
-  profileFeature
+  profileFeature,
 } from '@tt/data-access';
 
 export const appConfig: ApplicationConfig = {

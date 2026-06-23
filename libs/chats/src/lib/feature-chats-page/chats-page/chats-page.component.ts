@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { ChatsListComponent } from '../chats-list/chats-list.component';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {chatsActions} from '@tt/data-access';
+import { chatsActions } from '@tt/data-access';
 
 @Component({
   selector: 'tt-chats-page',

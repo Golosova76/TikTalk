@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
 import {
-  currentUserActions, profileActions,
+  currentUserActions,
+  profileActions,
   selectCurrentUserMe,
   selectSubscribersShortList,
-  selectUnreadMessagesCount
+  selectUnreadMessagesCount,
 } from '@tt/data-access';
 import { Store } from '@ngrx/store';
 

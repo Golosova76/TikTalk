@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {webSocket, WebSocketSubject} from "rxjs/webSocket";
-import {ChatConnectionWSParams, ChatsWebsocketAdapter} from "../interfaces/chat-ws-service.interface";
-import {filter, Observable, tap} from "rxjs";
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { ChatConnectionWSParams, ChatsWebsocketAdapter } from '../interfaces/chat-ws-service.interface';
+import { filter, Observable, tap } from 'rxjs';
 import {
   ChatWSInMessage,
   ChatWSSendMessage,
   ChatWSSocketMessage,
-  isServerMessage
-} from "../interfaces/chats-websocket.interface";
+  isServerMessage,
+} from '../interfaces/chats-websocket.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +35,11 @@ export class ChatsWebsocketService implements ChatsWebsocketAdapter {
     }
     return this.#socket.asObservable().pipe(
       filter(isServerMessage),
-      tap({ error: () => { this.#socket = null } })
+      tap({
+        error: () => {
+          this.#socket = null;
+        },
+      })
     );
   }
 
@@ -48,5 +52,4 @@ export class ChatsWebsocketService implements ChatsWebsocketAdapter {
     const payload: ChatWSSendMessage = { text, chat_id: chatId };
     this.#socket?.next(payload);
   }
-
 }

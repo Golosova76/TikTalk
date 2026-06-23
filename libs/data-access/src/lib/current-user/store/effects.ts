@@ -42,16 +42,12 @@ export class CurrentUserEffects {
         const patchProfile$ = this.profileService.patchProfile(profile);
 
         const saveSettingsRequest$ = avatar
-          ? this.profileService.uploadAvatar(avatar).pipe(
-            switchMap(() => patchProfile$)
-          )
+          ? this.profileService.uploadAvatar(avatar).pipe(switchMap(() => patchProfile$))
           : patchProfile$;
 
         return saveSettingsRequest$.pipe(
           map((me) => currentUserActions.saveSettingsSuccess({ me })),
-          catchError((error: unknown) =>
-            of(currentUserActions.saveSettingsFailure({ error }))
-          )
+          catchError((error: unknown) => of(currentUserActions.saveSettingsFailure({ error })))
         );
       })
     );

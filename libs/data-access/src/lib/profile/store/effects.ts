@@ -2,14 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { ProfileFilterParams, ProfileFiltersState, ProfileService } from '../data';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { profileActions } from './actions';
-import {catchError, map, of, switchMap} from 'rxjs';
-
+import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectProfileFiltersForm, selectProfilesPageParams } from './selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileEffects {
   private readonly profileService = inject(ProfileService);
+  private readonly store = inject(Store);
   actions$ = inject(Actions);
 
   loadSubscribers$ = createEffect(() => {
@@ -17,21 +19,28 @@ export class ProfileEffects {
       ofType(profileActions.loadSubscribers),
       switchMap(() => {
         return this.profileService.getSubscribers().pipe(
-          map((response) =>  profileActions.loadSubscribersSuccess({ subscribers: response.items })),
+          map((response) => profileActions.loadSubscribersSuccess({ subscribers: response.items })),
           catchError((error: unknown) => of(profileActions.loadSubscribersFailure({ error })))
         );
-      }),
+      })
     );
   });
 
   filterProfiles$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(profileActions.filterEvents),
-      switchMap(({ filtersForm }) => {
+      ofType(profileActions.filterEvents, profileActions.loadProfilesPage),
+      withLatestFrom(this.store.select(selectProfileFiltersForm), this.store.select(selectProfilesPageParams)),
+      switchMap(([, filtersForm, pageParams]) => {
         const filters = this.mapFiltersFormToParams(filtersForm);
-        return this.profileService.filterProfiles(filters);
-      }),
-      map((response) => profileActions.filterProfilesSuccess({ profiles: response.items }))
+        const params: ProfileFilterParams = {
+          ...filters,
+          ...pageParams,
+        };
+        return this.profileService.filterProfiles(params).pipe(
+          map((response) => profileActions.filterProfilesSuccess({ profilesPage: response })),
+          catchError((error: unknown) => of(profileActions.filterProfilesFailure({ error })))
+        );
+      })
     );
   });
 

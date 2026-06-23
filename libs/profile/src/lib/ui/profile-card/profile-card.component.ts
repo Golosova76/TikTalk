@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ImgUrlPipe, SvgIconComponent } from '@tt/common-ui';
 import { Profile } from '@tt/data-access';

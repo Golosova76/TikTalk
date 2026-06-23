@@ -1,5 +1,5 @@
-import {Observable} from "rxjs";
-import {ChatWSInMessage} from "./chats-websocket.interface";
+import { Observable } from 'rxjs';
+import { ChatWSInMessage } from './chats-websocket.interface';
 
 //описывает параметры подключения
 export interface ChatConnectionWSParams {
@@ -7,7 +7,6 @@ export interface ChatConnectionWSParams {
   token: string | null;
   onOpen?: () => void;
   onClose?: (event: CloseEvent) => void;
-
 }
 
 export interface ChatsWebsocketAdapter {

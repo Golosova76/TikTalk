@@ -6,7 +6,7 @@ import {
   inject,
   Input,
   Output,
-  Renderer2
+  Renderer2,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';

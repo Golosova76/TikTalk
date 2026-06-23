@@ -11,12 +11,16 @@ export interface Profile {
   description: string;
 }
 
+//параметры запроса
 export type ProfileFilterParams = Partial<{
   firstName: string;
   lastName: string;
   stack: string;
+  page: number;
+  size: number;
 }>;
 
+//состояние формы ввода
 export interface ProfileFiltersState {
   firstName: string;
   lastName: string;

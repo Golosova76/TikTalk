@@ -1,8 +1,8 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import {ChatView, getTotalUnreadCount, LastMessageRes, markChatAsRead} from '../data';
+import { ChatView, getTotalUnreadCount, LastMessageRes, markChatAsRead } from '../data';
 import { chatsActions } from './actions';
-import {mapWSMessageDataToMessageView} from "../data/mapper/chat.mapper";
-import {ChatWsConnectionStatus} from "../data/interfaces/chats-websocket.interface";
+import { mapWSMessageDataToMessageView } from '../data/mapper/chat.mapper';
+import { ChatWsConnectionStatus } from '../data/interfaces/chats-websocket.interface';
 
 export interface ChatsState {
   activeChat: ChatView | null;
@@ -177,9 +177,9 @@ export const chatsFeature = createFeature({
 
       return {
         ...state,
-        activeChat: {...activeChat, messages: [...activeChat.messages, messageView] },
+        activeChat: { ...activeChat, messages: [...activeChat.messages, messageView] },
       };
-    }),
+    })
 
     /**/
   ),

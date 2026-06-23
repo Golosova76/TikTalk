@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, inject, ViewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvatarUploadComponent } from '../../ui';
 import { AsyncPipe } from '@angular/common';

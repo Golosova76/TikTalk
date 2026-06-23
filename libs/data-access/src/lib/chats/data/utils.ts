@@ -1,4 +1,4 @@
-import { LastMessageRes } from "./interfaces/chats.interface";
+import { LastMessageRes } from './interfaces/chats.interface';
 
 export function markChatAsRead(chats: LastMessageRes[], chatId: number | null | undefined): LastMessageRes[] {
   if (chatId == null) {

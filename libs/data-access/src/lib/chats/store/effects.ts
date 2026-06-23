@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {catchError, EMPTY, exhaustMap, filter, map, mergeMap, of, switchMap, take, tap, timer} from 'rxjs';
+import { catchError, EMPTY, exhaustMap, filter, map, mergeMap, of, switchMap, take, tap, timer } from 'rxjs';
 import { Chat, ChatsService } from '../data';
 import { chatsActions } from './actions';
 import { Router } from '@angular/router';
@@ -8,9 +8,9 @@ import { Store } from '@ngrx/store';
 import { patchChatWithCurrentUser } from '../data/mapper/chat.mapper';
 import { selectCurrentUserMe } from '../../current-user';
 import { Profile } from '../../profile/data';
-import {isWSErrorMessage, isWSNewMessage, isWSUnreadMessage} from "../data/interfaces/chats-websocket.interface";
-import {selectWsConnectionStatus, selectWsShouldReconnect} from "./selectors";
-import {concatLatestFrom} from "@ngrx/operators";
+import { isWSErrorMessage, isWSNewMessage, isWSUnreadMessage } from '../data/interfaces/chats-websocket.interface';
+import { selectWsConnectionStatus, selectWsShouldReconnect } from './selectors';
+import { concatLatestFrom } from '@ngrx/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -91,37 +91,38 @@ export class ChatEffects {
     return this.actions$.pipe(
       ofType(chatsActions.wsConnect),
       exhaustMap(() => {
-        return this.chatService.connectWs({
-          onOpen: () => this.store.dispatch(chatsActions.wsConnected()),
-          onClose: (event) => {
-            this.store.dispatch(
-              chatsActions.wsDisconnected({
-                closeInfo: {
-                  code: event.code,
-                  reason: event.reason,
-                  wasClean: event.wasClean,
-                },
-              })
-            );
-          },
-        }).pipe(
-          map(( message ) => {
-            if (isWSErrorMessage(message)) {
-              return chatsActions.wsErrorReceived({ error: message.message });
-            }
-            if (isWSUnreadMessage(message)) {
-              return chatsActions.wsUnreadReceived({ count: message.data.count });
-            }
-            if (isWSNewMessage(message)) {
-              return chatsActions.wsNewMessageReceived({ message });
-            }
-            return chatsActions.wsErrorReceived({
-              error: 'Unknown websocket message',
-            });
-          }),
-          catchError((error: unknown) => of(chatsActions.wsConnectFailure({ error }))
-          )
-        );
+        return this.chatService
+          .connectWs({
+            onOpen: () => this.store.dispatch(chatsActions.wsConnected()),
+            onClose: (event) => {
+              this.store.dispatch(
+                chatsActions.wsDisconnected({
+                  closeInfo: {
+                    code: event.code,
+                    reason: event.reason,
+                    wasClean: event.wasClean,
+                  },
+                })
+              );
+            },
+          })
+          .pipe(
+            map((message) => {
+              if (isWSErrorMessage(message)) {
+                return chatsActions.wsErrorReceived({ error: message.message });
+              }
+              if (isWSUnreadMessage(message)) {
+                return chatsActions.wsUnreadReceived({ count: message.data.count });
+              }
+              if (isWSNewMessage(message)) {
+                return chatsActions.wsNewMessageReceived({ message });
+              }
+              return chatsActions.wsErrorReceived({
+                error: 'Unknown websocket message',
+              });
+            }),
+            catchError((error: unknown) => of(chatsActions.wsConnectFailure({ error })))
+          );
       })
     );
   });
@@ -152,7 +153,8 @@ export class ChatEffects {
     );
   });
 
-  disconnectWs$ = createEffect(() => {
+  disconnectWs$ = createEffect(
+    () => {
       return this.actions$.pipe(
         ofType(chatsActions.wsDisconnect),
         tap(() => {
@@ -171,9 +173,7 @@ export class ChatEffects {
           take(1),
           filter(Boolean),
           switchMap(() => {
-            return timer(3000).pipe(
-              map(() => chatsActions.wsReconnect())
-            );
+            return timer(3000).pipe(map(() => chatsActions.wsReconnect()));
           })
         );
       })

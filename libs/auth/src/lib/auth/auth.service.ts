@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {catchError, finalize, map, Observable, of, shareReplay, tap, throwError} from 'rxjs';
+import { catchError, finalize, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { TokenResponse } from './auth.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import {BASE_API_URL} from "@tt/shared";
-import {isTokenExpiringSoon} from "./auth-token.utils";
+import { BASE_API_URL } from '@tt/shared';
+import { isTokenExpiringSoon } from './auth-token.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -45,18 +45,19 @@ export class AuthService {
     fd.append('username', payload.username);
     fd.append('password', payload.password);
 
-    return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(
-      tap((value) => this.saveTokens(value))
-    );
+    return this.http.post<TokenResponse>(`${this.baseApiUrl}token`, fd).pipe(tap((value) => this.saveTokens(value)));
   }
 
   refreshAuthToken() {
     const refreshToken = this.getRefreshToken();
 
-    if (!refreshToken) {return throwError(() => new Error('Refresh token is missing'));}
+    if (!refreshToken) {
+      return throwError(() => new Error('Refresh token is missing'));
+    }
 
     if (!this.refreshTokenRequest$) {
-      this.refreshTokenRequest$ =  this.http.post<TokenResponse>(`${this.baseApiUrl}refresh`, {refresh_token: refreshToken,})
+      this.refreshTokenRequest$ = this.http
+        .post<TokenResponse>(`${this.baseApiUrl}refresh`, { refresh_token: refreshToken })
         .pipe(
           tap((value) => this.saveTokens(value)),
           finalize(() => {
@@ -104,7 +105,7 @@ export class AuthService {
     this.token = res.access_token;
     this.refreshToken = res.refresh_token;
 
-    this.cookieService.set('token', this.token, {path: '/', sameSite: 'Lax'});
-    this.cookieService.set('refreshToken', this.refreshToken, {path: '/', sameSite: 'Lax'});
+    this.cookieService.set('token', this.token, { path: '/', sameSite: 'Lax' });
+    this.cookieService.set('refreshToken', this.refreshToken, { path: '/', sameSite: 'Lax' });
   }
 }

@@ -8,9 +8,7 @@ export const getTokenExpirationTime = (token: string): number | null => {
       return null;
     }
 
-    const normalizedPayload = payloadBase64
-      .replace(/-/g, '+')
-      .replace(/_/g, '/');
+    const normalizedPayload = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
 
     const payloadJson = atob(normalizedPayload);
     const payload = JSON.parse(payloadJson) as { exp?: number };

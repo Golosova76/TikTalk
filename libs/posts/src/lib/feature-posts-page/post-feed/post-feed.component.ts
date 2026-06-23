@@ -1,4 +1,12 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, Renderer2} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { debounceTime, fromEvent } from 'rxjs';
 import { PostInputComponent } from '../../ui';
 import { PostComponent } from '../post/post.component';

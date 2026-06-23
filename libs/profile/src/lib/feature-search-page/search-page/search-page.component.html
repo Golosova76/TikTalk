@@ -3,7 +3,19 @@
 </div>
 
 <div class="profile-card__wrapper scrollable-feed">
-  @for (profile of profiles(); track profile.id) {
+  @for (profile of profiles(); track profile.id; let last = $last) {
     <tt-profile-card [profile]="profile" [isSubscriber]="subscriberIds().has(profile.id)"></tt-profile-card>
+
+    @if (last) {
+      @defer (on viewport) {
+        <tt-load-profiles-page-trigger (loaded)="timeToFetch()"></tt-load-profiles-page-trigger>
+      } @placeholder {
+        <div class="profiles-page-sentinel" aria-hidden="true"></div>
+      }
+    }
+  }
+
+  @if (loading()) {
+    <div class="profiles-loader">Загрузка...</div>
   }
 </div>

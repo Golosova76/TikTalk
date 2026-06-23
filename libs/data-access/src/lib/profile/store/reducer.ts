@@ -6,6 +6,12 @@ import { ProfileFiltersState } from '../data/interfaces/profile.interface';
 export interface ProfileState {
   profiles: Profile[];
   filtersForm: ProfileFiltersState;
+
+  page: number;
+  size: number;
+  total: number;
+  pages: number;
+
   subscribers: Profile[];
   subscriberIds: number[];
   loading: boolean;
@@ -20,6 +26,12 @@ export const profileInitialState: ProfileState = {
     lastName: '',
     stack: '',
   },
+
+  page: 1,
+  size: 10,
+  total: 0,
+  pages: 0,
+
   subscribers: [],
   subscriberIds: [],
   loadingSubscribers: false,
@@ -32,17 +44,25 @@ export const profileFeature = createFeature({
   reducer: createReducer(
     profileInitialState,
 
-    /* profile */
+    /* filter */
     on(profileActions.filterEvents, (state, payload) => ({
       ...state,
+      profiles: [],
       filtersForm: payload.filtersForm,
+      page: 1,
+      total: 0,
+      pages: 0,
       loading: true,
       error: null,
     })),
 
-    on(profileActions.filterProfilesSuccess, (state, payload) => ({
+    on(profileActions.filterProfilesSuccess, (state, { profilesPage }) => ({
       ...state,
-      profiles: payload.profiles,
+      profiles: state.profiles.concat(profilesPage.items),
+      page: profilesPage.page,
+      size: profilesPage.size,
+      total: profilesPage.total,
+      pages: profilesPage.pages,
       loading: false,
       error: null,
     })),
@@ -53,7 +73,18 @@ export const profileFeature = createFeature({
       error: payload.error,
     })),
 
-    /* profile */
+    on(profileActions.loadProfilesPage, (state, payload) => {
+      const page = payload.page ?? state.page + 1;
+
+      return {
+        ...state,
+        page,
+        loading: true,
+        error: null,
+      };
+    }),
+
+    /* Subscribers */
     on(profileActions.loadSubscribers, (state) => ({
       ...state,
       loadingSubscribers: true,
@@ -72,6 +103,6 @@ export const profileFeature = createFeature({
       ...state,
       loadingSubscribers: false,
       error,
-    })),
+    }))
   ),
 });

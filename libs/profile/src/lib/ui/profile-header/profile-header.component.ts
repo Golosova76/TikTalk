@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { AvatarCircleComponent } from '@tt/common-ui';
 import { Profile } from '@tt/data-access';

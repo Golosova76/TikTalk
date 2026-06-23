@@ -1,5 +1,6 @@
 import {
-  AfterViewInit, ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   effect,
   ElementRef,
@@ -18,7 +19,7 @@ import {
   MessageGroup,
   MessageGroupDateService,
   MessageView,
-  selectActiveChatMessages
+  selectActiveChatMessages,
 } from '@tt/data-access';
 import { ChatView } from '@tt/data-access';
 import { Store } from '@ngrx/store';
@@ -55,7 +56,7 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnInit(): void {
-    this.messages$.pipe(takeUntil(this.destroy$)).subscribe(( messages) => {
+    this.messages$.pipe(takeUntil(this.destroy$)).subscribe((messages) => {
       this.updateGroupedMessages(messages);
       this.scrollToBottom();
     });
@@ -94,7 +95,7 @@ export class ChatWorkspaceWrapperComponent implements OnInit, AfterViewInit, OnD
     //this.store.dispatch(chatsActions.sendMessage({ chatId: this.chat().id, text: data.text }));
     this.store.dispatch(chatsActions.wsSendMessage({ chatId: this.chat().id, text: data.text }));
   }
-/*
+  /*
   private scrollToBottom(): void {
     requestAnimationFrame(() => {
       const feedElement = this.hostElement.nativeElement.querySelector('.scrollable-chat');

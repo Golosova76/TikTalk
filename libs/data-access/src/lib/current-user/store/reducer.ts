@@ -77,6 +77,6 @@ export const currentUserFeature = createFeature({
       ...state,
       loading: false,
       error: payload.error,
-    })),
+    }))
   ),
 });
