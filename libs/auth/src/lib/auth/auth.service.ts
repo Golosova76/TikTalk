@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { BASE_API_URL } from '@tt/shared';
 import { isTokenExpiringSoon } from './auth-token.utils';
+import {isRefreshTokenInvalidError} from "./auth-error.utils";
 
 @Injectable({
   providedIn: 'root',
@@ -87,7 +88,9 @@ export class AuthService {
     return this.refreshAuthToken().pipe(
       map((res) => res.access_token),
       catchError((error: unknown) => {
-        this.logout();
+        if (isRefreshTokenInvalidError(error)) {
+          this.logout();
+        }
         return throwError(() => error);
       })
     );

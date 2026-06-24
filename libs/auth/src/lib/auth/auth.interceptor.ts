@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 
 import { BASE_API_URL } from '@tt/shared';
 import { isTokenExpiringSoon } from './auth-token.utils';
+import {isRefreshTokenInvalidError} from "./auth-error.utils";
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
@@ -47,7 +48,11 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
 const refreshAndProceed = (authService: AuthService, req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   return authService.refreshAuthToken().pipe(
     catchError((error: unknown) => {
-      return logoutAndFail(authService, error);
+      if (isRefreshTokenInvalidError(error)) {
+        return logoutAndFail(authService, error);
+      }
+
+      return throwError(() => error);
     }),
     switchMap((res) => {
       return next(addToken(req, res.access_token));
