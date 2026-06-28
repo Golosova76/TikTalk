@@ -56,10 +56,16 @@
             <tt-avatar-upload></tt-avatar-upload>
           </div>
         </div>
+        <!--
         <label class="tt-form-label">
           <span class="tt-form-label__text">Навыки</span>
           <input type="text" class="tt-form-input" formControlName="stack" />
         </label>
+         -->
+        <div class="tt-form-label">
+          <span class="tt-form-label__text">Навыки</span>
+        </div>
+        <tt-stack-custom-control formControlName="stack"></tt-stack-custom-control>
         <a [routerLink]="['/experimental']" class="experimental-form"> Experimental form </a>
       </div>
       <div class="profile-controls">

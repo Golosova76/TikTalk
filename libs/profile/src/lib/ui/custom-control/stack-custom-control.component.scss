@@ -1,0 +1,87 @@
+@use "styles/mixins" as *;
+
+.stack-control {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--light-solid);
+  padding: 12px 0;
+  gap: 20px;
+}
+
+.stack-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.stack-tag {
+  display: inline-flex;
+  width: fit-content;
+  gap: 4px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 133%;
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid var(--light-solid);
+}
+
+.stack-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.stack-body {
+  @include flex-center;
+  gap: 16px;
+}
+
+.stack-ghost-input {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  border: none;
+  background: none;
+  outline: none;
+  flex: 0 1 400px;
+  color: var(--light-solid);
+  padding: 12px 5px;
+  min-height: 44px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  &:focus-within {
+    outline: 1px solid var(--primary-primary);
+  }
+}
+
+.stack-add,
+.search-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.subscribers-search-icon,
+.control-search-icon {
+  width: 16px;
+  height: 16px;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-search-icon {
+  margin-left: auto;
+}

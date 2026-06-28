@@ -1,0 +1,30 @@
+<div class="stack-control">
+  <div class="stack-tags">
+    @for (skill of valueStack(); track skill; let i = $index) {
+      <div class="stack-tag">
+        <button (click)="onRemoveSkill(i)" type="button" class="stack-delete">
+          <span class="control-stack-close-icon">
+            <svg icon="close" class="close-icon"></svg>
+          </span>
+        </button>
+        {{ skill }}
+      </div>
+    }
+  </div>
+
+  <div class="stack-body">
+    <input
+      [value]="inputValue()"
+      (input)="onInput($event)"
+      type="text"
+      placeholder="Введите данные и нажмите +"
+      class="stack-ghost-input"
+    />
+    <button (click)="skillAdd()" type="button" class="stack-add" aria-label="Добавить навык">
+      <svg icon="plus" class="subscribers-search-icon"></svg>
+    </button>
+    <span class="control-search-icon">
+      <svg icon="search" class="search-icon"></svg>
+    </span>
+  </div>
+</div>

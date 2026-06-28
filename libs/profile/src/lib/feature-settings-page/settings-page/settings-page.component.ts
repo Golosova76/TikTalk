@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AvatarUploadComponent } from '../../ui';
+import { AvatarUploadComponent, StackCustomControlComponent } from '../../ui';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@tt/auth';
@@ -19,6 +19,7 @@ import { ProfileHeaderComponent } from '../../ui';
     AvatarUploadComponent,
     AsyncPipe,
     RouterLink,
+    StackCustomControlComponent,
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
@@ -39,14 +40,15 @@ export class SettingsPageComponent {
     lastName: ['', Validators.required],
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
-    stack: [''],
+    //stack: this.fb.nonNullable.control<string[]>([]),
+    stack: [[] as string[]],
   });
 
   constructor() {
     effect(() => {
       this.form.patchValue({
         ...this.me(),
-        stack: this.mergeStack(this.me()?.stack),
+        stack: this.me()?.stack ?? [],
       });
     });
   }
@@ -63,24 +65,10 @@ export class SettingsPageComponent {
       firstName: formValue.firstName,
       lastName: formValue.lastName,
       description: formValue.description,
-      stack: this.splitStack(formValue.stack),
+      stack: formValue.stack,
     };
 
     this.store.dispatch(currentUserActions.saveSettings({ profile, avatar: this.avatarUploader.avatar ?? null }));
-  }
-
-  splitStack(stack: string | null | string[] | undefined): string[] {
-    if (!stack) return [];
-    if (Array.isArray(stack)) return stack;
-
-    return stack.split(',');
-  }
-
-  mergeStack(stack: string | null | string[] | undefined) {
-    if (!stack) return '';
-    if (Array.isArray(stack)) return stack.join(',');
-
-    return stack;
   }
 
   onUndo(): void {
@@ -88,7 +76,7 @@ export class SettingsPageComponent {
 
     this.form.patchValue({
       ...profile,
-      stack: this.mergeStack(profile?.stack),
+      stack: profile?.stack ?? [],
     });
 
     this.form.markAsPristine();

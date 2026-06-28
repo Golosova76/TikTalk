@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 
 import { BASE_API_URL } from '@tt/shared';
 import { isTokenExpiringSoon } from './auth-token.utils';
-import {isRefreshTokenInvalidError} from "./auth-error.utils";
+import { isRefreshTokenInvalidError } from './auth-error.utils';
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);

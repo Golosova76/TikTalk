@@ -3,6 +3,9 @@
 :host {
   height: 100%;
   display: block;
+  input {
+    color: var(--light-solid);
+  }
 }
 
 .settings-body {
@@ -71,6 +74,7 @@
 .tt-textarea {
   height: 84px;
   resize: none;
+  color: var(--light-solid);
 }
 
 .required-star {
@@ -118,5 +122,11 @@
   }
   &:active {
     transform: translate(2px, 2px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .settings-body {
+    grid-template-columns: 1fr;
   }
 }
