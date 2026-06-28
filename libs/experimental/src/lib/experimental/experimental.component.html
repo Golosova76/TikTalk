@@ -211,6 +211,10 @@
             }
           </div>
         }
+        <tt-address-custom-control [formControl]="testAddressControl"></tt-address-custom-control>
+        <button type="button" class="form__button address" (click)="setTestAddress()">
+          Проверить writeValue
+        </button>
       </fieldset>
     }
     @if (extraServices.length > 0) {

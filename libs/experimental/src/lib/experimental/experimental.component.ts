@@ -14,6 +14,8 @@ import { MockService } from './mock.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlErrorComponent } from '../control-error';
 import { Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from '../data';
+import {AddressCustomControlComponent} from "../ui";
+import {AddressFormValue} from "../data/interfaces/form.model";
 
 function getAddressForm(initialValue: Address = {}) {
   return new FormGroup({
@@ -31,7 +33,7 @@ function requiredTrimmed(control: AbstractControl<string>): ValidationErrors | n
 
 @Component({
   selector: 'tt-experimental',
-  imports: [ReactiveFormsModule, ControlErrorComponent],
+  imports: [ReactiveFormsModule, ControlErrorComponent, AddressCustomControlComponent],
   templateUrl: './experimental.component.html',
   styleUrl: './experimental.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,6 +43,8 @@ export class ExperimentalComponent {
   readonly ReceiverType = ReceiverType;
   extraServices: ExtraServices[] = [];
   products: Product[] = [];
+
+  testAddressControl = new FormControl<AddressFormValue | null>(null);
 
   orderForm = new FormGroup(
     {
@@ -96,6 +100,11 @@ export class ExperimentalComponent {
     this.orderForm.controls.deliveryMethod.valueChanges.pipe(takeUntilDestroyed()).subscribe((deliveryMethod) => {
       this.updateAddressControls(deliveryMethod);
     });
+
+    this.testAddressControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
+      console.log('[testAddressControl value]', value);
+    });
+
 
     this.mockService
       .getExtraServices()
@@ -265,5 +274,15 @@ export class ExperimentalComponent {
 
     console.log('[getRawValue]', formValue);
     console.log('[submit payload]', payload);
+  }
+
+  setTestAddress(): void {
+    this.testAddressControl.setValue({
+      city: 'Казань',
+      street: 'Баумана',
+      house: '10',
+      building: '',
+      apartment: '15',
+    });
   }
 }

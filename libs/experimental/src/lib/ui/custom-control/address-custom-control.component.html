@@ -1,0 +1,23 @@
+<div class="address-control">
+  <div class="form-field">
+    <label for="address" class="form-field__label">Адрес (Город, улица, дом, квартира)</label>
+    <input
+      id="address"
+      type="text"
+      placeholder="..."
+      [value]="inputValue()"
+      class="form-field__control"
+    />
+
+    @if (suggestions().length > 0) {
+      <div class="address-control__suggestions">
+        @for (address of suggestions(); track $index) {
+          <button type="button" (click)="selectAddress(address)" class="address-control__suggestion">
+            {{ formatAddress(address) }}
+          </button>
+        }
+      </div>
+    }
+
+  </div>
+</div>
