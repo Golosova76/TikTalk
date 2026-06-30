@@ -1,23 +1,64 @@
 <div class="address-control">
-  <div class="form-field">
-    <label for="address" class="form-field__label">Адрес (Город, улица, дом, квартира)</label>
-    <input
-      id="address"
-      type="text"
-      placeholder="..."
-      [value]="inputValue()"
-      class="form-field__control"
-    />
+  <div class="address-control__input">
+    <label for="address-search" class="address-search">
+      <span class="address-search__placeholder-label">Город, улица, дом, квартира</span>
+      <input
+        id="address-search"
+        name="address-search"
+        type="text"
+        placeholder=" "
+        autocomplete="off"
+        [value]="inputValue()"
+        (input)="onInput($event)"
+        (blur)="onBlur()"
+        class="address-search__control"
+      />
+      <span class="address-search__floating-label">Город, улица, дом, квартира</span>
+    </label>
 
-    @if (suggestions().length > 0) {
+    @if (isHintsOpened() && hints().length > 0) {
       <div class="address-control__suggestions">
-        @for (address of suggestions(); track $index) {
-          <button type="button" (click)="selectAddress(address)" class="address-control__suggestion">
-            {{ formatAddress(address) }}
+        <div class="address-control__hint">Выберите вариант или продолжите ввод</div>
+        @for (hint of hints(); track $index) {
+          <button type="button" (click)="selectAddress(hint)" class="address-control__suggestion">
+            {{ hint.label }}
           </button>
         }
       </div>
     }
-
   </div>
+
+  @if (valueAddress(); as address) {
+    <div class="address-card">
+      <div class="address-card__row">
+        <div class="address-card__field">
+          <div class="address-card__label">Город</div>
+          <div class="address-card__control">{{ address.city }}</div>
+        </div>
+
+        <div class="address-card__field">
+          <div class="address-card__label">Улица</div>
+          <div class="address-card__control">{{ address.street }}</div>
+        </div>
+
+        <div class="address-card__field">
+          <div class="address-card__label">Дом</div>
+          <div class="address-card__control">{{ address.house }}</div>
+        </div>
+
+        <div class="address-card__field">
+          <div class="address-card__label">Корпус</div>
+          <div class="address-card__control">{{ address.building }}</div>
+        </div>
+
+        <div class="address-card__field">
+          <div class="address-card__label">Квартира</div>
+          <div class="address-card__control">{{ address.apartment }}</div>
+        </div>
+      </div>
+      @if (showRemoveButton()) {
+        <button type="button" (click)="onRemove()" class="address-card__button address">Удалить адрес</button>
+      }
+    </div>
+  }
 </div>

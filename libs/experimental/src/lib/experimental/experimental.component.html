@@ -146,75 +146,14 @@
       <fieldset class="form__section">
         <legend class="form__legend">Адрес доставки</legend>
         <button type="button" (click)="addAddress()" class="form__button address">Добавить адрес</button>
-        @for (group of orderForm.controls.addresses.controls; track group; let i = $index) {
-          <div [formGroup]="group" class="address-card">
-            <div class="form-row">
-              <div class="form-field">
-                <label [for]="'city-' + i" class="form-field__label">Город</label>
-                <input
-                  [id]="'city-' + i"
-                  type="text"
-                  placeholder="Город"
-                  autocomplete="address-level2"
-                  formControlName="city"
-                  class="form-field__control"
-                />
-                <tt-control-error [control]="group.controls.city"></tt-control-error>
-              </div>
-              <div class="form-field">
-                <label [for]="'street-' + i" class="form-field__label">Улица</label>
-                <input
-                  [id]="'street-' + i"
-                  type="text"
-                  placeholder="Улица"
-                  autocomplete="address-line1"
-                  formControlName="street"
-                  class="form-field__control"
-                />
-                <tt-control-error [control]="group.controls.street"></tt-control-error>
-              </div>
-              <div class="form-field">
-                <label [for]="'house-' + i" class="form-field__label">Дом</label>
-                <input
-                  [id]="'house-' + i"
-                  type="text"
-                  placeholder="Дом"
-                  autocomplete="address-line1"
-                  formControlName="house"
-                  class="form-field__control"
-                />
-                <tt-control-error [control]="group.controls.house"></tt-control-error>
-              </div>
-              <div class="form-field">
-                <label [for]="'building-' + i" class="form-field__label">Корпус</label>
-                <input
-                  [id]="'building-' + i"
-                  type="text"
-                  placeholder="Корпус"
-                  formControlName="building"
-                  class="form-field__control"
-                />
-              </div>
-              <div class="form-field">
-                <label [for]="'apartment-' + i" class="form-field__label">Квартира</label>
-                <input
-                  [id]="'apartment-' + i"
-                  type="text"
-                  placeholder="Квартира"
-                  formControlName="apartment"
-                  class="form-field__control"
-                />
-              </div>
-            </div>
-            @if (orderForm.controls.addresses.length > 1) {
-              <button type="button" (click)="removeAddress(i)" class="form__button address">Удалить адрес</button>
-            }
-          </div>
+        @for (addressControl of orderForm.controls.addresses.controls; track addressControl; let i = $index) {
+          <tt-address-custom-control
+            [formControl]="addressControl"
+            [showRemoveButton]="orderForm.controls.addresses.length > 1"
+            (remove)="removeAddress(i)"
+          ></tt-address-custom-control>
+          <tt-control-error [control]="addressControl"></tt-control-error>
         }
-        <tt-address-custom-control [formControl]="testAddressControl"></tt-address-custom-control>
-        <button type="button" class="form__button address" (click)="setTestAddress()">
-          Проверить writeValue
-        </button>
       </fieldset>
     }
     @if (extraServices.length > 0) {

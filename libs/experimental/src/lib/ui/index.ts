@@ -1,3 +1,3 @@
-import { AddressCustomControlComponent } from "./custom-control/address-custom-control.component";
+import { AddressCustomControlComponent } from './custom-control/address-custom-control.component';
 
-export { AddressCustomControlComponent }
+export { AddressCustomControlComponent };

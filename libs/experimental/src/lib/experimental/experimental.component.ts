@@ -13,22 +13,30 @@ import {
 import { MockService } from './mock.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlErrorComponent } from '../control-error';
-import { Address, DeliveryMethod, ExtraServices, Product, ReceiverType } from '../data';
-import {AddressCustomControlComponent} from "../ui";
-import {AddressFormValue} from "../data/interfaces/form.model";
+import { DeliveryMethod, ExtraServices, Product, ReceiverType } from '../data';
+import { AddressCustomControlComponent } from '../ui';
+import { AddressFormValue } from '../data/interfaces/form.model';
 
-function getAddressForm(initialValue: Address = {}) {
-  return new FormGroup({
-    city: new FormControl<string>(initialValue.city ?? '', { nonNullable: true }),
-    street: new FormControl<string>(initialValue.street ?? '', { nonNullable: true }),
-    house: new FormControl<string>(initialValue.house ?? '', { nonNullable: true }),
-    building: new FormControl<string>(initialValue.building ?? '', { nonNullable: true }),
-    apartment: new FormControl<string>(initialValue.apartment ?? '', { nonNullable: true }),
-  });
+function getAddressControl(initialValue: AddressFormValue | null = null) {
+  return new FormControl<AddressFormValue | null>(initialValue, { validators: [requiredAddress] });
 }
 
-function requiredTrimmed(control: AbstractControl<string>): ValidationErrors | null {
-  return control.value.trim().length === 0 ? { required: true } : null;
+function requiredAddress(control: AbstractControl<AddressFormValue | null>): ValidationErrors | null {
+  const address = control.value;
+
+  if (address === null) {
+    return { required: true };
+  }
+
+  const city = address.city.trim();
+  const street = address.street.trim();
+  const house = address.house.trim();
+
+  if (!city || !street || !house) {
+    return { required: true };
+  }
+
+  return null;
 }
 
 @Component({
@@ -43,8 +51,6 @@ export class ExperimentalComponent {
   readonly ReceiverType = ReceiverType;
   extraServices: ExtraServices[] = [];
   products: Product[] = [];
-
-  testAddressControl = new FormControl<AddressFormValue | null>(null);
 
   orderForm = new FormGroup(
     {
@@ -64,7 +70,8 @@ export class ExperimentalComponent {
         validators: [Validators.required],
       }),
       //addresses: new FormArray([getAddressForm()]), сразу создается форма с пустым адресом
-      addresses: new FormArray<ReturnType<typeof getAddressForm>>([]),
+      //addresses: new FormArray<ReturnType<typeof getAddressForm>>([]),
+      addresses: new FormArray<ReturnType<typeof getAddressControl>>([]),
       extraServices: new FormRecord<FormControl<boolean>>({}),
     },
     { validators: [this.amountInStockValidator()] }
@@ -101,11 +108,6 @@ export class ExperimentalComponent {
       this.updateAddressControls(deliveryMethod);
     });
 
-    this.testAddressControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      console.log('[testAddressControl value]', value);
-    });
-
-
     this.mockService
       .getExtraServices()
       .pipe(takeUntilDestroyed())
@@ -113,15 +115,6 @@ export class ExperimentalComponent {
         this.extraServices = extraServices;
         this.initExtraServicesControls(extraServices);
       });
-
-    //this.mockService
-    //  .getAddresses()
-    //  .pipe(takeUntilDestroyed())
-    //  .subscribe((addresses) => {
-    //    for (const address of addresses) {
-    //      this.orderForm.controls.addresses.push(getAddressForm(address));
-    //    }
-    //  });
 
     this.mockService
       .getProducts()
@@ -189,28 +182,16 @@ export class ExperimentalComponent {
     const addresses = this.orderForm.controls.addresses;
 
     if (deliveryMethod === 'courier' && addresses.length === 0) {
-      addresses.push(getAddressForm());
+      addresses.push(getAddressControl());
     }
 
-    for (const addressGroup of addresses.controls) {
-      const { city, street, house } = addressGroup.controls;
-      city.clearValidators();
-      street.clearValidators();
-      house.clearValidators();
-      if (deliveryMethod === 'courier') {
-        city.setValidators([requiredTrimmed]);
-        street.setValidators([requiredTrimmed]);
-        house.setValidators([requiredTrimmed]);
-      }
-      city.updateValueAndValidity();
-      street.updateValueAndValidity();
-      house.updateValueAndValidity();
+    if (deliveryMethod !== 'courier') {
+      addresses.clear();
     }
   }
 
   addAddress(): void {
-    this.orderForm.controls.addresses.push(getAddressForm());
-    this.updateAddressControls(this.orderForm.controls.deliveryMethod.value);
+    this.orderForm.controls.addresses.push(getAddressControl());
   }
 
   removeAddress(index: number): void {
@@ -274,15 +255,5 @@ export class ExperimentalComponent {
 
     console.log('[getRawValue]', formValue);
     console.log('[submit payload]', payload);
-  }
-
-  setTestAddress(): void {
-    this.testAddressControl.setValue({
-      city: 'Казань',
-      street: 'Баумана',
-      house: '10',
-      building: '',
-      apartment: '15',
-    });
   }
 }
